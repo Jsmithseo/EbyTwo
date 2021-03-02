@@ -5,7 +5,7 @@
   "license": "MIT",
   "keywords": [],
   "author": "Mike Salvati",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "webpack --mode=development --config webpack.dev.js && npx tailwindcss build src/components/tailwind.css -o dist/assets/tailwind.css.liquid && cleancss -o dist/assets/tailwind.min.css.liquid dist/assets/tailwind.css.liquid",
     "build": "webpack --mode=production --config webpack.prod.js && npx tailwindcss build src/components/tailwind.css -o dist/assets/tailwind.css.liquid && cleancss -o dist/assets/tailwind.min.css.liquid dist/assets/tailwind.css.liquid",
