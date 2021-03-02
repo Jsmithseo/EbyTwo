@@ -1,0 +1,56 @@
+<div class="faqPageWrapper">
+    {% if section.blocks.size > 0 %}
+        <div id="faqs-{{ section.id }}" class="panel-group">
+            {% for block in section.blocks %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a 
+                                class="collapsed"
+                                data-toggle="collapse" 
+                                data-parent="#faqs-{{ section.id }}" 
+                                href="#faq-item--{{ forloop.index }}{{ section.id }}">
+                                {{ block.settings.title }}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="faq-item--{{ forloop.index }}{{ section.id }}" 
+                        class="panel-collapse collapse">
+                        <div class="faq-item--content">
+                            {{ block.settings.content }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% schema %}
+  	{
+        "name": "Vela Faq Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Add New Faq Item"
+            }
+		],
+        "blocks": [
+            {
+                "type": "faq",
+                "name": "Faq Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Item heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "content",
+                        "label": "Item content"
+                    }
+                ]
+            }
+        ]
+  	}
+{% endschema %}

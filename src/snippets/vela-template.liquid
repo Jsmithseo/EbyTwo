@@ -1,0 +1,21 @@
+{%- if settings.ajax_cart_method == "drawer" -%}
+	<div id="cartDrawer" class="drawer drawerRight"
+         
+/* add background to cart slide out */
+           				/* need to integrate to js */ 
+{% if cart.item_count == 0 %}
+{% endif %}>
+      
+		<div class="drawerClose">
+            <span class="jsDrawerClose">close</span>
+        </div>
+	    <div class="drawerCartTitle">
+          	{% if customer %}
+          		<a class="ebyDrawerTitle" href="/account">My Account</a>
+	    	{% else %}
+          		<span class="ebyDrawerTitle">Cart</span>
+	    	{% endif %}
+	    </div>
+	    <div id="cartContainer"></div>
+	</div>
+{%- endif -%}

@@ -1,0 +1,31 @@
+<div class="velaProDetailInstagram velaInstagram mb60" style="background-color: {{ section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.instagram_full %}-full{% endif %}">
+        <div class="velaInstagramInner">
+            <div class="headingGroup pb20">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaHomeTitle text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                {%- if section.settings.subtitle != blank -%}
+                    <span class="subTitle">{{ section.settings.subtitle }}</span>
+                {%- endif -%}
+            </div>
+            <div class="velaContent">
+                <div id="velaIns{{ section.id }}" class="boxInstagram" 
+                     data-id="velaIns{{ section.id }}"
+                     data-userid="{{ section.settings.userid }}"
+                     data-accesstoken="{{ section.settings.accessToken }}"
+                     data-limit="{{ section.settings.limited }}"
+                     data-resolution="{{ section.settings.resolution }}">
+              	</div>
+                {%- if section.settings.show_loadmore and section.settings.loadmore != blank -%}
+                    <div class="insLoadMore pt-sm-30">
+                        <a class="btnInsLoadMore btn" href="javascript:void(0);">{{ section.settings.loadmore }}</a>
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>

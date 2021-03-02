@@ -1,0 +1,74 @@
+<div class="pageTitle pageTop">
+  <div class="wrapper">
+    <div class="" style="background-color: {{ page.metafields.ebyacf.blkOne_background_color }};">
+      {{ page.metafields.ebyacf.blkOne_page_title.en }}
+    </div>
+  </div>
+</div>
+<div class="conunt_block">
+  <div class="wrapper">
+    {{ page.metafields.ebyacf.blkTwo_banner_image }}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Count Section",
+    "class": "countMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+    {
+      "type": "image_picker",
+      "id":"title_img",
+      "label":"Select Title images"
+    },
+    {
+      "type":"richtext",
+      "id":"count_content",
+      "label":"Enter Count Content"
+    },
+    {
+      "type":"text",
+      "id":"join_now_btn",
+      "label":"Button Label"
+    },
+    {
+      "type": "url",
+      "id": "join_now_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id":"count_img",
+      "label":"Select Count images"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "text",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "cat_tagline",
+            "label": "Count Tagline"
+          },
+          {
+            "type":"text",
+            "id":"count_number",
+            "label":"Count Number"
+          },
+          {
+            "type":"richtext",
+            "id":"count_text",
+            "label":"Count Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

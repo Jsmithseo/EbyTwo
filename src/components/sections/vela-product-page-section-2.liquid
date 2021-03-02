@@ -1,0 +1,73 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_2 -%}
+{%- if product.metafields.ebyacf.enable_blkTwo -%}
+<div class="our-product-block" style="background: {{ product.metafields.liningbackground.cotton_lining_background }};">
+  <div class="product-blocks">
+    <div class="product-box">
+    <div class="product-box-img">
+      {%- if section.settings.global_section_2_image_1 != blank or section.settings.global_section_2_image_2 != blank -%}
+        <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blktwo_image_content }}</div>
+      {%- else -%}
+      <img class="img-responsive border-radius1 lazyload" alt="{{ shop.name }}" data-src="//placehold.it/{{ bannersize }}" />
+      {%- endif -%}
+    </div>
+    <div class="product-box_details">
+      <h3>{{ product.metafields.liningtitle.cotton_lining_title }}</h3>
+      <div class="rich-text">
+      	<p>{{ product.metafields.liningcontent.cotton_lining_content }}</p>
+      </div>
+      {%- if product.metafields.ebyacf.enable_blkTwo_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.cottonlininglink.cotton_lining_link }}" href="{{ product.metafields.cottonlininglink.cotton_lining_link }}" >{{ product.metafields.liningfield.cotton_lining_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 2",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 2"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_2",
+          "label": "Show global section 2",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_2",
+          "label": "Heading",
+          "default": "Cotton Lining"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_2",
+          "label": "Text",
+          "default": "Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley jicama salsify."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_2_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_2_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

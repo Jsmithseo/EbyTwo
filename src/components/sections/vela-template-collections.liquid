@@ -1,0 +1,507 @@
+{%- if section.settings.listcoll_type == 'typeone' -%}
+  {%- assign pageItems = section.settings.items_page | plus: 0 -%}
+  {% paginate collections by pageItems %}
+    <div class="rowFlex rowFlexMargin">
+      {%- for collection in collections -%}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-xl-3">
+          <div class="velaBoxCollection mb30 pb-md-30">
+            {%- if section.settings.collection_image -%}
+            <div class="velaBoxCollectionImage">
+              <a href="{{ collection.url }}">
+                {%- if collection.image -%}
+                <img class="img-responsive lazyloaded" alt="{{ collection.title }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ collection.image | collection_img_url: 'master' }}" />
+                {%- else -%}
+                {%- if section.settings.image_default != blank -%}
+                <img class="img-responsive lazyloaded" alt="{{ section.settings.image_default.alt | default: shop.name }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ section.settings.image_default | img_url: 'master' }}" />
+                {%- else -%}
+                <img class="img-responsive lazyloaded" alt="{{ shop.name }}" src="{{ 'blank.png' | asset_url }}" data-src="//placehold.it/425x510" />
+                {%- endif -%}
+                {%- endif -%}
+              </a>
+            </div>
+            {%- endif -%}
+            <div class="velaBoxCollectionContent">
+              <h3 class="collectionTitle">
+                <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>
+              </h3>
+              {%- if section.settings.product_count -%}
+              <div class="collectionProductCount">{{ 'collections.general.products_with_count' | t: count:collection.products_count }}</div>
+              {%- endif -%}
+              {%- if collection.description != blank and section.settings.collection_desc -%}
+              <div class="collectionShortDesc">
+                {{ collection.description | strip_html | truncatewords: 20 }}
+              </div>
+              {%- endif -%}
+              {%- if section.settings.collection_btntext != blank -%}
+              <div class="collectionButtonDetail">
+                <a href="{{ collection.url }}" title="{{ section.settings.collection_btntext | escape }}">
+                  {{ section.settings.collection_btntext }}
+                </a>
+              </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+	  {% include 'vela-pagination' %}
+	{%- endif -%}
+  {% endpaginate %}
+{%- else -%}
+  {%- assign pageItems = section.settings.items_propage | plus: 0 -%}
+
+{% if shop.metafields.ebyacf.enable_newprod_mode-coll_pg %}
+
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      <div class="ebyCollectionHolidayWrapper">
+        {{ shop.metafields.ebyacf.ecomm_newprod_banner_block.en }}
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+<section id="foot" style="margin-bottom:0;">
+  <div class="container-full">
+      {% section 'vella-collection-section-2' %}
+  </div>  
+</section>
+
+	
+  {% for block in section.blocks %}
+  	{% if block.settings.collection != blank %}
+	  {% assign collection = collections[block.settings.collection] %}
+	  
+		{% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+        {%- if collection_title == 'Sets' -%}
+		<div class="vipPromoBannerBlockWrapper">
+			{{ shop.metafields.ebyacf.vip-promo-banner-one }}
+		</div>
+        <div class="velaCollections setsCollection">
+        {%- elsif collection_title == 'Packs' -%} 
+        <div class="velaCollections packsCollection">
+        {%- elsif collection_title == 'Bralettes' -%}
+        <div class="velaCollections bralettesCollection">
+        {%- elsif collection_title == 'Undies' -%}
+        <div class="velaCollections pantiesCollection">
+        {%- elsif collection_title == 'Highwaisted Thongs' -%}
+        <div class="velaCollections pantiesTwoCollection hide">
+        {%- elsif collection_title == 'Denim Cotton' -%}
+        <div class="velaCollections denimCottonCollection">
+        {%- elsif collection_title == 'Masks' -%}
+        <div class="velaCollections masksCollection">
+        {%- else -%}
+        <div class="velaCollections">
+        {%- endif -%}
+        
+        {% if collection_title == 'Sets' %}
+          <div class="bralette_slide">
+            <div class="left_area">
+              {% if section.settings.block3_title1 != blank %}<h2 class="pnk">{{ section.settings.block3_title1 }}</h2>{% endif %}
+              {% if section.settings.block3_title2 != blank %}<h2>{{ section.settings.block3_title2 }}</h2>{% endif %}
+              
+              {% if section.settings.block3_info != blank %}{{ section.settings.block3_info }}{% endif %}
+              
+              <div class="btn_area">
+                <a class="btn btn-pink" href="{{ section.settings.block3_link1 }}">{{ section.settings.block3_btn1 }}</a>
+                <a class="btn btn-trans" href="{{ section.settings.block3_link2 }}">{{ section.settings.block3_btn2 }}</a>
+              </div>
+            </div>
+            <div class="right_area">
+              {{ section.settings.block3_right_img | img_url: 'master' | img_tag }}
+              {% comment %}
+              <img src="https://cdn.shopify.com/s/files/1/0340/6525/2411/files/undi@2x.png?v=1593699999"/>
+              {% endcomment %}
+            </div>
+          </div>
+        {% endif %}
+        
+          
+        {% if collection_title == 'Sets'%}
+        <div class="velaBoxCollectionTop ebySetsHeader" id="sets-anchor">
+        {% elsif collection_title == 'Packs' %} 
+        <div class="velaBoxCollectionTop ebyPacksHeader" id="packs-anchor">
+        {% elsif collection_title == 'Bralettes' %}
+        <div class="velaBoxCollectionTop ebyBralettesHeader" id="bralettes-anchor">
+        {% elsif collection_title == 'Denim Cotton' %}
+        <div class="velaBoxCollectionTop ebyDenimCottonHeader" id="denim-anchor">
+        {% elsif collection_title == 'Undies' %}
+        <div class="velaBoxCollectionTop ebyPantiesHeader" id="panties-anchor">
+        {% elsif collection_title == 'Masks' %}
+        <div class="velaBoxCollectionTop ebyMasksHeader" id="masks-anchor">
+        {% else %}
+        <div class="velaBoxCollectionTop">
+        {% endif %}
+          <h3 class="headerCollection clearfix">
+            {% if collection_title == 'Undies' %}Panties
+            {% elsif collection_title == 'Denim Cotton' %}<span class="ebyNewFlag">NEW</span>Invisible Cotton - Members Only
+            {% else %}
+            {{ collection_title }}
+            {% endif %}
+            <div class="model_in_size pull-right">
+              {% assign counter = 0 %}
+              {% for product in collection.products %}
+              {% if counter < 1 %}
+              {% for option in product.options %}
+              {%- if option == 'Size' or option == 'size' -%}
+              {%- assign optionIndex = forloop.index0 -%}
+              {%- assign valueList = '' -%}
+              {%- assign value = '' -%}
+              {%- if product.variants.size > 1 -%}
+              <span>Model In Size</span>
+              {% for variant in product.variants %}
+              <span class="col_pro_var">{{ variant.title }}</span>
+              {% endfor %}
+              {%- endif -%}
+              {%- endif -%}
+              {% endfor %}
+              {% assign counter = counter | plus: 1 %}
+              {% endif %}
+              {% endfor %}
+            </div>
+          </h3>
+        </div>
+        
+        {% if shop.metafields.ebyacf.enable_holiday_mode-coll_pg == false %}
+        <div class="vela_pro_middle">
+          <div class="rowFlex">
+            <div class="ebyCollection-priceBar">
+              {% assign counter = 0 %}
+              {% for product in collection.products %}
+              {% if counter < 1 %}
+              <span class="price_collcs">{{ product.price | money }}</span>
+              {% assign counter = counter | plus: 1 %}
+              {% endif %}
+              {% endfor %}
+              
+              {% if collection_title == 'Undies' %}              
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-panties }}</p>
+              {% elsif  collection_title == 'Highwaisted Thongs' %}
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-hw_thong }}</p>
+              {% elsif  collection_title == 'Bralettes' %}
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-bralette }}</p>
+              {% elsif  collection_title == 'Denim Cotton' %}
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-denim_cotton }}</p>
+              {% elsif  collection_title == 'Sets'  %}             
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-sets }}</p>
+              {% elsif  collection_title == 'Masks'  %}             
+              <p class="ebyVipDiscountCopy">{{ shop.metafields.ebyacf.vip_membership_price-mask }}</p>
+              {% endif %}
+              
+            </div>
+            <div class="ebyColCtaWrapper">
+              <div class="join_btn_collec"><a href="/pages/build-your-box">Join Now</a></div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+		{% if collection_title == 'Sets'%}
+        <div class="proList noSuffixBlock ebySetsList">
+        {% elsif collection_title == 'Packs' %} 
+        <div class="proList noSuffixBlock ebyPacksList centerAlign">
+        {% elsif collection_title == 'Bralettes' %}
+        <div class="proList ebyBralettesList">
+        {% elsif collection_title == 'Undies' %}
+        <div class="proList ebyPantiesList">
+        {% elsif collection_title == 'Highwaisted Thongs' %}
+        <div class="proList ebyPantiesTwoList">
+        {% elsif collection_title == 'Masks' %}
+        <div class="proList ebyMasksList">
+        {% else %}
+        <div class="proList">
+        {% endif %}
+          <div class="velaOwlRow owlCarouselPlay ebyProdTileListWrapper">
+            {% for product in collection.products %}
+            <div class="item ebyProdTile {% if product.metafields.ebyacf.product_is_new_release %}newRelease{% endif %}">
+              {% include 'product-grid-item' %}
+            </div>
+            {% endfor %}
+            {% if collection_title == 'Undies' %}              
+              <div class="item item2 oneTileBlock">
+                <div class="slider_area panties_spbx simple-section-text">
+                  <div class="content_area">
+                    {% if section.settings.block1_title != blank %}
+                      <h3>{{ section.settings.block1_title }}</h3>
+                    {% endif %}
+                    {% if section.settings.block1_info != blank %}
+                      {{ section.settings.block1_info }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if collection_title == 'Bralettes' %}              
+              <div class="item item2 twoTileBlock">
+                <div class="slider_area panties_spbx simple-section-text">
+                  <div class="content_area">
+                    {% if section.settings.block2_title != blank %}
+                      <h3>{{ section.settings.block2_title }}</h3>
+                    {% endif %}
+                    {% if section.settings.block2_info != blank %}
+                      {{ section.settings.block2_info }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if collection_title == 'Masks' %}              
+              <div class="item item2 threeTileBlock">
+                <div class="slider_area panties_spbx simple-section-text">
+                  <div class="content_area">
+                    {{ shop.metafields.ebyacf.masks_global_coll_copy.en }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        
+	 </div>
+	{% endif %}
+  {% endfor %}
+  
+{%- endif -%}
+
+{% comment %}
+<div class="rowFlex rowFlexMargin mt30 pt-md-30 pro_coll_topcats negtiv_mrgin">
+  <div class="last_slider">
+    <div class="left_content">
+      <h2>Your choices have power.<br>Put them on repeat.</h2>
+      <a class="btn btn-black" href="/pages/build-your-box">Join Now</a>
+    </div>
+    <div class="right_content">
+      <img class="lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="https://cdn.shopify.com/s/files/1/0340/6525/2411/files/Untitled-1@2x.png?v=1593698394"/>
+    </div>
+  </div>
+</div>
+{% endcomment %}
+
+{% schema %}
+    {
+        "name": "Vela List Collections",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "select",
+                "id": "listcoll_type",
+                "label": "Page template",
+                "default": "typeone",
+                "options": [
+                    {
+                        "label": "List Collections",
+                        "value": "typeone"
+                    },
+                    {
+                        "label": "List Products with Collection",
+                        "value": "typetwo"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "List Collections"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_image",
+                "label": "Show collection image",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "image_default",
+                "label": "Collection image default"
+            },
+            {
+                "type": "select",
+                "id": "items_page",
+                "label": "Number items on a page",
+                "default": "12",
+                "options": [
+                    {
+                        "label": "3",
+                        "value": "3"
+                    },
+                    {
+                        "label": "6",
+                        "value": "6"
+                    },
+                    {
+                        "label": "9",
+                        "value": "9"
+                    },
+                    {
+                        "label": "12",
+                        "value": "12"
+                    },
+                    {
+                        "label": "15",
+                        "value": "15"
+                    },
+                    {
+                        "label": "18",
+                        "value": "18"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "product_count",
+                "label": "Show product count",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_desc",
+                "label": "Show short description",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "collection_btntext",
+                "label": "Collection button"
+            },
+            {
+                "type": "header",
+                "content": "List Products with Collection"
+            },
+            {
+                "type": "select",
+                "id": "items_propage",
+                "label": "Number items on a page",
+                "default": "3",
+                "options": [
+                    {
+                        "label": "2",
+                        "value": "2"
+                    },
+                    {
+                        "label": "3",
+                        "value": "3"
+                    },
+                    {
+                        "label": "4",
+                        "value": "4"
+                    },
+                    {
+                        "label": "5",
+                        "value": "5"
+                    },
+                    {
+                        "label": "6",
+                        "value": "6"
+                    }
+                ]
+            },
+			{
+   			    "type":"header",
+				"content":"Undies Custom Block"
+			},
+		    {
+				"type":"text",
+				"id":"block1_title",
+				"label":"Title",
+				"default":"Fit Guaranteed"
+			},
+		    {
+				"type":"richtext",
+				"id":"block1_info",
+				"label":"Info",
+				"default":"<p>Our aim is to provide the best fit with consistency across all sizes. If you are unhappy in any way with your EBYs, we will help you find your absolute best fit -- or your money back.</p>"
+			},
+			{
+   			    "type":"header",
+				"content":"Bralette Custom Block"
+			},
+		    {
+				"type":"text",
+				"id":"block2_title",
+				"label":"Title"
+			},
+		    {
+				"type":"richtext",
+				"id":"block2_info",
+				"label":"Info",
+				"default":"<p>Massaging About Bralette</p>"
+			},
+			{
+   			    "type":"header",
+				"content":"Sets Custom Block"
+			},
+		    {
+				"type":"text",
+				"id":"block3_title1",
+				"label":"Title1",
+				"default":"Mix it up!"
+			},
+			{
+				"type":"text",
+				"id":"block3_title2",
+				"label":"Title2",
+				"default":"3 Pack or Quarterly Membership"
+			},
+		    {
+				"type":"richtext",
+				"id":"block3_info",
+				"label":"Info"
+			},
+		    {
+				"type":"text",
+				"id":"block3_btn1",
+				"label":"Button Label 1",
+				"default":"Join Now"
+			},
+		    {
+				"type":"url",
+				"id":"block3_link1",
+				"label":"Button Link 1"
+			},
+		    {
+				"type":"text",
+				"id":"block3_btn2",
+				"label":"Button Label 2",
+				"default":"Shop All"
+			},
+		    {
+				"type":"url",
+				"id":"block3_link2",
+				"label":"Button Link 2"
+			},
+			{
+				"type":"image_picker",
+				"id":"block3_right_img",
+				"label":"Right Image"
+			}
+        ],
+	    "blocks":[
+		    {
+				"type":"collection-block",
+				"name":"Collection Block",
+				"settings":[
+					{
+						"type":"text",
+						"id":"title",
+						"label":"Title"
+					},
+					{
+						"type":"collection",
+						"id":"collection",
+						"label":"Collection"
+					},
+					{
+						"type":"text",
+						"id":"parent_title",
+						"label":"Main Title"
+					}
+				]
+			}
+		]
+    }
+{% endschema %}

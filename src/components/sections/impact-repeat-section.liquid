@@ -1,0 +1,45 @@
+<div style="background-color: {{ page.metafields.contentbackground.content_background_color }};">
+  <div class="wrapper">
+    {{ page.metafields.blkeightcontent.blk_eight_content }}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Impact On Repeat",
+    "class": "repeatMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+    {
+      "type":"richtext",
+      "id":"count_content",
+      "label":"Enter Count Content"
+    },
+	{
+      "type":"textarea",
+      "id":"your_choice_content",
+      "label":"Enter text"
+    },
+	{
+      "type":"text",
+      "id":"join_now_btn",
+      "label":"Button Label"
+    },
+    {
+      "type": "url",
+      "id": "join_now_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id":"repeat_img",
+      "label":"Select images"
+    }
+    ]
+  }
+{% endschema %}

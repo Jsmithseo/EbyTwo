@@ -1,0 +1,90 @@
+<div class="pick-style-wrapper">
+  <div class="pick-styles">
+    <h3>Choose your styles</h3>
+    <ul class="style-list">
+      <li>
+        <a href="javascript:void(0);" data-href="#thong" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/thong_01a.jpg">
+          <h4>Thong</h4>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" data-href="#brief" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/brief_01a.jpg">
+          <h4>Brief</h4>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" data-href="#highwaisted" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/high_waisted_01a.jpg">
+          <h4>High Waisted</h4>
+        </a>
+      </li>
+      <li class="hwt_cb_option">
+        <a href="javascript:void(0);" data-href="#highwaisted-thong" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/thong_hw_01a.jpg">
+          <h4>HW Thong</h4>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" data-href="#bikini" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/bikini_01a.jpg">
+          <h4>Bikini</h4>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" data-href="#cheeky" class="style style-selection">
+          <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/black-Cheeky_01a.jpg">
+          <h4>Cheeky</h4>
+        </a>
+      </li>
+    </ul>
+    <div class="pick-tag-b">All styles available in multiple colors and prints</div>
+  </div>
+  
+  <div class="pick-style-products-wrapper hide">
+    {%- assign styles = 'thong,brief,highwaisted,highwaisted-thong,bikini,cheeky' | split : ',' -%}
+    {%- assign collection = collections['all-boxes-cb-assortment'] -%}
+    {%- capture products -%}
+      {%- for style in styles -%}
+        {%- for p in collection.products -%}
+          {%- if p.handle contains style -%}
+    		{{- p.handle -}}{%- break -%}
+    	  {% endif %}
+        {%- endfor -%}
+    	{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- assign products = products | strip -%}
+    {%- assign productsArr = products | split:',' -%}
+    
+    {%- for pHandle in productsArr -%}
+    	{%- assign handle = pHandle | strip -%}
+    	{%- assign product = all_products[handle] -%}
+        <div class="single-style" id="{% if product.handle contains 'highwaisted-thong' %}highwaisted-thong{% else %}{{ product.handle | split:'-' | last }}{% endif %}" data-group="{% if product.handle contains 'highwaisted-thong' %}highwaisted-thong{% else %}{{ product.handle | split:'-' | last }}{% endif %}" data-product-id="{{ product.id }}">
+            <div data-price="{{ product.price | money_without_currency }}">
+              	     
+              	{% for prodTag in product.tags %}
+                	{% if prodTag contains 'pantyColor' %}
+              			{% assign img = prodTag | replace: 'pantyColor-', '' | append: '-cb.jpg' %}			
+              		{% break %}
+              		{% endif %}
+                {% endfor %}
+              
+              	<img class="img-responsive" src="{{ img | file_img_url: 'master' }}">
+              
+                <div class="sub_style_details">
+                  <a href="javascript:void(0);" class="back-to-style-btn">Other Styles</a>
+                  <div class="proContent" sa-swatch-root="true">
+                    {% render 'starapps-product-json', product: product %}
+                    <h5 class="proName">{{ product.title }}</h5>
+                    <span class="product-handle" style="display: none;" >{{ product.handle }}</span>
+                  </div>
+                </div>
+              
+            </div>
+          	<button class="btn custom-add-box-btn" type="button">Add To Box</button>
+        </div>
+    {%- endfor -%}
+  </div>
+</div>

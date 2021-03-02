@@ -1,0 +1,78 @@
+<div class="our-product-inner">
+  {%- if page.metafields.membertoptitle.member_top_title != blank -%}
+  <h1 class="our-product-title pageTop">{{ page.metafields.membertoptitle.member_top_title }}</h1>
+  {%- endif -%}
+  {% if page.metafields.membertopimage.member_top_image != blank %}
+  <div class="top-banner"><img src="{{ page.metafields.membertopimage.member_top_image }}" alt=""></div>
+  {% endif %}
+</div>
+
+<div class="what-get-section">
+  {%- if page.metafields.membercontent.member_content != blank -%}
+  {{ page.metafields.membercontent.member_content }}
+  {%- endif -%}
+</div>
+
+{% comment %}
+<div class="light_gray_section">
+  <div class="inner_section">
+    {%- if section.settings.our_choice_t != blank -%}
+    	<h2>{{ section.settings.our_choice_t | escape }}</h2>
+    {%- endif -%}
+
+    {% if section.settings.link != blank %}
+    	<a class="btn shop_btn" href="{{ section.settings.link }}">{{ section.settings.link_btn | escape }}</a>
+    {% endif %}
+  </div>
+</div>
+{% endcomment %}
+
+
+  
+{% schema %}
+  {
+    "name": "Membership Top",
+    "class": "our-product-section membership-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Become A Member"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+	  {
+        "type": "header",
+        "content": "What You Get"
+      },
+	  {
+        "type": "text",
+        "id": "our_choice_t",
+        "label": "Heading",
+        "default": "What You Get"
+      },
+      {
+        "type": "text",
+        "id": "link_btn",
+        "label": "Shop"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }      
+      
+    ],
+    "presets": [
+      {
+        "name": "Membership Top",
+        "category": "Membership"
+      }
+    ]
+  }
+{% endschema %}

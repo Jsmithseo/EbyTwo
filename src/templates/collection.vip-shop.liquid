@@ -1,0 +1,166 @@
+
+{% unless customer.tags contains 'Active Subscriber'%}
+<script type="text/javascript">window.location.href = '/account/login'</script>
+{% endunless %}
+{% include 'breadcrumb' %}
+
+{% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+
+<section id="pageContent" class="ebyHolidayListCollWrapper">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      <div class="shopify-section top_categories vipTopCategories">
+      	<div class="top_categories_inner">
+        {% if collection.metafields.ebyacf.enable_coll_subnav %}
+        <ul>
+          {% for value in collection.metafields.ebyacf.collection_subnav_menu_title %}
+          <li>
+            <div class="coll_thumb">
+              <a href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">
+                <div class="coll_thumbImg">{{collection.metafields.ebyacf.collection_subnav_menu_img[forloop.index0]}}</div>
+              </a>
+              <p class="coll_name">
+                  <a class="navDesktopLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.collection_subnav_menu_title[forloop.index0]}}</a>
+                  <a class="navMobileLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.mobile_coll_subnav_menu_title[forloop.index0]}}</a>
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="ebyCategoryBannerWrapper">
+          <div class="ebyCategoryBanner"><img src="{{ collection.image | collection_img_url: '1440x300' }}"></div>
+          <p class="coll_name ebyCollName">{{ collection.title }}</p>
+        </div>
+        {% endif %}
+      </div>
+      </div>
+      <div class="ebyCollectionHolidayWrapper">
+        {{ shop.metafields.ebyacf.coll_holiday_banner_bloc.en }}
+      </div>
+      <div class="ebyVipHeader">
+      	<header class="vipHeader">
+          <h4>Members Only</h4>
+          <h1>VIP Shopping</h1>
+          <p>Enjoy full access to ALL products at member-only prices, with early access to new styles and first picks of limited edition colors and prints, created exclusively for you.</p>
+        </header>
+      </div>
+      <section class="ebyVipCollectionList">
+      	{% section 'vela-template-collections' %}
+      </section>    
+    </div>
+  </div>
+</section>
+
+<section id="foot" style="margin-bottom:0;">
+  <div class="container-full">
+      {% section 'vella-collection-section-2' %}
+  </div>  
+</section>
+
+{% elsif shop.metafields.ebyacf.enable_newprod_mode-vip_pg %}
+
+<section id="pageContent" class="ebyHolidayListCollWrapper">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      <div class="shopify-section top_categories vipTopCategories">
+      	<div class="top_categories_inner">
+        {% if collection.metafields.ebyacf.enable_coll_subnav %}
+        <ul>
+          {% for value in collection.metafields.ebyacf.collection_subnav_menu_title %}
+          <li>
+            <div class="coll_thumb">
+              <a href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">
+                <div class="coll_thumbImg">{{collection.metafields.ebyacf.collection_subnav_menu_img[forloop.index0]}}</div>
+              </a>
+              <p class="coll_name">
+                  <a class="navDesktopLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.collection_subnav_menu_title[forloop.index0]}}</a>
+                  <a class="navMobileLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.mobile_coll_subnav_menu_title[forloop.index0]}}</a>
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="ebyCategoryBannerWrapper">
+          <div class="ebyCategoryBanner"><img src="{{ collection.image | collection_img_url: '1440x300' }}"></div>
+          <p class="coll_name ebyCollName">{{ collection.title }}</p>
+        </div>
+        {% endif %}
+      </div>
+      </div>
+      <div class="ebyVipHeader">
+      	<header class="vipHeader">
+          <h4>Members Only</h4>
+          <h1>VIP Shopping</h1>
+          <p>Enjoy full access to ALL products at member-only prices, with early access to new styles and first picks of limited edition colors and prints, created exclusively for you.</p>
+        </header>
+      </div>
+      <div class="ebyCollectionHolidayWrapper">
+        {{ shop.metafields.ebyacf.vip_coll_newprod_banner_block.en }}
+      </div>
+      <section class="ebyVipCollectionList">
+      	{% section 'vela-template-collections' %}
+      </section>    
+    </div>
+  </div>
+</section>
+
+<section id="foot" style="margin-bottom:0;">
+  <div class="container-full">
+      {% section 'vella-collection-section-2' %}
+  </div>  
+</section>
+
+{% else %}
+
+<section id="pageContent">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      <div class="shopify-section top_categories vipTopCategories">
+      	<div class="top_categories_inner">
+        {% if collection.metafields.ebyacf.enable_coll_subnav %}
+        <ul>
+          {% for value in collection.metafields.ebyacf.collection_subnav_menu_title %}
+          <li>
+            <div class="coll_thumb">
+              <a href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">
+                <div class="coll_thumbImg">{{collection.metafields.ebyacf.collection_subnav_menu_img[forloop.index0]}}</div>
+              </a>
+              <p class="coll_name">
+                  <a class="navDesktopLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.collection_subnav_menu_title[forloop.index0]}}</a>
+                  <a class="navMobileLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.mobile_coll_subnav_menu_title[forloop.index0]}}</a>
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="ebyCategoryBannerWrapper">
+          <div class="ebyCategoryBanner"><img src="{{ collection.image | collection_img_url: '1440x300' }}"></div>
+          <p class="coll_name ebyCollName">{{ collection.title }}</p>
+        </div>
+        {% endif %}
+      </div>
+      </div>
+      <div class="ebyVipHeader">
+      	<header class="vipHeader">
+          <h4>Members Only</h4>
+          <h1>VIP Shopping</h1>
+          <p>Enjoy full access to ALL products at member-only prices,with early access to new styles and first picks of limited edtiion colors and prints, created exclusively for you.</p>
+        </header>
+      </div>
+      <section class="ebyVipCollectionList">
+      	{% section 'vela-template-collections' %}
+      </section>    
+    </div>
+  </div>
+</section>
+
+<section id="foot" style="margin-bottom:0;">
+  <div class="container-full">
+      {% section 'vella-collection-section-2' %}
+  </div>  
+</section>
+
+{% endif %}

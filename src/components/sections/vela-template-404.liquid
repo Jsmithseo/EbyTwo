@@ -1,0 +1,96 @@
+
+{%- if section.settings.bgimage != blank -%}
+    {% capture bgImage %}
+        background-image: url({{ section.settings.bgimage | img_url:'master' }});
+    {% endcapture %}
+{%- endif -%}
+<section class="page404" style="{{ bgImage }}">
+    <div class="container-full">
+        <div class="page404Inner text-center">
+            <div class="page404Wrap">
+                        <div class="col-xs-12 col-md-10 col-lg-8 col-md-offset-1 col-lg-offset-2">
+                            <div class="boxText">
+                                {%- if section.settings.title != blank -%}
+                                    <h3 class="page404Title">{{ section.settings.title }}</h3>
+                                {%- endif -%}
+                                {%- if section.settings.subtitle != blank -%}
+                                    <h3 class="page404Subtitle">{{ section.settings.subtitle }}</h3>
+                                {%- endif -%}
+                                {%- if section.settings.description != blank -%}
+                                    <div class="page404Des">{{ section.settings.description }}</div>
+                                {%- endif -%}
+                                {%- if section.settings.search_form -%}
+                                    {% comment %}
+                              		<form class="formSearchPage" action="/search" method="get">
+                                        <div class="input-group">
+                                            <input type="hidden" name="type" value="product" />
+                                            <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="formSearchPageInput form-control" />
+                                            <div class="input-group-addon">
+                                                <button type="submit" class="btn formSearchPageButton">
+                                                    <i class="icons icon-magnifier"></i>
+                                                    <span class="searchPageButtonText">{{ 'general.search.submit' | t }}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                              		{% endcomment %}
+                                {%- endif -%}
+                                {%- if section.settings.btntext != blank -%}
+                                    <div class="boxButton">
+                                        <a class="btn bg-white btn404" href="{{ section.settings.btnlink }}"><i class="fa fa-long-arrow-left "></i>{{ section.settings.btntext }}</a>
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela 404 Page",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "search_form",
+                "label": "Enable Search Form"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background Image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "404 Heading",
+                "placeholder": "Tittle of Page 404"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "404 SubHeading",
+                "placeholder": "SubTittle of Page 404"
+            },
+            {
+                "type": "html",
+                "id": "description",
+                "label": "404 Description",
+                "placeholder": "Description of Page 404"
+            },
+            {
+                "type": "text",
+                "id": "btntext",
+                "label": "404 Button text",
+                "placeholder": "Text of Button"
+            },
+            {
+                "type": "url",
+                "id": "btnlink",
+                "label": "404 Button URL"
+            }
+        ]
+    }
+{% endschema %}

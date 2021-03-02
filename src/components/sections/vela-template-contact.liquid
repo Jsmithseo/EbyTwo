@@ -1,0 +1,172 @@
+<div class="pageContact">
+    {%- if section.settings.googlemap_enable and settings.googlemap_enable -%}
+        <div class="velaGoogleMap mb60">
+            <div id="googleMap{{ section.id }}" class="velaGoogleMapInner"></div>
+            <div class="googleOverPlay"></div>
+            <script type="text/javascript">
+                function initMap() {
+                    var uluru = {lat: {{ section.settings.latitude }}, lng: {{ section.settings.longitude }}};
+                    var map = new google.maps.Map(document.getElementById('googleMap{{ section.id }}'), {
+                        zoom: {{ section.settings.zoom }},
+                        center: uluru,
+                        zoomControlOptions: {
+                            position: google.maps.ControlPosition.LEFT_BOTTOM
+                        },
+                        styles: [
+                            {elementType: 'geometry', stylers: [{color: '#ebebeb'}]},
+                            {elementType: 'labels.text.fill', stylers: [{color: '#252525'}]},
+                            {
+                                featureType: 'poi.park',
+                                elementType: 'geometry',
+                                stylers: [{color: '#ebebeb'}]
+                            },
+                            {
+                                featureType: 'road',
+                                elementType: 'geometry',
+                                stylers: [{color: '#fdfdfd'}]
+                            },
+                            {
+                                featureType: 'water',
+                                elementType: 'geometry',
+                                stylers: [{color: '#99b3cc'}]
+                            }
+                        ],
+                    });
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                    });
+                }
+            </script>
+        </div>
+    {%- endif -%}
+    <div class="pageContactInfo mb30">
+        <div class="container-full">
+            <div class="rowFlex rowFlexMargin">
+                <div class="col-xs-12 col-md-5 mb30">
+                    <div class="pageContactLeft">
+                        <h1 class="velaContactTitle">{{ page.title }}</h1>
+                        <div class="rowFlex rowFlexMargin">
+                            {%- if section.blocks.size > 0 -%}
+                                {%- for block in section.blocks -%}
+                                    <div class="col-xs-12">
+                                        {%- if block.settings.contact_title != blank -%}
+                                            <h4 class="velaTitle">{{ block.settings.contact_title }}</h4>
+                                        {%- endif -%}
+                                        {%- if block.settings.contact_details != blank -%}
+                                            <div class="contactDetail">
+                                                {{ block.settings.contact_details }}
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                {%- endfor -%}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-7 mb20">
+                    <div class="pageContactRight">
+                        <div class="formContactUs">
+                            {% form 'contact' %}
+                                <div class="formContent">
+                                    {% if form.posted_successfully? %}
+                                        <div class="alert alert-success">
+                                            {{ 'contact.form.post_success' | t }}
+                                        </div>
+                                    {% endif %}
+                                    {% if form.errors %}
+                                        <div class="alert alert-danger">
+                                            {{ form.errors | default_errors }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                {% assign name_attr = 'contact.form.name' | t | handle %}
+                                                <label for="ContactFormName" class="hidden">{{ 'contact.form.name' | t }} <sup>*</sup></label>
+                                                <input type="text" id="ContactFormName" class="form-control" placeholder="{{ 'contact.form.name' | t }}" name="contact[{{ name_attr }}]" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="ContactFormEmail" class="hidden">{{ 'contact.form.email' | t }} <sup>*</sup></label>
+                                                <input type="email" id="ContactFormEmail" class="form-control" placeholder="{{ 'contact.form.email' | t }}" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="ContactFormMessage" class="hidden">{{ 'contact.form.message' | t }}<sup>*</sup></label>
+                                                <textarea rows="6" id="ContactFormMessage" class="form-control" placeholder="{{ 'contact.form.message' | t }}" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-button">
+                                        <input type="submit" class="btn btnContact" value="{{ 'contact.form.send' | t }}">
+                                    </div>
+                                </div>
+                            {% endform %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+  	{
+        "name": "Vela Contact Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Google Map"
+            },
+            {
+                "type": "checkbox",
+                "id": "googlemap_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "latitude",
+                "label": "Latitude",
+                "placeholder": "Latitude",
+                "default": "45.420469"
+            },
+            {
+                "type": "text",
+                "id": "longitude",
+                "label": "Longitude",
+                "placeholder": "Longitude",
+                "default": "-75.692782"
+            },
+            {
+                "type": "range",
+                "id": "zoom",
+                "min": 1,
+                "max": 20,
+                "step": 1,
+                "label": "Zoom Levels",
+                "default": 12
+            }
+		],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Contactinfo",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "contact_title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "contact_details",
+                        "label": "Description",
+                        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+                    }
+                ]
+            }
+        ]
+  	}
+{% endschema %}

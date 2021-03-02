@@ -1,0 +1,68 @@
+
+<div class="velaRichText mb60" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaRichTextInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle velaTitle text-center">
+                   {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="rte">
+                    {{ section.settings.text }}    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela rich text",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "richtext",
+                "id": "text",
+                "label": "Text",
+                "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Rich text",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

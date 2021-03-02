@@ -1,0 +1,16 @@
+<div class="vela-currency jsvela-currency" name="currencies" data-value="{{ shop.currency }}">
+    <div class="vela-currency__title" data-toggle="dropdown">
+        <span class="vela-currency__current jsvela-currency__current">{{ shop.currency }}</span>
+        <i class="fa fa-angle-down"></i>
+    </div>
+    <div class="dropdown-menu vela-currency__content">
+        {%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' -%}
+        {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
+        <div class="vela-currency__item jsvela-currency__item active" data-value="{{ shop.currency }}">{{ shop.currency }}</div>
+        {%- for code in supported_codes -%}
+            {%- if code != shop.currency and codes contains code -%}
+                <div class="vela-currency__item jsvela-currency__item" data-value="{{ code }}">{{ code }}</div>
+            {%- endif -%}
+        {%- endfor -%}
+    </div>
+</div>

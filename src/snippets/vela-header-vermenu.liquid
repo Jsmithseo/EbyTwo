@@ -1,0 +1,78 @@
+{% if section.settings.velavermenu_enable %}
+<div id="velaVerticalMenu" class="velaVerticalMenu">
+    <div class="vermenuTitle clearfix" data-toggle="collapse" data-target="#vermenuContent" aria-expanded="false">
+        <span class="icon-bar-group pull-left">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </span>
+        {{ section.settings.velavermenu_title }}
+        <i class="fa fa-chevron-up"></i>
+    </div>
+    <div id="vermenuContent" class="vermenuContainer collapse">
+        <ul class="nav">
+            {%- for velaLink in linklists[section.settings.velavermenu_linklist].links -%}
+                    {%- assign isMega = false -%}
+                    {%- for block in section.blocks -%}
+                        {%- assign menuItem = velaLink.title -%}
+                        {%- if block.settings.velamenu_item contains menuItem and block.settings.select_itemmenu == "no" -%}
+                            {% include 'vela-megamenu' %}
+                            {% assign isMega = true %}
+                            {% break %}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- if isMega == false -%}
+                        {%- if velaLink.links != blank -%}
+                            {% comment %}====== MENU DROPDOWN LEVEL I ======{% endcomment %}
+                            <li class="hasMenuDropdown{% if velaLink.active %} active{% endif %}">
+                                <a href="{{ velaLink.url }}" title="">{{ velaLink.title }}</a>
+                                <a class="btnCaret hidden-lg hidden-md" data-toggle="collapse" href="#vertilDropdown1{{ ifor }}{{ forloop.index }}"></a>
+                                <ul id="vertilDropdown1{{ ifor }}{{ forloop.index }}" class="menuDropdown collapse">
+                                    {%- for velaLink1 in velaLink.links -%}
+                                        {%- if velaLink1.links != blank -%}
+                                            {% comment %}====== MENU DROPDOWN LEVEL II ======{% endcomment %}
+                                            <li class="hasMenuDropdown{% if velaLink1.active %} active{% endif %}">
+                                                <a href="{{ velaLink1.url }}" title="">{{ velaLink1.title }}</a>
+                                                <a class="btnCaret hidden-lg hidden-md" data-toggle="collapse" href="#vertilDropdown2{{ ifor }}{{ forloop.index }}"></a>
+                                                <ul id="vertilDropdown2{{ ifor }}{{ forloop.index }}" class="menuDropdown collapse">
+                                                    {%- for velaLink2 in velaLink1.links -%}
+                                                        {%- if velaLink2.links != blank -%}
+                                                            {% comment %}====== MENU DROPDOWN LEVEL III ======{% endcomment %}
+                                                            <li class="hasMenuDropdown{% if velaLink2.active %} active{% endif %}">
+                                                                <a href="{{ velaLink2.url }}" title="">{{ velaLink2.title }}</a>
+                                                                <a class="btnCaret hidden-lg hidden-md" data-toggle="collapse" href="#vertilDropdown3{{ ifor }}{{ forloop.index }}"></a>
+                                                                <ul id="vertilDropdown3{{ ifor }}{{ forloop.index }}" class="menuDropdown collapse">
+                                                                    {%- for velaLink3 in velaLink2.links -%}
+                                                                        <li class="{% if velaLink3.active %}active{% endif %}">
+                                                                            <a href="{{ velaLink3.url }}" title="">{{ velaLink3.title }}</a>
+                                                                        </li>
+                                                                    {%- endfor -%}
+                                                                </ul>
+                                                            </li>
+                                                        {%- else -%}
+                                                            <li class="{% if velaLink2.active %}active{% endif %}">
+                                                                <a href="{{ velaLink2.url }}" title="">{{ velaLink2.title }}</a>
+                                                            </li>
+                                                        {%- endif -%}
+                                                    {%- endfor -%}
+                                                </ul>
+                                            </li>
+                                        {%- else -%}
+                                            <li class="{% if velaLink1.active %}active{% endif %}">
+                                                <a href="{{ velaLink1.url }}" title="">{{ velaLink1.title }}</a>
+                                            </li>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </ul>
+                            </li>
+                        {%- else -%}
+                            <li class="{% if velaLink.active %}active{% endif %}">
+                                <a href="{{ velaLink.url }}" title="">{{ velaLink.title }}</a>
+                            </li>
+                        {%- endif -%}
+                    {%- endif -%}
+                {%- endfor -%}
+        </ul>
+    </div>
+</div>
+{% endif %}

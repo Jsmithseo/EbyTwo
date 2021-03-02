@@ -1,0 +1,21 @@
+<div class="velaInstagram footerInstagram">
+    {%- if section.settings.footer_instagram_title != blank -%}
+        <h3 class="velaFooterTitle">
+            {{ section.settings.footer_instagram_title }}
+            {%- if section.settings.footer_instagram_view != blank -%}
+                <a class="viewInstagram" href="{{ section.settings.footer_instagram_viewurl }}" target="_blank">
+                    {{ section.settings.footer_instagram_view }}
+                </a>
+            {%- endif -%}
+        </h3>
+    {%- endif -%}
+    <div class="velaContent">
+        <div id="velaInsFooter" class="boxInstagram" 
+             data-id="velaInsFooter"
+             data-userid="{{ section.settings.footer_instagram_userid }}"
+             data-accesstoken="{{ section.settings.footer_instagram_accessToken }}"
+             data-limit="{{ section.settings.footer_instagram_limited }}"
+             data-resolution="{{ section.settings.footer_instagram_resolution }}">
+      	</div>
+    </div>
+</div>

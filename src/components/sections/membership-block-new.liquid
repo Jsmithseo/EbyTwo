@@ -1,0 +1,138 @@
+<div class="our-pro-top-txt">
+  <div class="our-pro-top-in">
+    {%- if page.metafields.membershiptitle.membership_title != blank -%}
+    <h2>{{ page.metafields.membershiptitle.membership_title }}</h2>
+    {%- endif -%}
+  </div>
+</div>
+
+<div class="product-blocks">
+  {%- if page.metafields.membershipcontent.membership_content != blank -%}
+  {{ page.metafields.membershipcontent.membership_content }}
+  {%- endif -%}
+</div>
+
+<div class="light_gray_section">
+  <div class="inner_section">
+    {%- if page.metafields.membershipbutton.membership_button != blank -%}
+    {{ page.metafields.membershipbutton.membership_button }}
+    {%- endif -%}
+    {% if page.metafields.membershipimage.membership_image != blank %}
+    <div class="product-box-img">
+      <img src="{{ page.metafields.membershipimage.membership_image }}" alt="">
+    </div>
+    {% endif %}
+    {%- if page.metafields.membershipbottomtext.membership_bottom_text != blank -%}
+    {{ page.metafields.membershipbottomtext.membership_bottom_text }}
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Membership Block",
+    "class": "membership-block",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+	  {
+        "type": "header",
+        "content": "Membership Works Details"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_membership",
+        "label": "Image"
+      },
+	  {
+        "type": "text",
+        "id": "our_join",
+        "label": "Join Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "richtext_join",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+      {
+        "type": "text",
+        "id": "link_btn",
+        "label": "Shop"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "color",
+            "id": "our_pro_bg",
+            "label": "Block Background",
+            "default": "#f2cfbf"
+          },
+		  {
+            "type": "color",
+            "id": "our_pro_txt",
+            "label": "Block Text Color",
+            "default": "#000000"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Main Title"
+          },
+          {
+            "type": "richtext",
+            "id": "richtext",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          },
+          {
+            "type": "text",
+            "id": "link_btn",
+            "label": "Shop"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Membership Block",
+        "category": "Membership",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

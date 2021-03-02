@@ -1,0 +1,199 @@
+<div class="eby-product">
+  <div class="pro_top_link"><a href="/pages/membership">Why should you become a member?</a></div>
+  <div class="mask-product-desc">
+    <ul class="collapsible">
+      <li>
+        <h3 class="collapsible-header">{{ section.settings.product_tab1_title }}<span class="ebyicon-accordionToggle">&nbsp;</span></h3>
+        <ul class="collapsible-body">
+          <li>
+            {{ fullDescription }}
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3 class="collapsible-header">{{ section.settings.product_tab2_title }}<span class="ebyicon-accordionToggle">&nbsp;</span></h3>
+        <ul class="collapsible-body">
+          <li>
+            {{ product.metafields.ebyacf.made_for_you.en }}
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3 class="collapsible-header">{{ section.settings.product_tab3_title }}<span class="ebyicon-accordionToggle">&nbsp;</span></h3>
+        <ul class="collapsible-body">
+          <li>
+            {{ product.metafields.ebyacf.fit_guarantee_content.en }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+{% comment %}
+<section class="proDetailInfo">
+  {%- if section.settings.product_tab_type == 'protab' -%}
+  <ul class="nav velaProductNavTabs nav-tabs">
+    {%- if section.settings.product_tab1_enable -%}
+    <li>
+      <a href="#proTabs1" data-toggle="tab">{{ section.settings.product_tab1_title }}</a>
+    </li>
+    {%- endif -%}
+    {%- if section.settings.product_tab2_enable -%}
+    <li>
+      <a href="#proTabs2" data-toggle="tab">{{ section.settings.product_tab2_title }}</a>
+    </li>
+    {%- endif -%}
+    {%- if section.settings.product_tab3_enable -%}
+    <li>
+      <a href="#proTabs3" data-toggle="tab">{{ section.settings.product_tab3_title }}</a>
+    </li>
+    {%- endif -%}
+    {%- if section.settings.product_tab4_enable -%}
+    <li>
+      <a href="#proTabs4" data-toggle="tab">{{ section.settings.product_tab4_title }}</a>
+    </li>
+    {%- endif -%}
+  </ul>
+  <div class="tab-content">
+    {%- if section.settings.product_tab1_enable -%}
+    <div class="tab-pane" id="proTabs1">
+      <div class="rte">{{ fullDescription }}</div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab2_enable -%}
+    <div class="tab-pane" id="proTabs2">
+      <div class="rte">
+        {{ product.metafields.ebyacf.made_for_you.en }}
+       </div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab3_enable -%}
+    <div class="tab-pane" id="proTabs3">
+      <div id="accordion">
+        {% for block in section.blocks %}
+        {% if block.type == 'item' %}
+        <div class="panel">
+          {% if block.settings.question != blank %}
+          <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+              <a {% if forloop.index != 1 %}class="collapsed"{% endif %} role="button" data-toggle="collapse" data-parent="#accordion" href="#velaFaq{{ forloop.index }}" aria-expanded="true" aria-controls="velaFaq{{ forloop.index }}">
+                <span>{{ forloop.index }}.</span> {{ block.settings.question }}
+              </a>
+            </h4>
+          </div>
+          {% endif %}
+          {% if block.settings.answer !=blank %}
+          <div id="velaFaq{{ forloop.index }}" class="panel-collapse collapse{% if forloop.index == 1 %} in{% endif %}" role="tabpanel">
+            <div class="panel-body">
+              {{ product.metafields.ebyacf.fit_guarantee_content.en }}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab4_enable -%}
+    <div class="tab-pane" id="proTabs4">
+      {%- if settings.product_reviews_enable -%}
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+  </div>
+  {%- elsif section.settings.product_tab_type == 'propanel' -%}
+  <div class="panel-group" id="vealAccordion">
+    {%- if section.settings.product_tab1_enable -%}
+    <div class="panel velaPanel">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseOne"><span>{{ section.settings.product_tab1_title }}</span></a>
+      </h4>
+      <div id="proCollapseOne" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="rte">{{ fullDescription }}</div>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab2_enable -%}
+    <div class="panel velaPanel">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseTwo" class="collapsed"><span>{{ section.settings.product_tab2_title }}</span></a>
+      </h4>
+      <div id="proCollapseTwo" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="rte">{{ section.settings.product_tab2_content }}</div>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab3_enable -%}
+    <div class="panel velaPanel">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseThree" class="collapsed"><span>{{ section.settings.product_tab3_title }}</span></a>
+      </h4>
+      <div id="proCollapseThree" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% for block in section.blocks %}
+          <div class="panel velaFaq" id="accordion">
+            {% if block.settings.question != blank %}
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#velaFaq{{ forloop.index }}" aria-expanded="true" aria-controls="velaFaq{{ forloop.index }}">
+                  <span>{{ forloop.index }}.</span> {{ block.settings.question }}
+                </a>
+              </h4>
+            </div>
+            {% endif %}
+            {% if block.settings.answer !=blank %}
+            <div id="velaFaq{{ forloop.index }}" class="panel-collapse collapse" role="tabpanel">
+              <div class="panel-body">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+    {%- if section.settings.product_tab4_enable -%}
+    <div class="panel velaPanel">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#vealAccordion" href="#proCollapseFour" class="collapsed"><span>{{ section.settings.product_tab4_title }}</span></a>
+      </h4>
+      <div id="proCollapseFour" class="panel-collapse collapse">
+        <div class="panel-body">
+          {% if settings.product_reviews_enable %}
+          <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+  {%- else -%}
+  <div class="reviewOnly">
+    {%- if settings.product_reviews_enable -%}
+      <div id="stamped-main-widget"   
+           data-widget-style="standard" 
+           data-product-id="{{ product.id }}"   
+           data-name="{{ product.title | escape }}"   
+           data-url="{{ shop.url }}{{ product.url }}"   
+           data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+           data-description="{{ product.description | escape }}"   
+           data-product-sku="{{product.handle}}"
+           data-product-type="{{product.type}}">   
+        {{ product.metafields.stamped.reviews }}   
+      </div>
+      {% comment %}
+        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+      {% endcomment %}
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+</section>
+{% endcomment %}

@@ -1,0 +1,73 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_3 -%}
+{%- if product.metafields.ebyacf.enable_blkThree -%}
+<div class="our-product-block" style="background: {{ product.metafields.pantylinesbg.no_panty_lines_background }};">
+  <div class="product-blocks">
+    <div class="product-box">
+    <div class="product-box-img">
+      {%- if section.settings.global_section_3_image_1 != blank or section.settings.global_section_3_image_2 != blank -%}
+        <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blkthree_image_content }}</div>
+      {%- else -%}
+      <img class="img-responsive border-radius1 lazyload" alt="{{ shop.name }}" data-src="//placehold.it/{{ bannersize }}" />
+      {%- endif -%}
+    </div>
+    <div class="product-box_details">
+      <h3>{{ product.metafields.pantylinestitle.no_panty_lines_title }}</h3>
+      <div class="rich-text">
+      	<p>{{ product.metafields.nopantycontent.no_panty_lines_content }}</p>
+      </div>
+      {%- if product.metafields.ebyacf.enable_blkThree_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.nopantylink.no_panty_lines_link }}" href="{{ product.metafields.nopantylink.no_panty_lines_link }}" >{{ product.metafields.nopantyfield.no_panty_lines_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 3",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 3"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_3",
+          "label": "Show global section 3",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_3",
+          "label": "Heading",
+          "default": "No Slip Grip"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_3",
+          "label": "Text",
+          "default": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_3_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_3_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

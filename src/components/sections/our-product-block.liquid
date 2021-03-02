@@ -1,0 +1,308 @@
+<div class="our-pro-top-txt">
+  <div class="our-pro-top-in">
+	{%- if page.metafields.ourproductblockcont.our_product_block_content != blank -%}
+    {{ page.metafields.ourproductblockcont.our_product_block_content }}
+    {%- endif -%}
+  </div>
+</div>
+
+<div class="product-blocks">
+  {% if page.metafields.craftedimage.crafted_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.comfortbackground.crafted_for_comfort_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.craftedimage.crafted_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.comforttitle.crafted_for_comfort_title != blank %}
+            <h3>{{ page.metafields.comforttitle.crafted_for_comfort_title }}</h3>
+        {% endif %}
+        {% if page.metafields.comfortcontent.crafted_for_comfort_content != blank %}
+          <div class="rich-text">{{ page.metafields.comfortcontent.crafted_for_comfort_content }}</div>
+        {% endif %}
+        {% if page.metafields.comfortbuttonlink.comfort_button_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.comfortbuttonlink.comfort_button_link }}">{{ page.metafields.comfortbuttonfield.comfort_button_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+	{% endif %}
+  
+  {% if page.metafields.nopantyimage.no_panty_lines_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.pantylinesbg.no_panty_lines_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.nopantyimage.no_panty_lines_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.pantylinestitle.no_panty_lines_title != blank %}
+            <h3>{{ page.metafields.pantylinestitle.no_panty_lines_title }}</h3>
+        {% endif %}
+        {% if page.metafields.nopantycontent.no_panty_lines_content != blank %}
+          <div class="rich-text">{{ page.metafields.nopantycontent.no_panty_lines_content }}</div>
+        {% endif %}
+        {% if page.metafields.nopantylink.no_panty_lines_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.nopantylink.no_panty_lines_link }}">{{ page.metafields.nopantyfield.no_panty_lines_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+        
+  {% if page.metafields.innovativeimage.innovative_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.innovativebg.innovative_background }};">
+
+        <div class="product-box-img">
+          <img src="{{ page.metafields.innovativeimage.innovative_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.innovativetitle.innovative_title != blank %}
+            <h3>{{ page.metafields.innovativetitle.innovative_title }}</h3>
+        {% endif %}
+        {% if page.metafields.innovativecontent.innovative_content != blank %}
+          <div class="rich-text">{{ page.metafields.innovativecontent.innovative_content }}</div>
+        {% endif %}
+        {% if page.metafields.innovativelink.innovative_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.innovativelink.innovative_link }}">{{ page.metafields.innovativefield.innovative_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+    {% if page.metafields.performanceimage.performance_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.Performancebg.performance_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.performanceimage.performance_image }}" alt="">
+        </div>
+
+		<div class="product-box_details">
+        {% if page.metafields.performancetitle.performance_title != blank %}
+            <h3>{{ page.metafields.performancetitle.performance_title }}</h3>
+        {% endif %}
+        {% if page.metafields.performancecontent.performance_content != blank %}
+          <div class="rich-text">{{ page.metafields.performancecontent.performance_content }}</div>
+        {% endif %}
+        {% if page.metafields.performancelink.performance_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.performancelink.performance_link }}">{{ page.metafields.performancefield.performance_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  {% if page.metafields.cottonliningimage.cotton_lining_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.liningbackground.cotton_lining_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.cottonliningimage.cotton_lining_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.liningtitle.cotton_lining_title != blank %}
+            <h3>{{ page.metafields.liningtitle.cotton_lining_title }}</h3>
+        {% endif %}
+        {% if page.metafields.liningcontent.cotton_lining_content != blank %}
+          <div class="rich-text">{{ page.metafields.liningcontent.cotton_lining_content }}</div>
+        {% endif %}
+        {% if page.metafields.cottonlininglink.cotton_lining_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.cottonlininglink.cotton_lining_link }}">{{ page.metafields.liningfield.cotton_lining_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.accessimage.access_to_power_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.accessbackground.access_to_power_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.accessimage.access_to_power_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.accesstitle.access_to_power_title != blank %}
+            <h3>{{ page.metafields.accesstitle.access_to_power_title }}</h3>
+        {% endif %}
+        {% if page.metafields.accesscontent.access_to_power_content != blank %}
+          <div class="rich-text">{{ page.metafields.accesscontent.access_to_power_content }}</div>
+        {% endif %}
+        {% if page.metafields.accesslink.access_to_power_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.accesslink.access_to_power_link }}">{{ page.metafields.accessfield.access_to_power_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.printsimage.special_edition_prints_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.specialeditionbg.special_edition_prints_bg }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.printsimage.special_edition_prints_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.printstitle.special_edition_prints_title != blank %}
+            <h3>{{ page.metafields.printstitle.special_edition_prints_title }}</h3>
+        {% endif %}
+        {% if page.metafields.printscontent.special_edition_prints_content != blank %}
+          <div class="rich-text">{{ page.metafields.printscontent.special_edition_prints_content }}</div>
+        {% endif %}
+        {% if page.metafields.printslink.special_edition_prints_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.printslink.special_edition_prints_link }}">{{ page.metafields.printsfield.special_edition_prints_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.everybodyimage.every_body_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.everybodybg.every_body_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.everybodyimage.every_body_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.everybodytitle.every_body_title != blank %}
+            <h3>{{ page.metafields.everybodytitle.every_body_title }}</h3>
+        {% endif %}
+        {% if page.metafields.everybodycontent.every_body_content != blank %}
+          <div class="rich-text">{{ page.metafields.everybodycontent.every_body_content }}</div>
+        {% endif %}
+        {% if page.metafields.everybodylink.every_body_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.everybodylink.every_body_link }}">{{ page.metafields.everybodyfield.every_body_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  	
+  	{% if page.metafields.purpose_image.panties_with_purpose_image != blank %}
+	<div class="product-box" style="background:{{ page.metafields.purposebackground.purpose_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.purpose_image.panties_with_purpose_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.purposetitle.panties_with_purpose_title != blank %}
+            <h3 style="color:{{ page.metafields.purposecolor.panties_with_purpose_color }};">{{ page.metafields.purposetitle.panties_with_purpose_title }}</h3>
+        {% endif %}
+        {% if page.metafields.purposecontent.panties_with_purpose_content != blank %}
+          <div class="rich-text" style="color:{{ page.metafields.purposetextcolor.panties_with_purpose_text_colo }};">{{ page.metafields.purposecontent.panties_with_purpose_content }}</div>
+        {% endif %}
+        {% if page.metafields.purposelink.panties_with_purpose_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.purposelink.panties_with_purpose_link }}">{{ page.metafields.purposefield.panties_with_purpose_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+</div>
+
+<div class="light_gray_section">
+  <div class="inner_section">
+    {%- if section.settings.our_join != blank -%}
+    	<h2>{{ section.settings.our_join | escape }}</h2>
+    {%- endif -%}
+    {% if section.settings.richtext_join != blank %}
+    	<div class="rich-text">{{ section.settings.richtext_join }}</div>
+    {% endif %}
+
+    {% if section.settings.link != blank %}
+    	<a class="btn shop_btn" href="{{ section.settings.link }}">{{ section.settings.link_btn | escape }}</a>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Our Product Block",
+    "class": "our-product-block",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "richtext_main",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+	  {
+        "type": "header",
+        "content": "Our Choice of Undies"
+      },
+	  {
+        "type": "text",
+        "id": "our_join",
+        "label": "Join Heading",
+        "default": "Join the fiercest ladies on the planet"
+      },
+      {
+        "type": "richtext",
+        "id": "richtext_join",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+      {
+        "type": "text",
+        "id": "link_btn",
+        "label": "Shop"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "color",
+            "id": "our_pro_bg",
+            "label": "Block Background",
+            "default": "#f2cfbf"
+          },
+		  {
+            "type": "color",
+            "id": "our_pro_txt",
+            "label": "Block Text Color",
+            "default": "#000000"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Main Title"
+          },
+          {
+            "type": "richtext",
+            "id": "richtext",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          },
+          {
+            "type": "text",
+            "id": "link_btn",
+            "label": "Shop"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Our Product Block",
+        "category": "Our Product",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

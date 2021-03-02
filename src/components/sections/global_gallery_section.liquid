@@ -1,0 +1,66 @@
+{% assign bannersize = '1280x300' %}
+{%- if section.settings.global_gallery_section_enable -%}
+<div class="gallery_sec">
+  <div class="ebyPdpInstaPostCarousel">
+      <img class="ebyInstaIcon lazyloaded" title="follow @joineby" alt="follow @joineby" src="{{ 'blank.png' | asset_url }}" data-src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/insta_icon_f76e0839-9bba-4b41-9958-e9cb77dec750.png?v=1602751999" />
+  </div>
+  
+  {%- if section.settings.global_gallery_image != blank -%}
+  <div class="instagram_wrapper">
+    {% comment %}
+    <img class="lazyloaded" 
+         alt="{{ section.settings.global_gallery_image.alt | default: shop.name }}" 
+         src="{{ 'blank.png' | asset_url }}" data-src="{{ section.settings.global_gallery_image | img_url: 'master' }}"
+         />
+    {% endcomment %}
+    <div class="instagram_feed" id="instagram"></div>
+  </div>
+  {%- else -%}
+    <div class="instagram_feed" id="instagram"></div>
+  {% comment %}
+    <img class="img-responsive border-radius1 lazyloaded" alt="{{ shop.name }}" src="{{ 'blank.png' | asset_url }}" data-src="//placehold.it/{{ bannersize }}" />
+  {% endcomment %}
+  {%- endif -%}
+  
+  {%- if product.metafields.ebyacf.ugc_section_title.en -%}
+  <div>{{ product.metafields.ebyacf.ugc_section_title.en }}</div>
+  {%- else -%}
+  <h2>{{ section.settings.global_gallery_section_title }}</h2>
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Gallery Section",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Gallery Section"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_gallery_section_enable",
+          "label": "Show global section 1",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_gallery_section_title",
+          "label": "Heading",
+          "default": "Designed to move with you"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_gallery_image",
+          "label": "Gallery image"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

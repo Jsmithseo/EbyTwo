@@ -1,0 +1,540 @@
+<script id="CartTemplate" type="text/template">
+    {% raw %}
+        <form action="/cart" method="post" novalidate class="cart ajaxcart">
+            <div class="ajaxCartInner">
+				<div class="top_cart_ttl">
+					<span class="cartSubtotalHeading">Your cart:</span>
+					<span class="cartSubtotal">{{{totalPrice}}}</span>
+                    <p class="ebyClearCartBtnWrapper"><a href="/cart/clear" class="ebyClearCartBtn">Empty Cart</a></p>
+				</div>
+                
+                
+                {% endraw %}
+                
+{% assign isSubscription = false %}
+{% assign cartItems = cart.items %}
+
+{% for item in cartItems %}
+  {% if (item.product.type == "Subscription Box") %}
+    {% assign isSubscription = true %}
+  {% endif %}
+{% endfor %}
+
+
+                {% raw %}
+                
+                {{#items}}
+
+                <div class="ajaxCartProduct {{#if subsubscription}}hide{{/if}} {{#if (ifHasProperty 'included_in_pack' properties)}}hide{{/if}}">
+                    <div class="drawerProduct ajaxCartRow" data-line="{{line}}" data-prop="{{#if bundle}}bundle{{/if}}{{#if subscription}}subscription{{/if}}" data-vid="{{id}}">
+                    	<div class="drw-cus-div">
+                        <div class="drawerProductImage" style="background-image:url({{img}})">
+                            <a{{#unless productFreeGift}} href="{{url}}"{{/unless}}></a>
+                        </div>
+                        <div class="drawerProductContent">
+                            <div class="drawerProductTitle {{#if hasDiscount}}has-discount{{/if}}">
+                                {{#if subscription}}<p>{{ getProductName name }}</p>{{else}}<a{{#unless productFreeGift}} href="{{url}}"{{/unless}}>{{ getProductName name }}</a>{{/if}}
+                                
+                                {{#if variation}}
+                                    <span>{{variation}}</span>
+                                {{/if}}
+                                {{#properties}}
+                                    {{#each this}}
+                                        {{#if this}}
+                                            <span class="ebyprop {{@key}}">{{@key}}: {{this}}</span>
+                                        {{/if}}
+                                    {{/each}}
+                                {{/properties}}
+{% endraw %}
+                                {% if settings.cart_vendor_enable %}
+{% raw %}
+                                    <span>{{ vendor }}</span>
+{% endraw %}
+                                {% endif %}
+{% raw %}
+                            </div>
+                            <div class="drawerActionsFooter">
+                              <div class="drawerProductPrice">
+                                  <div class="priceProduct">
+                                      {{#if hasDiscount}}
+                                        <span class="strikethrough-price"><s>{{{originalTotal}}}</s></span>
+                                      {{/if}}
+                                      <span class="{{#if hasDiscount}}has-discount{{/if}}">
+                                        {{{itemTotal}}}
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="drawerProductQty">
+                                  <div class="velaQty">
+                                      {{#unless productFreeGift}}
+                                      <button type="button" class="qtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}" data-line="{{line}}">
+                                          <span class="txtFallback">&minus;</span>
+                                      </button>
+                                      <input type="text" name="updates[]" class="qtyNum velaQtyText" data-prop="{{#if bundle}}{{bundleIDS}}{{/if}}{{#if subscription}}{{subscriptionIDs}}{{/if}}" value="{{itemQty}}" min="0" data-id="{{id}}" data-line="{{line}}"  pattern="[0-9]*" />
+                                      <button type="button" class="qtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-line="{{line}}" data-qty="{{itemAdd}}">
+                                          <span class="txtFallback">+</span>
+                                      </button>
+                                      {{else}}
+                                      <input type="hidden" name="updates[]" class="qtyNum velaQtyText" data-prop="{{#if bundle}}{{bundleIDS}}{{/if}}{{#if subscription}}{{subscriptionIDs}}{{/if}}" value="{{itemQty}}" data-id="{{id}}" data-line="{{line}}" />
+                                      <span class="qtyNum velaQtyText">{{itemQty}}</span>
+                                      {{/unless}}
+                                  </div>
+                              </div>
+                              <div class="drawerProductDelete">
+                                  <div class="cartRemoveBox">
+                                      {{#unless productFreeGift}}
+                                      <a href="#" class="cartRemove btnClose" onclick="return false;" data-line="{{ line }}" data-prop="{{#if bundle}}{{bundleIDS}}{{/if}}{{#if subscription}}{{subscriptionIDs}}{{/if}}" data-vid="{{id}}">
+                                          {% endraw %}<span>{{ 'cart.general.remove' | t }}</span>{% raw %}
+                                      </a>
+                                      {{/unless}}
+                                  </div>
+                              </div>
+  							</div>
+                        </div>
+                       </div>
+  					</div>
+                </div>
+                {{/items}}
+                                
+                
+    {% endraw %}
+                {% if settings.cart_notes_enable %}
+    {% raw %}
+                    <div class="ajaxCartNote">
+                        <div class="velaCartNoteButton">
+                            <a class="btnCartNote collapsed" href="#velaCartNote" data-toggle="collapse">
+                                <i class="fa fa-times"></i>
+                                {% endraw %}{{ 'cart.general.add_note' | t }}{% raw %}
+                            </a>
+                        </div>
+                        <div id="velaCartNote" class="velaCartNoteGroup collapse">
+                            <label for="CartSpecialInstructions">{% endraw %}{{ 'cart.general.note' | t }}{% raw %}</label>
+                            <textarea name="note" class="form-control" id="CartSpecialInstructions" rows="4">{{ note }}</textarea>
+                        </div>
+                    </div>
+    {% endraw %}
+                {% endif %}
+    {% raw %}
+			<div class="cus_crt_cont ebyMinicartGuarantee">
+            	{% endraw %}
+                
+                {% if (isSubscription) %}
+                  <ul class="member">
+                      <li>100% Fit Guarantee.</li>
+                      <li>Free shipping for members</li>
+                      <li>Skip a box or cancel anytime </li>
+                      <li>10% of membership goes to empower women.</li>
+                  </ul>          
+                {% else %}
+                	<ul class="ecom ">
+                      <li>100% Fit Guarantee.</li>
+                      <li>10% of this purchase goes to empower women.</li>
+                    </ul>
+                {% endif %}
+                
+            {% raw %}
+			</div>
+			{% endraw %}
+			<div class="product-recommendations">
+				{% comment %}<h2>Would you like to add?</h2>{% endcomment %}
+                		
+                    {% if request.path contains '/flash-sale' %}
+                        
+                        	<div data-rebuy-id="5926" class="rebuy-ebyModule">
+                                <div class="rebuy-widget"
+                                     v-cloak
+                                     v-on:click="stopPropagation($event)"
+                                     v-bind:id="'rebuy-widget-' + id"
+                                     v-bind:class="['widget-type-' + config.type.replace('_','-'), 'widget-display-' + config.display_type, products.length > 0 ? 'is-visible' : 'is-hidden']">
+
+                                  <div
+                                       class="rebuy-widget-container"
+                                       v-cloak
+                                       v-bind:class="['widget-display-' + config.display_type, visible ? 'is-visible' : 'is-hidden' ]"
+                                       v-on:click.self="hide()">
+
+                                    <div class="rebuy-widget-content">
+                                      <div class="rebuy-modal-close" v-on:click="hide()">
+                                        <i class="fas fa-times"></i>
+                                      </div>
+
+                                      <h4 class="super-title" v-if="config.language.super_title != ''" v-html="config.language.super_title"></h4>
+
+                                      <h3 class="primary-title" v-if="config.language.title != ''" v-html="config.language.title"></h3>
+
+                                      <div class="description" v-if="config.language.description != ''" v-html="config.language.description"></div>
+
+                                      <div class="rebuy-product-grid" v-bind:class="layoutClasses">
+
+                                        <div class="rebuy-product-block" v-for="product in products" v-bind:class="[product.handle, 'product-id-' + product.id, cartHasProduct(product) ? 'cart-has-item' : '']">
+                                          <div class="rebuy-product-media">
+                                            <img v-bind:src="itemImage(product, product.selected_variant, '400x400')" v-bind:alt="product.title">
+                                            <div class="rebuy-product-options" v-if="showVariantSelect(product)">
+                                              <select
+                                                      class="rebuy-select"
+                                                      v-model="product.selected_variant_id"
+                                                      v-on:change="selectVariant(product)">
+                                                <option v-for="variant in product.variants" v-bind:value="variant.id" v-html="variant.title.replace(' / One Size Fits All', '')"></option>
+                                              </select>
+                                            </div>
+                                            <div class="rebuy-product-actions">
+                                              <div class="subscription-checkbox" v-if="showSubscriptionOptions(product)">
+                                                <label class="rebuy-checkbox">
+                                                  <input
+                                                         class="checkbox-input"
+                                                         v-model="product.subscription"
+                                                         v-on:change="toggleSubscription(product)"
+                                                         type="checkbox" />
+                                                  <span class="checkbox-label" v-html="upgradeToSubscriptionLabel(product)"></span>
+                                                </label>
+                                              </div>
+
+                                              <div class="subscription-frequency" v-if="showSubscriptionFrequency(product)">
+                                                <select
+                                                        class="rebuy-select"
+                                                        v-model="product.subscription_frequency">
+                                                  <option v-for="frequency in product.subscription_frequencies" v-bind:value="frequency">{{ frequencyLabel(frequency, product.subscription_interval) }}</option>
+                                                </select>
+                                              </div>
+
+                                              <button
+                                                      class="rebuy-button"
+                                                      v-bind:class="{ working: (product.status != 'ready' && product.status != 'selecting') }"
+                                                      v-bind:disabled="!(variantAvailable(product.selected_variant)) || (product.status != 'ready' && product.status != 'selecting')"
+                                                      v-on:click="addUpsellToCart(product)"
+                                                      type="button">
+                                                <span v-html="buttonLabel(product)"></span>
+                                              </button>
+
+                                              <button
+                                                      class="rebuy-button decline"
+                                                      v-on:click="declineOffer(product)"
+                                                      type="button">
+                                                <span v-html="declineLabel(product)"></span>
+                                              </button>
+
+                                            </div>
+                                          </div>
+                                          <div class="rebuy-product-info">
+                                            <p class="rebuy-product-title" v-html="product.title"></p>
+                                            <div class="rebuy-variant-title" v-html="product.selected_variant.title"></div>
+                                            <div class="rebuy-product-review" v-if="hasProductReviews(product)">
+                                              <span class="rebuy-star-rating">
+                                                <span class="rebuy-star-rating-background"></span>
+                                                <span class="rebuy-star-rating-foreground" v-bind:style="{ width: productReviewRatingPercentage(product) }"></span>
+                                              </span>
+                                              <span class="rebuy-review-count" v-html="productReviewCount(product)"></span>
+                                            </div>
+                                            <div class="rebuy-product-price">
+                                              <div v-if="variantOnSale(product, product.selected_variant)">
+                                                <span class="rebuy-money sale" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                                <span class="rebuy-money compare-at" v-html="formatMoney(variantCompareAtPrice(product, product.selected_variant))"></span>
+                                              </div>
+                                              <div v-if="!(variantOnSale(product, product.selected_variant))">
+                                                <span class="rebuy-money" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                              </div>
+                                            </div>
+                                            <div class="rebuy-product-description" v-html="text(product.body_html)"></div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    {% else %}
+                        
+                        	<div data-rebuy-id="3906" class="rebuy-ebyModule">
+                                <div class="rebuy-widget"
+                                     v-cloak
+                                     v-on:click="stopPropagation($event)"
+                                     v-bind:id="'rebuy-widget-' + id"
+                                     v-bind:class="['widget-type-' + config.type.replace('_','-'), 'widget-display-' + config.display_type, products.length > 0 ? 'is-visible' : 'is-hidden']">
+
+                                  <div
+                                       class="rebuy-widget-container"
+                                       v-cloak
+                                       v-bind:class="['widget-display-' + config.display_type, visible ? 'is-visible' : 'is-hidden' ]"
+                                       v-on:click.self="hide()">
+
+                                    <div class="rebuy-widget-content">
+                                      <div class="rebuy-modal-close" v-on:click="hide()">
+                                        <i class="fas fa-times"></i>
+                                      </div>
+
+                                      <h4 class="super-title" v-if="config.language.super_title != ''" v-html="config.language.super_title"></h4>
+
+                                      <h3 class="primary-title" v-if="config.language.title != ''" v-html="config.language.title"></h3>
+
+                                      <div class="description" v-if="config.language.description != ''" v-html="config.language.description"></div>
+
+                                      <div class="rebuy-product-grid" v-bind:class="layoutClasses">
+
+                                        <div class="rebuy-product-block" v-for="product in products" v-bind:class="[product.handle, 'product-id-' + product.id, cartHasProduct(product) ? 'cart-has-item' : '']">
+                                          <div class="rebuy-product-media">
+                                            <img v-bind:src="itemImage(product, product.selected_variant, '400x400')" v-bind:alt="product.title">
+                                            <div class="rebuy-product-options" v-if="showVariantSelect(product)">
+                                              <select
+                                                      class="rebuy-select"
+                                                      v-model="product.selected_variant_id"
+                                                      v-on:change="selectVariant(product)">
+                                                <option v-for="variant in product.variants" v-bind:value="variant.id" v-html="variant.title.replace(' / One Size Fits All', '')"></option>
+                                              </select>
+                                            </div>
+                                            <div class="rebuy-product-actions">
+                                              <div class="subscription-checkbox" v-if="showSubscriptionOptions(product)">
+                                                <label class="rebuy-checkbox">
+                                                  <input
+                                                         class="checkbox-input"
+                                                         v-model="product.subscription"
+                                                         v-on:change="toggleSubscription(product)"
+                                                         type="checkbox" />
+                                                  <span class="checkbox-label" v-html="upgradeToSubscriptionLabel(product)"></span>
+                                                </label>
+                                              </div>
+
+                                              <div class="subscription-frequency" v-if="showSubscriptionFrequency(product)">
+                                                <select
+                                                        class="rebuy-select"
+                                                        v-model="product.subscription_frequency">
+                                                  <option v-for="frequency in product.subscription_frequencies" v-bind:value="frequency">{{ frequencyLabel(frequency, product.subscription_interval) }}</option>
+                                                </select>
+                                              </div>
+
+                                              <button
+                                                      class="rebuy-button"
+                                                      v-bind:class="{ working: (product.status != 'ready' && product.status != 'selecting') }"
+                                                      v-bind:disabled="!(variantAvailable(product.selected_variant)) || (product.status != 'ready' && product.status != 'selecting')"
+                                                      v-on:click="addUpsellToCart(product)"
+                                                      type="button">
+                                                <span v-html="buttonLabel(product)"></span>
+                                              </button>
+
+                                              <button
+                                                      class="rebuy-button decline"
+                                                      v-on:click="declineOffer(product)"
+                                                      type="button">
+                                                <span v-html="declineLabel(product)"></span>
+                                              </button>
+
+                                            </div>
+                                          </div>
+                                          <div class="rebuy-product-info">
+                                            <p class="rebuy-product-title" v-html="product.title"></p>
+                                            <div class="rebuy-variant-title" v-html="product.selected_variant.title"></div>
+                                            <div class="rebuy-product-review" v-if="hasProductReviews(product)">
+                                              <span class="rebuy-star-rating">
+                                                <span class="rebuy-star-rating-background"></span>
+                                                <span class="rebuy-star-rating-foreground" v-bind:style="{ width: productReviewRatingPercentage(product) }"></span>
+                                              </span>
+                                              <span class="rebuy-review-count" v-html="productReviewCount(product)"></span>
+                                            </div>
+                                            <div class="rebuy-product-price">
+                                              <div v-if="variantOnSale(product, product.selected_variant)">
+                                                <span class="rebuy-money sale" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                                <span class="rebuy-money compare-at" v-html="formatMoney(variantCompareAtPrice(product, product.selected_variant))"></span>
+                                              </div>
+                                              <div v-if="!(variantOnSale(product, product.selected_variant))">
+                                                <span class="rebuy-money" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                              </div>
+                                            </div>
+                                            <div class="rebuy-product-description" v-html="text(product.body_html)"></div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                    
+                    {% endif %}
+			</div>
+			{% raw %}
+            <div class="ebyMinicartTotalsWrapper">
+            	<div class="cart_prc_tbl">
+					<div class="cus_crt_row">
+						<span>Shipping</span>
+                        {% endraw %}
+                        {% if (isSubscription) %}
+                        {% raw %}
+                          <span class="price_content">Free with Membership</span>  
+                        {% endraw %}
+                        {% else %}
+                        {% raw %}
+                            {{#unless isFreeShipping}}
+                        		<span class="price_content">Calculated at checkout</span>
+                            {% endraw %}
+                            {%- comment -%}
+                            {%- if cart.items_subtotal_price >= 5000 -%}
+                            <span class="price_content">Free</span>
+                            {%- else -%}
+                            	<span class="price_content">Free</span>
+                            {%- endif -%}
+                            {%- endcomment -%}
+                            {% raw %}
+                            {{else}}
+                            	<span class="price_content">Free</span>
+                            {{/unless}}
+                        {% endraw %}
+                        {% endif %}
+                        {% raw %}
+                    </div>
+                    {% endraw %}
+                    {%- if cart.total_discount > 0 -%}
+                    {% raw %}
+                        <div class="cus_crt_row">
+                            <span>Subtotal</span>
+                            <span>{{totalOriginal}}</span>
+                        </div>
+                        <div class="cus_crt_row">
+                            <span>Discount</span>
+                            <span>-{{totalDiscount}}</span>
+                        </div>
+                        <div class="cus_crt_row">
+                            <span>Total</span>
+                            <span>{{totalPrice}}</span>
+                        </div>
+                    {% endraw %}
+                    {%- else -%}
+                    {%- raw -%}
+                        <div class="cus_crt_row">
+                            <span>Subtotal</span>
+                            <span>{{totalPrice}}</span>
+                        </div>
+                    {% endraw %}
+                    {%- endif -%}
+                    {%- raw -%}
+				</div>
+  			</div>
+                <div class="drawerCartFooter">
+                    <div class="drawerAjaxFooter">
+                        <div class="drawerButton">
+                            <div class="drawerButtonBox">
+                            	{% endraw %}
+                                
+                                {% if (isSubscription) %}
+                                  	<button class="btn btnVelaCart btnCheckout r-btn">Checkout</button>      
+                                {% else %}
+                                	<a href="{{ shop.url }}/checkout" class="btn btnVelaCart btnCheckout">Checkout</a>
+                                {% endif %}
+                            	
+                                {% raw %}
+                            </div>
+    {% endraw %}
+                            {% if additional_checkout_buttons %}
+                                <div class="drawerButtonBox">
+                                    <div class="additional_checkout_buttons">{{ content_for_additional_checkout_buttons }}</div>
+                                </div>
+                            {% endif %}
+    {% raw %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endraw %}
+</script>
+<script id="headerCartTemplate" type="text/template">
+    <form action="/cart" method="post" novalidate class="cart ajaxcart">
+    <div class="headerCartInner">
+        <div class="headerCartScroll">
+{% raw %}
+        {{#items}}
+            <div class="ajaxCartProduct">
+                <div class="ajaxCartRow rowFlex" data-line="{{line}}">
+                    <div class="headerCartImage">
+                        <a href="{{url}}"><img class="img-responsive" src="{{img}}" alt="" /></a>
+                    </div>
+                    <div class="headerCartContent">
+                        <div class="headerCartInfo">
+                            <a href="{{url}}" class="headerCartProductName">{{name}}</a>
+                            {{#if variation}}
+                                <div class="headerCartProductMeta">{{variation}}</div>
+                            {{/if}}
+                            {{#properties}}
+                                {{#each this}}
+                                    {{#if this}}
+                                        <div class="headerCartProductMeta">{{@key}}: {{this}}</div>
+                                    {{/if}}
+                                {{/each}}
+                            {{/properties}}
+        {% endraw %}
+                            {% if settings.cart_vendor_enable %}
+        {% raw %}
+                                <div class="headerCartProductMeta">{{ vendor }}</div>
+        {% endraw %}
+                            {% endif %}
+        {% raw %}
+                            <div class="headerCartPrice">
+                                {{{price}}} <span class="d-block">x {{itemQty}}</span>
+                            </div>
+                        </div>
+                        <div class="headerCartRemoveBox">
+                            <a href="#" class="cartRemove" onclick="return false;" data-line="{{ line }}">
+                                <i class="btnClose"></i> {% endraw %}<span>{{ 'cart.general.remove' | t }}</span>{% raw %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/items}}
+        </div>
+        <div class="headerCartTotal">
+            <span class="headerCartTotalTitle">{% endraw %}{{ 'cart.general.subtotal' | t }}{% raw %}</span>
+            <span class="headerCartTotalNum">{{{totalPrice}}}</span>
+        </div>
+        <div class="headerCartButton d-flex">
+            <div class="headerCartButtonBox mr10">
+                <a class="btn btnVelaCart btnViewCart" href="/cart">
+        {% endraw %}
+                    {{ 'cart.general.viewcart' | t }}
+        {% raw %}
+                </a>
+            </div>
+            <div class="headerCartButtonBox">
+            	<button type="button" class="btn r-btn btnCheckout hide" >{{ 'cart.general.checkout' | t }}</button>
+            
+                <button type="submit" class="btn btnVelaCart btnCheckout" name="checkout">
+        {% endraw %}
+                    {{ 'cart.general.checkout' | t }}
+        {% raw %}
+                </button>
+            </div>
+        </div>
+{% endraw %}
+    </div>
+    </form>
+</script>
+<script id="velaAjaxQty" type="text/template">
+    {% raw %}
+        <div class="velaQty">
+            <button type="button" class="qtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}">
+                <span class="txtFallback">&minus;</span>
+            </button>
+            <input type="text" class="qtyNum velaQtyText" value="{{itemQty}}" min="0" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*">
+            <button type="button" class="qtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-qty="{{itemAdd}}">
+                <span class="txtFallback">+</span>
+            </button>
+        </div>
+    {% endraw %}
+</script>
+<script id="velaJsQty" type="text/template">
+    {% raw %}
+        <div class="velaQty">
+            <button type="button" class="velaQtyAdjust velaQtyButton velaQtyMinus" data-id="{{id}}" data-qty="{{itemMinus}}">
+                <span class="txtFallback">&minus;</span>
+            </button>
+            <input type="text" class="velaQtyNum velaQtyText" value="{{itemQty}}" min="1" data-id="{{id}}" aria-label="quantity" pattern="[0-9]*" name="{{inputName}}" id="{{inputId}}" />
+            <button type="button" class="velaQtyAdjust velaQtyButton velaQtyPlus" data-id="{{id}}" data-qty="{{itemAdd}}">
+                <span class="txtFallback">+</span>
+            </button>
+        </div>
+    {% endraw %}
+</script>

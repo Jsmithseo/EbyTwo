@@ -1,0 +1,30 @@
+{% comment %}
+{% include 'breadcrumb' %}
+{% endcomment%}
+
+{% comment %}
+{% section 'vela-collection-banner' %}
+{% endcomment %}
+<section id="pageContent">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30">
+      <div class="row">
+        <aside id="velaSidebar" class="filterTagFullwidthContent sidebarLeft velaSidebar">
+          <div class="filterTagFullwidthClose hidden-lg hidden-md hidden-xl"></div>
+          <div class="velaSidebarInner">
+            {% section 'sidebartop' %}
+            {% section 'sidebarfilter' %}
+            {% section 'sidebarbottom' %}
+          </div>
+        </aside>
+        <div id="proListCollection" class="velaCenterColumn velaCenterColumnFix col-xs-12 col-sm-12">
+          {% if collection.handle == 'undies' %}
+          	{% section 'vela-collection-undies' %}
+          {% else %}
+            {% section 'vela-template-collection' %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,195 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+{%- assign nproCollection = section.settings.nproduct_handle -%}
+{%- assign owlColumn1 = section.settings.column1 | plus:0 -%}
+{%- assign owlColumn2 = section.settings.column2 | plus:0 -%}
+{%- assign owlColumn3 = section.settings.column3 | plus:0 -%}
+{%- assign owlColumn4 = section.settings.column4 | plus:0 -%}
+{%- assign owlColumn5 = section.settings.column5 | plus:0 -%}
+{%- assign proLimit = section.settings.limit | plus:0 -%}
+{%- assign nproLimit = section.settings.nproduct_limit | plus:0 -%}
+{%- if section.settings.image_size != blank -%}
+    {%- assign proImageSize = section.settings.image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+
+<div class="productDeals velaProducts mb70" style="background-color: {{section.settings.color_bg }};{% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="headingGroup pb20">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            {%- if section.settings.subtitle != blank -%}
+                <span class="subTitle">{{ section.settings.subtitle }}</span>
+            {%- endif -%}
+        </div>
+        <div class="velaContent">
+            <div class="proOwlCarousel owlCarouselPlay">
+                <div class="owl-carousel" 
+                    data-nav="{{ section.settings.navigation }}"
+                    data-loop="{% if collections[proCollection].products_count > owlColumn1 and proLimit > owlColumn1 %}true{% else %}false{% endif %}" 
+                    data-autoplay="{{ section.settings.autoplay }}" 
+                    data-autoplaytimeout="{{ section.settings.autoplay_timeout }}" 
+                    data-columnone="{{ owlColumn1 }}" 
+                    data-columntwo="{{ owlColumn2 }}" 
+                    data-columnthree="{{ owlColumn3 }}" 
+                    data-columnfour="{{ owlColumn4 }}" 
+                    data-columnfive="{{ owlColumn5 }}">
+                    {% for product in collections[proCollection].products limit:proLimit %}
+                        <div class="item">
+                            {% include 'product-deal-lis-item' %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela product deal",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings Block Deal"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle",
+                "placeholder": "SubTitle"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "370x370",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "header",
+                "content": "Carousel Settings"
+            },
+            {
+                "type": "text",
+                "id": "limit",
+                "label": "Limit",
+                "default": "8"
+            },
+            {
+                "type": "checkbox",
+                "id": "navigation",
+                "label": "Show navigation",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "autoplay",
+                "label": "Auto play",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "autoplay_timeout",
+                "label": "Autoplay timeout",
+                "placeholder": "Default: 10000(ms)",
+                "info": "Autoplay interval timeout.",
+                "default": "10000"
+            },
+            {
+                "type": "range",
+                "id": "column1",
+                "min": 1,
+                "max": 7,
+                "step": 1,
+                "label": "#Column 1",
+                "default": 5,
+                "info": "Large desktops"
+            },
+            {
+                "type": "range",
+                "id": "column2",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 2",
+                "default": 3,
+                "info": "Desktops & Tablets landscape"
+            },
+            {
+                "type": "range",
+                "id": "column3",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 3",
+                "default": 2,
+                "info": "Tablets"
+            },
+            {
+                "type": "range",
+                "id": "column4",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 4",
+                "default": 2,
+                "info": "Mobile phone landscape"
+            },
+            {
+                "type": "range",
+                "id": "column5",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 5",
+                "default": 1,
+                "info": "Mobile phone"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Product deals",
+                "category": "2. Vela Product",
+                "settings": {
+                    "title": "Product Deals"
+                }
+            }
+        ]
+    }
+{% endschema %}

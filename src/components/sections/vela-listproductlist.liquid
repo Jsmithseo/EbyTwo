@@ -1,0 +1,105 @@
+
+
+<div class="velaListProlist velaProducts mb60"{% if section.settings.padding_block != blank %} style="padding:{{section.settings.padding_block}};"{% endif %}>
+    <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">      
+        <div class="velaContent">
+            <div class=" proList row">
+                {%- for block in section.blocks -%}
+                    {%- assign proCollection = block.settings.collection_handle -%}
+                    {%- if proCollection !=blank -%}
+                        <div class="{{ block.settings.prolist_class }} clearfix">
+                            <div class="velaBlock">
+                                {%- if block.settings.prolist_title != blank -%}
+                                    <h4 class="velaTitle velaHomeTitle">{{ block.settings.prolist_title }}</h4>
+                                {%- endif -%}
+                                <div class="block_conent">
+                                    {%- assign proLimit = block.settings.prolist_limit | plus:0 -%}
+                                    {%- for product in collections[proCollection].products limit:proLimit -%}
+                                        <div class="item">
+                                            {%- include 'product-list-item1' -%}
+                                        </div>
+                                    {%- endfor -%}                                   
+                                </div>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+ "name": "Vela List ProList",
+ "class": "velaFramework",
+ "settings":[
+     {
+          "type": "header",
+          "content": "Design Section"
+      },
+      {
+          "type": "checkbox",
+          "id": "full_with",
+          "label": "Enabel Full Width?"
+      },
+     
+      {
+          "type": "color",
+          "id": "color_bg",
+          "label": "Background Color",
+          "default": "rgba(0,0,0,0)"
+      },
+      {
+          "type": "text",
+          "id": "padding_block",
+          "label": "Padding",
+          "placeholder": "0px 0px"
+      }
+   ],
+   "blocks": [
+     {
+         "type": "prolist",
+         "name": "ProList Item",
+         "settings": [
+            {
+               "type": "text",
+               "id": "prolist_class",
+               "label": "Class",
+               "default": "col-xs-12 col-sm-6"
+            },
+            {
+               "type": "text",
+               "id": "prolist_title",
+               "label": "Title"
+            },
+            {
+               "type": "collection",
+               "id": "collection_handle",
+               "label": "Collection"
+            },
+            {
+               "type": "text",
+               "id": "prolist_limit",
+               "label": "Limit",
+               "default": "4"
+            }
+         ]
+      }
+   ],
+   "presets": [
+      {
+         "name": "Vela List ProList",
+         "category": "2. Vela Product",
+         "blocks": [
+            {
+               "type":"prolist"
+            },
+            {
+               "type":"prolist"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}

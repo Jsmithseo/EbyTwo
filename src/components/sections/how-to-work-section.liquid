@@ -1,0 +1,58 @@
+<div style="background-color: {{ page.metafields.workbackgroundcolor.work_background_color }};">
+  <div class="wrapper">
+    {{ page.metafields.blkelevencontent.blk_eleven_content }}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "How Does Work",
+    "class": "how_to_work_Main",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+	{
+      "type": "text",
+      "id": "video_link",
+      "label": "Video Link"
+    },
+    {
+      "type":"text",
+      "id":"join_now_btn",
+      "label":"Button Label"
+    },
+    {
+      "type": "url",
+      "id": "join_now_link",
+      "label": "Link"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "block_number",
+            "label": "Enter Number"
+          },
+          {
+            "type":"text",
+            "id":"work_heading",
+            "label":"Heading"
+          },
+          {
+            "type":"richtext",
+            "id":"work_text",
+            "label":"Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

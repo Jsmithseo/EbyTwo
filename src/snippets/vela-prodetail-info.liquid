@@ -1,0 +1,540 @@
+{% if product.type == "Core Underwear" or product.type == "Cotton Underwear" %}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "pantyType-" %}
+            {%- assign prodNameTitle = prodTag | replace: "pantyType-", "" -%}
+        {% endif %}
+        {% if prodTag contains "pantyColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "pantyColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type == "Core Bralette" or product.type == "Cotton Bralette"  %}
+	{%- assign prodNameTitle = "bralette" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "braletteColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "braletteColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type == "Mask" %}
+	{%- assign prodNameTitle = "mask" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "maskColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "maskColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type contains "Pack" %}
+	{%- assign prodNameTitle = "3 pack" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "packColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "packColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+
+
+{% if product.type contains "Cotton" %}
+<div class="subtitle"><h1 itemprop="name">EBY invisible cotton {{ prodNameTitle | replace: "_", " " }} in {{ prodColorTitle | replace: "_", " " }}</h1></div>
+{% else %}
+<div class="subtitle"><h1 itemprop="name">EBY seamless {{ prodNameTitle | replace: "_", " " }} in {{ prodColorTitle | replace: "_", " " }}</h1></div>
+{% endif %}
+
+<div class="style-changer-block-desktop">
+    <h2 class="product-name-desktop">
+      	{% if product.type contains "Cotton" %}Cotton {% endif %}{{ prodNameTitle | capitalize }}
+        <!-- <img src="{{ 'arrow-point-to-down.svg' | asset_url }}" alt="Arrow" class="changer-arrow"/> -->
+    </h2>
+    <!-- <div class="style-changer style-changer-desktop">
+        <div class="single-type">Bikini</div>
+        <div class="single-type">Cheeky</div>
+        <div class="single-type">Highwaisted</div>
+        <div class="single-type">Thong</div>
+        <div class="single-type">Highwaisted Thong</div>
+    </div> -->
+</div>
+<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+  <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+  <div class="proPrice flexRow flexAlignCenter">
+    {% if customer.tags contains 'Active Subscriber' %}
+    {% else %}
+    	{% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+    		<div class="priceProduct holidaySale {% if on_sale %}priceSale{% endif %}">{{ product.price | money | remove: ".00" }}</div>
+    	{% else %}
+    		<div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money | remove: ".00" }}</div>
+    	{% endif %}
+    {% endif %}
+		{% if customer.tags contains 'Active Subscriber' %}
+    		{% if product.type == "Mask"%}
+            	{% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+    			<div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+            	{% else %}
+            		<div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+            	{% endif %}
+    
+                <div class="ebyProdTile-vipPriceWrapper">
+                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                  		<p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                  {% else %}
+                  		<p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                  {% endif %}
+                </div>
+            {% elsif product.type == "Core Bralette"%}
+                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                    <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                {% else %}
+                    <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                {% endif %}
+    
+                <div class="ebyProdTile-vipPriceWrapper">
+                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                  		<p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                  {% else %}
+                  		<p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                  {% endif %}
+                </div>
+            {% elsif product.type == "Core Underwear" and product.tags contains "Featured Style" %}
+                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                {% else %}
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                {% endif %}
+    
+                <div class="ebyProdTile-vipPriceWrapper">
+                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                  		<p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                  {% else %}
+                  		<p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                  {% endif %}
+                </div>
+            {% elsif product.type == "Core Underwear" %}
+                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                    <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                {% else %}
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                {% endif %}
+    
+                <div class="ebyProdTile-vipPriceWrapper">
+                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                  		<p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                  {% else %}
+                  		<p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                  {% endif %}
+                </div>
+    		{% else %}
+                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"></div>
+                {% else %}
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                {% endif %}
+    
+                <div class="ebyProdTile-vipPriceWrapper">
+                    {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                          {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                    <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                    {% else %}
+                    <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        {% else %}
+            <div class="ebyProdTile-vipPriceWrapper">
+              {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+              		{%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+              		{%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+              <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+              {% else %}
+              <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+              {% endif %}
+            </div>
+    	{% else %}
+        <p id="ProductPrice" class="priceProduct {% if product.compare_at_price > product.price %}priceSale{% endif %}" itemprop="price">
+          {{ current_variant.price | money }}
+        </p>
+    	{% endif %}
+    
+    {%- if product.compare_at_price > product.price -%}
+    <span id="ComparePrice" class="priceProduct priceCompare">
+      {{ current_variant.compare_at_price | money }}
+    </span>
+    {%- endif -%}
+  </div>
+  {%- if settings.product_reviews_enable -%}
+  <div class="proReviews">
+    <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}" style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+    {% comment %}<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>{% endcomment %}
+  </div>
+  {%- endif -%}
+  {%- include 'vela-product-countdown' -%}
+  {% form 'product', product, id: "oldID", class: "formAddToCart" %}
+      <a class="siz_guid size_guid_pdp" href="#">View Guide</a>
+  	  <!-- Begin ReCharge code -->
+      {% if product.available %}{% include 'subscription-product' %}{% endif %}
+      <!-- End ReCharge code -->
+  	  <span class="mw-product-options"></span>
+  	  {%- assign variantCount = product.variants | size -%}
+  	  <div class="proVariants" data-variants="">
+        <select name="id" id="productSelect">
+          {% for variant in product.variants %}
+            {%- if variant.available -%}
+              <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+          	{%- else -%}
+              <option disabled="disabled">
+                {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+              </option>
+            {%- endif -%}
+          {% endfor %}
+        </select>
+        {%- if settings.product_swatch -%}
+          {% for option in product.options %}
+            {% include 'vela-swatch' with option %}
+          {% endfor %}
+        {%- endif -%}
+      </div>
+      {%- if section.settings.product_short_description == 'yes' -%}
+        {%- if shortDescription != blank -%}
+          <div class="proDescription rte" itemprop="description">
+            {{ shortDescription }}
+          </div>
+        {%- endif -%}
+      {%- elsif section.settings.product_short_description == 'full' -%}
+        {%- if product.description != blank -%}
+          <div class="proDescription rte" itemprop="description">
+            {{ fullDescription }}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+      <div class="velaGroup clearfix">
+        <div id="inventoryLocationInformation" class="ebyInvenCheck">
+          <span class="inventoryLocationLoading"></span>
+        </div>
+        <div class="proQuantity">
+          <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}:</label>
+          <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
+          {% include 'vela-size-guide' %}
+        </div>
+        <div class="proButton mb20">
+          {% if product.type == 'Panty Pack' or product.type == "Bralette Panty Set" or product.type == "Subscription Box" %}
+          
+          	{% assign bundleProductHandles = '' %}
+          	{%- capture bundleProductHandles -%}
+			    {%- for t in product.tags -%}          
+                    {%- if t contains 'packs:' -%}
+                        {{- t | remove : 'packs:' -}}
+                  	{%- endif -%}          	    
+          	    {%- endfor -%}
+          	{%- endcapture -%}
+          	
+          	{% if bundleProductHandles != '' %}
+          		{% assign productIDs = '' %}
+                <div class="bundle-products">            
+                    {% assign bundleProductHandlesArr = bundleProductHandles %}
+                  	
+                    {% for p in collections[bundleProductHandlesArr].products %}
+                  	  <div style="display:none;">{{ p }}</div>
+                        {%- assign bProducts = p -%}
+                  		{%- assign productIDs = productIDs | append: bProducts.id -%}
+                  		{% unless forloop.last %}{%- assign productIDs = productIDs | append:',' -%}{% endunless %}
+                        <div class="single-product" data-product="{{ bProducts.id }}">
+                            <select class="product-selector" id="productSelector-{{ bProducts.handle }}">
+                                {% for var in bProducts.variants %}
+                                    {%- if var.available -%}
+                                        <option data-sku="{{ var.sku }}" data-title="{{ var.title }}" value="{{ var.id }}">{{ var.title }}</option>
+                                    {%- else -%}
+                                        <option disabled="disabled" data-title="{{ var.title }}" value="{{ var.id }}">
+                                            {{ var.title }} - {{ 'products.product.sold_out' | t }}
+                                        </option>
+                                    {%- endif -%}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endfor %}
+                </div>
+          
+              <script type="text/javascript">
+                
+                document.addEventListener('tomitLoaded', function(e) {
+                  var pIDs = "{{ productIDs }}";
+                  window.packProductIds = pIDs.split(',');
+                });
+                
+                document.addEventListener('tomitProductLoaded', function(e) {
+                  tomitProductInventoryInfo.activeProduct;
+                  console.log(tomitProductInventoryInfo.activeProduct);
+                });
+              </script>
+          	{% endif %}
+          
+            <div class="bundle-products">            
+              {% assign bundleCollectionHandle = '' %}
+
+
+
+              {% for t in product.tags %}
+
+
+                {% if t contains 'collection:' %}
+                  {%- assign bundleCollectionHandle = t | remove:'collection:' -%}
+                {% endif %}
+              {% endfor %}
+              {% assign bundleCollection = collections[bundleCollectionHandle] %}
+
+              {% if bundleCollectionHandle != '' %}
+                {% for bProducts in bundleCollection.products %}
+                  <div class="single-product" data-product="{{ bProducts.id }}">
+                    <select class="product-selector" id="productSelector-{{ bProducts.handle }}">
+                      {% for var in bProducts.variants %}
+                        {%- if var.available -%}
+                          <option data-sku="{{ var.sku }}" data-title="{{ var.title }}" value="{{ var.id }}">{{ var.title }}</option>
+                        {%- else -%}
+                          <option disabled="disabled" data-title="{{ var.title }}" value="{{ var.id }}">
+                            {{ var.title }} - {{ 'products.product.sold_out' | t }}
+                          </option>
+                        {%- endif -%}
+                      {% endfor %}
+                    </select>
+                  </div>
+                {% endfor %}
+
+                <input value="1" name="properties[bundle_]" type="hidden">
+                <input id="v_ids" name="properties[bundle_ids]" type="hidden">
+              {% endif %}
+            </div>
+          
+          	{%if product.type contains 'Cotton' %}
+          		{% if customer.tags contains 'Active Subscriber'%}
+                    <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart AddBundleProduct">
+                      <span id="AddToCartText">Add to cart</span>
+                    </button>
+          		{% else %}
+                    <a class="btn btnAddToCart" href="/pages/seamless-cotton-waitlist">
+                      <span id="AddToCartText">Join the Waitlist</span>
+                    </a>
+          			<p>Available to Members Now! <a href="/account">Sign In</a></p>
+          		{% endif %}
+          	{% else %}
+                <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart AddBundleProduct">
+                  <span id="AddToCartText">Get Once</span>
+                </button>
+          	{% endif %}
+          {% else %}
+          	{%if product.type contains 'Cotton' %}
+          		{% if customer.tags contains 'Active Subscriber'%}
+                    <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart">
+                      <span id="AddToCartText">Add to Cart</span>
+                    </button>
+          		{% else %}
+                    <a class="btn btnAddToCart" href="/pages/seamless-cotton-waitlist">
+                      <span id="AddToCartText">Join the Waitlist</span>
+                    </a>
+          			<p class="waitlistSubcopy">Available to Members Now! <a href="/account">Sign In</a></p>
+          		{% endif %}
+          	{% else %}
+          		{% if customer.tags contains 'Active Subscriber'%}
+                    <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart">
+                      <span id="AddToCartText">Add to Cart</span>
+                    </button>
+          		{% else %}
+                    <button type="submit" name="add" id="AddToCart" class="btn btnAddToCart navyBg">
+                      <span id="AddToCartText">Get Once</span>
+                    </button>
+          		{% endif %}
+          	{% endif %}
+          {% endif %}
+          
+          {%- if section.settings.buyit_check_enable -%}
+          {{ form | payment_button }}
+          {%- endif -%}
+          
+        </div>
+
+        
+        {%if product.type contains 'Core Underwear' %}
+       		{%if customer %}
+                {% if customer.tags contains 'Active Subscriber'%}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <div class="subtext">
+                        <h3>AS A VIP MEMBER</h3>
+                        <p>You will save 25% on this item</p>
+                        <p>Ships to you FREE</p>
+                        <p>10% of your purchase will empower women</p>
+                      </div>
+                      <p class="ebyMembershipSubline">{{ shop.metafields.ebyacf.become_a_member_cta_subline }}</p>
+                    </div>
+                {% else %}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <a href="/pages/build-your-box" class="ebyMacroBtn ebyBecomeAMemberBtn" >Subscribe for 25% OFF</a>
+                      <div class="subtext">
+                        <h3>BECOMEA MEMBER AND SAVE 25</h3>
+                        <p>3 undies delivered every 3 months</p>
+                        <p>New colors in each box</p>
+                        <p>Members-only pricing + Free shipping</p>
+                      </div>
+                      <a href="/pages/membership" class="ebyNavLink icon-link-arrow" >Learn More</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="ebyButtonWrapper center membershipBtns">
+                  <a href="/pages/build-your-box" class="ebyMacroBtn ebyBecomeAMemberBtn" >Subscribe for 25% OFF</a>
+                  <div class="subtext">
+                    <h3>How Membership Works</h3>
+                    <p>3 undies delivered every 3 months</p>
+                    <p>New colors in each box</p>
+                    <p>Members-only pricing + Free shipping</p>
+                  </div>
+                  <p class="ebyMembershipSubline">{{ shop.metafields.ebyacf.become_a_member_cta_subline }}</p>
+                </div>
+            {% endif %}
+       
+        {% elsif product.type contains 'Cotton' %}
+        
+        	{%if customer %}
+                {% if customer.tags contains 'Active Subscriber'%}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <div class="subtext">
+                        <h3>AS A VIP MEMBER</h3>
+                        <p>You will save 25% on this item</p>
+                        <p>Ships to you FREE</p>
+                        <p>10% of your purchase will empower women</p>
+                      </div>
+                      <p class="ebyMembershipSubline">{{ shop.metafields.ebyacf.become_a_member_cta_subline }}</p>
+                    </div>
+                {% else %}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <a href="/pages/build-your-box" class="ebyMacroBtn ebyBecomeAMemberBtn" >Subscribe for 25% OFF</a>
+                      <div class="subtext">
+                        <h3>BECOMEA MEMBER AND SAVE 25</h3>
+                        <p>3 undies delivered every 3 months</p>
+                        <p>New colors in each box</p>
+                        <p>Members-only pricing + Free shipping</p>
+                      </div>
+                      <a href="/pages/membership" class="ebyNavLink icon-link-arrow" >Learn More</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="ebyButtonWrapper center membershipBtns">
+                  <div class="subtext">
+                    <h3>Become a member and save 25%</h3>
+                    <p>3 undies delivered every 3 months</p>
+                    <p>New colors in each box</p>
+                    <p>Members-only pricing + Free shipping</p>
+                  </div>
+                  <a href="/pages/membership" class="ebyNavLink icon-link-arrow" >Learn More</a>
+                </div>
+            {% endif %}
+
+        {% else %}
+        
+        	{%if customer %}
+                {% if customer.tags contains 'Active Subscriber'%}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <div class="subtext">
+                        <h3>AS A VIP MEMBER</h3>
+                        <p>You will save 25% on this item</p>
+                        <p>Ships to you FREE</p>
+                        <p>10% of your purchase will empower women</p>
+                      </div>
+                      <p class="ebyMembershipSubline">{{ shop.metafields.ebyacf.become_a_member_cta_subline }}</p>
+                    </div>
+                {% else %}
+                    <div class="ebyButtonWrapper center membershipBtns">
+                      <a href="/pages/build-your-box" class="ebyMacroBtn ebyBecomeAMemberBtn" >Subscribe for 25% OFF</a>
+                      <div class="subtext">
+                        <h3>BECOMEA MEMBER AND SAVE 25</h3>
+                        <p>3 undies delivered every 3 months</p>
+                        <p>New colors in each box</p>
+                        <p>Members-only pricing + Free shipping</p>
+                      </div>
+                      <a href="/pages/membership" class="ebyNavLink icon-link-arrow" >Learn More</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="ebyButtonWrapper center membershipBtns">
+                  <div class="subtext">
+                    <h3>How Membership Works</h3>
+                    <p>3 undies delivered every 3 months</p>
+                    <p>New colors in each box</p>
+                    <p>Members-only pricing + Free shipping</p>
+                  </div>
+                  <a href="/pages/membership" class="ebyNavLink icon-link-arrow" >Learn More</a>
+                </div>
+            {% endif %}
+        
+        {% endif %}
+        
+        
+      </div>
+      {% if additional_checkout_buttons and section.settings.dynamic_check_enable %}
+      <div class="clearfix">
+        <div class="additional-checkout-buttons">
+          {{ content_for_additional_checkout_buttons }}
+        </div>
+      </div>
+    {% endif %}
+  {% endform  %}
+  <div class="line-dashed mb30">&nbsp;</div>
+  {%- if section.settings.product_available_enable -%}
+    <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+  {%- if product.available -%}
+    <p class="proAttr productAvailability instock"><label>{{ 'products.product.availability' | t }}:</label>{{'products.product.available' | t }}</p>
+  {%- else -%}
+    <p class="proAttr productAvailability outstock"><label>{{ 'products.product.availability' | t }}:</label>{{'products.product.unavailable' | t }}</p>
+  {%- endif -%}
+  {%- endif -%}
+  {%- if section.settings.product_type_enable -%}
+    <p class="proAttr productType"><label>{{ 'products.product.type' | t }}:</label> {{ product.type }}</p>
+  {%- endif -%}
+  {%- if section.settings.product_vendor_enable -%}
+    <p class="proAttr productVendor"><label>{{ 'products.product.vendor' | t }}:</label>{{ product.vendor }}</p>
+  {%- endif -%}
+  {% if section.settings.product_sku_enable %}
+    <p class="proAttr productSKU"><label>{{ 'products.product.sku' | t }}:</label>{{ product.selected_or_first_available_variant.sku }}</p>
+  {% endif %}
+  {%- if section.settings.product_collection_enable -%}
+  {%- assign limitedCate = section.settings.product_coll_limit | plus:0 -%}
+    <div class="proPageCategories">
+      {%- if section.settings.product_collection_title != blank -%}
+      <div class="cateTitle">{{ section.settings.product_collection_title }}</div>
+      {%- endif -%}
+      {% for collection in product.collections limit:limitedCate %}
+      {%- if forloop.last -%}
+      <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>
+      {%- else -%}
+      <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>, 
+      {%- endif -%}
+      {% endfor %}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.product_social_enable -%}
+    {% include 'vela-product-sharing' %}
+  {%- endif -%}
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.product-name-desktop').click(function () {
+            if ($('.style-changer').css("display") === "none"){
+                $('.style-changer').css("display", "block");
+                $('.changer-arrow').css("transform", "rotate(180deg)")
+            } else {
+                $('.style-changer').css("display", "none");
+                $('.changer-arrow').css("transform", "rotate(0deg)")
+            }
+        })
+    });
+</script>

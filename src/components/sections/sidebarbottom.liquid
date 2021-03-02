@@ -1,0 +1,136 @@
+{%- if section.settings.products_enbale -%}
+    {%- assign proLimit = section.settings.products_limit | plus:0 -%}
+    <div class="velaProductsSidebar velaBlock">
+        {%- if section.settings.products_title != blank -%}
+            <h3 class="titleSidebar">{{ section.settings.products_title }}</h3>
+        {%- endif -%}
+        <div class="velaContent">
+            {%- assign collectionSidebar = collections[section.settings.collection_handle] -%}
+            {% for product in collectionSidebar.products limit:proLimit %}
+                {%- assign on_sale = false -%}
+                {%- if product.compare_at_price > product.price -%}
+                    {%- assign on_sale = true -%}
+                {%- endif -%}
+                <div class="productSidebar">
+                    <div class="productSidebarImage">
+                        <a href="{{ product.url }}">
+                            <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:'200x' }}" />
+                        </a>
+                    </div>
+                    <div class="productSidebarContent">
+                        <h4 class="productSidebarName">
+                            <a href="{{ product.url }}">{{ product.title }}</a>
+                        </h4>
+                        <div class="productSidebarPrice">
+                            <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                            {%- if on_sale -%}
+                                <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{%- endif -%}
+{%- if section.settings.sidebar_banner_enable -%}
+    <div class="velaBannerSidebar velaBlock hidden-xs hidden-sm">
+        <div class="velaContent">
+            <div class="velaBanner">
+                <div class="{{ section.settings.effect }}">
+                    {% if section.settings.link != blank %}<a href="{{ section.settings.link }}" title="{{ section.settings.image.alt | default: shop.name }}">{% endif %}
+                        {% if section.settings.image != blank %}
+                            <img class="img-responsive" alt="{{ section.settings.image.alt | default: shop.name }}" src="{{ section.settings.image | img_url: 'master' }}" />
+                        {% else %}
+                            <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/270x402" />
+                        {% endif %}
+                    {% if section.settings.link != blank %}</a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Sidebar Bottom",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Sidebar products"
+            },
+            {
+                "type": "checkbox",
+                "id": "products_enbale",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "products_title",
+                "label": "Heading",
+                "placeholder": "Heading"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "products_limit",
+                "label": "Limit",
+                "default": "3"
+            },
+            {
+                "type": "header",
+                "content": "Sidebar Banner"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_banner_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "url",
+                "id": "link",
+                "label": "Image URL"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Banner image"
+            },
+            {
+                "type": "select",
+                "id": "effect",
+                "label": "Effect",
+                "default": "effectOne",
+                "options": [
+					{
+                        "value": "effectNone",
+                        "label": "None"
+                    },
+                    {
+                        "value": "effectOne",
+                        "label": "Effect One"
+                    },
+                    {
+                        "value": "effectTwo",
+                        "label": "Effect Two"
+                    },
+                    {
+                        "value": "effectThree",
+                        "label": "Effect Three"
+                    },
+                    {
+                        "value": "effectFour",
+                        "label": "Effect Four"
+                    },
+                    {
+                        "value": "effectFive",
+                        "label": "Effect Five"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

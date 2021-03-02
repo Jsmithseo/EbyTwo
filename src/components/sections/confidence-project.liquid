@@ -1,0 +1,136 @@
+<div class="confidence-project-block" {% if section.settings.our_pro_bg != blank %}style="background:{{ section.settings.our_pro_bg }};"{% endif %}>
+  
+  {% if page.metafields.projectimage.project_image != blank %}
+  <div class="project-imgr"><img src="{{ page.metafields.projectimage.project_image }}" alt=""></div>
+  {% endif %}
+  <div class="project-info">
+    {%- if page.metafields.projecttitle.project_title != blank -%}
+    <h2>{{ page.metafields.projecttitle.project_title }}</h2>
+    {%- endif -%}
+    {%- if page.metafields.projectcontent.project_content != blank -%}
+    {{ page.metafields.projectcontent.project_content }}
+    {%- endif -%}
+  </div>
+
+<div class="project-blocks">
+  {%- if page.metafields.projectblock.project_block != blank -%}
+  {{ page.metafields.projectblock.project_block }}
+  {%- endif -%}
+
+</div>
+<div class="project-bottom">
+  {%- if page.metafields.accessyourpower.access_your_power != blank -%}
+  {{ page.metafields.accessyourpower.access_your_power }}
+  {%- endif -%}
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Confidence Project",
+    "class": "confidence-project-section",
+    "max_blocks": 20,
+    "settings": [
+      {
+        "type": "color",
+        "id": "our_pro_bg",
+        "label": "Block Background",
+        "default": "#e5d3ca"
+      },
+      {
+        "type": "color",
+        "id": "our_pro_txt",
+        "label": "Block Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_project",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "richtext_project",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+	  {
+        "type": "header",
+        "content": "Access Your Power"
+      },
+	  {
+        "type": "text",
+        "id": "power_title",
+        "label": "Access Your Power"
+      },
+      {
+        "type": "text",
+        "id": "link_btn",
+        "label": "Shop"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Main Title"
+          },
+          {
+            "type": "richtext",
+            "id": "richtext",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          },
+          {
+            "type": "text",
+            "id": "link_btn",
+            "label": "Shop"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Confidence Project",
+        "category": "Membership",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

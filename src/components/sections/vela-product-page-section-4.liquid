@@ -1,0 +1,73 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_4 -%}
+{%- if product.metafields.ebyacf.enable_blkFour -%}
+<div class="our-product-block" style="background: {{ product.metafields.inclusive_background.size_inclusive_background }};">
+  <div class="product-blocks">
+    <div class="product-box">
+    <div class="product-box-img">
+      {%- if section.settings.global_section_4_image_1 != blank or section.settings.global_section_4_image_2 != blank -%}
+        <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blkfour_image_content }}</div>
+      {%- else -%}
+      <img class="img-responsive border-radius1 lazyload" alt="{{ shop.name }}" data-src="//placehold.it/{{ bannersize }}" />
+      {%- endif -%}
+    </div>
+    <div class="product-box_details">
+      <h3>{{ product.metafields.sizeinclusivetitle.size_inclusive_title }}</h3>
+      <div class="rich-text">
+      	<p>{{ product.metafields.sizeinclusivecontent.size_inclusive_content }}</p>
+      </div>
+      {%- if product.metafields.ebyacf.enable_blkFour_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.sizeinclusivelink.size_inclusive_link }}" href="{{ product.metafields.sizeinclusivelink.size_inclusive_link }}" >{{ product.metafields.sizeinclusivefield.size_inclusive_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 4",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 4"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_4",
+          "label": "Show global section",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_4",
+          "label": "Heading",
+          "default": "Size Inclusive"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_4",
+          "label": "Text",
+          "default": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_4_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_4_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

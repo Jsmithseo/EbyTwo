@@ -1,0 +1,71 @@
+<div class="our-product-inner">
+  {%- if page.metafields.ourproducttitle.our_product_title != blank -%}
+  <h1 class="our-product-title pageTop">{{ page.metafields.ourproducttitle.our_product_title }}</h1>
+  {%- endif -%}
+  {% if page.metafields.ourproductimage.our_product_image != blank %}
+  <div class="top-banner"><img src="{{ page.metafields.ourproductimage.our_product_image }}" alt=""></div>
+  {% endif %}
+</div>
+
+<div class="light_gray_section">
+  {%- if page.metafields.ourproductcontent.our_product_content != blank -%}
+    {{ page.metafields.ourproductcontent.our_product_content }}
+    {%- endif -%}
+</div>
+
+
+
+  
+{% schema %}
+  {
+    "name": "Our Product Top",
+    "class": "our-product-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Our Product"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+	  {
+        "type": "header",
+        "content": "Our Choice of Undies"
+      },
+      {
+        "type": "richtext",
+        "id": "richtext",
+        "label": "Text",
+        "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+      },
+	  {
+        "type": "text",
+        "id": "our_choice_t",
+        "label": "Heading",
+        "default": "Our Choice of Undies"
+      },
+      {
+        "type": "text",
+        "id": "link_btn",
+        "label": "Shop"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link",
+        "info": "Optional"
+      }      
+      
+    ],
+    "presets": [
+      {
+        "name": "Our Product Top",
+        "category": "Our Product"
+      }
+    ]
+  }
+{% endschema %}

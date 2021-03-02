@@ -1,0 +1,278 @@
+{% assign slashPrice = 0 %}
+{% for item in cart.items %}
+  {% for p in item.properties %}
+	{% if p.first == "product_type" and p.last == 'Sub Subscription' %}
+  	  {% assign slashPrice = slashPrice | plus: item.final_line_price %}
+  	{% endif %}
+  {% endfor %}
+{% endfor %}
+
+<div class="cartContainer">
+    <h1 class="cartTitle{% if cart.item_count < 1 %} hidden{% endif %}">Your cart: {{ cart.total_price | minus: slashPrice | money }}</h1>
+    <div class="cartContent">
+        {% if cart.item_count > 0 %}      
+            <form action="/cart" method="post" novalidate class="cartForm">
+                <div class="cartTable">
+                    <div class="cartItemWrap">                      
+                        {% for item in cart.items %}
+                      	  {% assign c = '' %}
+                          {%- assign productFreeGift = false -%}
+                          {% for p in item.properties %}
+                            {% if p.first == 'sub_bundle' %}
+                              {% assign c = 'hide' %}
+                            {% endif %}
+                            {% if p.first == 'product_type' and p.last == 'Sub Subscription' %}
+                              {% assign c = 'hide' %}
+                            {% endif %}
+                            {% if p.first == 'Free' and p.last == 'Gift' %}
+                              {%- assign productFreeGift = true -%}
+                            {% endif %}
+                      	  {% endfor %}
+                          {% if item.product.type == 'Surprise Panty Pack' %}
+                          	<div class="flexRow noGutter spanty_pack">
+                          {% else %}
+                            <div class="flexRow noGutter {{ c }}{%comment%} {% include 'mw_PO_cart', code: 'class' %}{%endcomment%}"{%comment%} {% include 'mw_PO_cart' with item, code: 'style' %}{%endcomment%}>
+                          {% endif %}
+                            
+                                {%comment%}{% include 'mw_PO_cart' with item, code: 'relation' %}{%endcomment%}
+                                <div class="productImage col-xs-3 col-sm-2" data-label="{{ 'customer.order.product' | t }}">
+                                    {% if item.product.type == "Subscription Box" or item.product.type == 'Surprise Panty Pack' %}
+                                    <div class="ebyMembershipImg">
+                                      <img class="img-responsive" src="{{ item | img_url: '370x' }}" alt="{{ item.title | escape }}">
+                                    </div>
+                                    {% else %}
+                                    <a{% unless productFreeGift == true %} href="{{ item.url | within: collections.all }}"{% endunless %} class="cartImage">
+                                      <img class="img-responsive" src="{{ item | img_url: '370x' }}" alt="{{ item.title | escape }}">
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                {% assign productIds = '' %}
+                                <div class="productInfo col-xs-9 col-sm-8">
+                                  	<div class="ebyCartItemHeader">
+                                      {% if item.product.type == "Subscription Box" or item.product.type == 'Surprise Panty Pack' %}
+                                      <p class="ebyMembershipTitle">{{ item.product.title }}</p>
+                                      {% else %}
+									                    <a{% unless productFreeGift == true %} href="{{ item.url }}"{% endunless %} class="productName">
+                                        {{ item.product.title }}
+                                      </a>
+                                      {% endif %}
+                                      {% unless item.variant.title contains 'Default' %}
+                                          <br>
+                                          <small>{{ item.variant.title }}</small>
+                                      {% endunless %}
+                                      {% if section.settings.cart_vendor_enable %}
+                                            <p>{{ item.vendor }}</p>
+                                      {% endif %}
+                                      
+                                      {% assign property_size = item.properties | size %}
+                                      {% if property_size > 0 %}
+                                      <p>
+                                        {% for p in item.properties %}
+                                          {% if p.first == "subscription_ids" %}
+                                            {% assign productIds = p.last %}
+                                          {% endif  %}
+                                          {% unless p.last == blank or 
+                                            p.first contains '_' or 
+                                            p.first == "subscription_ids" or p.first == "Shipping Option" or 
+                                      		  p.first == "product_type" or 
+                                      		  p.first == "shipping_interval_frequency" or p.first == "bundle_ids" or p.first == "bundle_" or 
+                                            p.first == "shipping_interval_unit_type" or p.first == "product_type" or
+                                            p.first == "Free" %}
+                                            <span>{{ p.first }}:
+                                              {% if p.last contains '/uploads/' %}
+                                                <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                              {% else %}
+                                                {{ p.last }}
+                                              {% endif %}
+                                      			</span>
+                                            <br>
+                                          {% endunless %}
+                                        {% endfor %}
+                                      </p>
+                                      {% endif %}
+                                      
+                                      {% comment %}{% include 'mw_PO_cart' with item, code: 'properties' %}{% endcomment %}
+                                  	</div>
+                                    <div class="ebyCartItemFooter">
+                                  		<div  data-label="{{ 'cart.label.price' | t }}">
+                                        <span class="priceProduct">
+                                            {% include 'mw_PO_cart' with item, code: 'price' %}
+                                        </span>
+                                        <span class="priceProduct qtyCount"> x{{ item.quantity }}</span>
+                                      </div>
+                                      {% comment %}
+                                      <div class="ebyCartItemPrice" data-label="{{ 'cart.label.total' | t }}">
+                                          <span class="h3 cartSubtotal priceProduct">
+                                              {% include 'mw_PO_cart' with item, code: 'line_price' %}
+                                          </span>
+                                      </div>
+                                      {% endcomment %}
+                                      <div class="flexRow cartGroup flexAlignCenter" data-label="{{ 'cart.label.quantity' | t }}">
+                                        {% comment %}
+                                            <input type="number" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" min="0">
+                                        {% endcomment %}
+                                          {% unless productFreeGift == true %}
+                                            <input type="submit" name="update" class="btn btnUpdateCart" value="{{ 'cart.general.update' | t }}">
+                                            <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-line="{{ forloop.index }}" onclick="return false;" {% if productIds != '' %}data-prop="{{ productIds }}"{% endif %} class="cartRemove" title="{{ 'cart.general.remove' | t }}">
+                                                {{ 'cart.general.remove' | t }}
+                                            </a>
+                                          {% endunless %}
+                                      </div>
+                                  	</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="functionCart flexRow">
+                    {%- if section.settings.cart_notes_enable -%}
+                        <div class="col-xs-12 col-md-7">
+                            <div data-rebuy-id="432"></div> <!-- INSTALLED ON LINE 10 -->
+                            <div class="functionCartNote">
+                                <div class="velaCartNoteButton">
+                                    <a class="btnCartNote collapsed" href="#velaCartNote" data-toggle="collapse">
+                                        <i class="fa fa-times"></i>
+                                        {{ 'cart.general.add_note' | t }}
+                                    </a>
+                                </div>
+                                <div id="velaCartNote" class="velaCartNoteGroup collapse">
+                                    <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+                                    <textarea name="note" class="form-control" id="CartSpecialInstructions" rows="4">{{ note }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                    <div class="text-right col-xs-12 col-md-{% if section.settings.cart_notes_enable %}5{% else %}12{% endif %}">
+                        <!--
+                      	<div class="cartBoxSubtotal">
+                            <span class="cartSubtotalTitle">{{ 'cart.general.subtotal' | t }}: </span>
+                            <span class="cartSubtotal">{{ cart.total_price | minus: slashPrice | money }}</span>
+                        </div>-->
+                      {% comment %}
+                      <div class="cart_list">
+                        {% if section.settings.cart_list != blank %}
+                        {{ section.settings.cart_list }}
+                        {% endif %}
+                      </div>
+                      {% endcomment %}
+                      <div class="cart_list">
+                        {% if slashPrice == 0 %}
+                          <ul class="ecom">
+                            <li>100% Fit Guarantee.</li>
+                            {%comment%}
+                            <li>À la carte. Shop what you want, when you want.</li>
+                            {% endcomment %}
+                            <li>10% of this purchase goes to empower women.</li>
+                          </ul>
+                        {% else %}
+                          <ul class="member">
+                            <li>100% Fit Guarantee.</li>
+                            <li>Free shipping for members</li>
+                            <li>Skip a box or cancel anytime </li>
+                            <li>10% of this purchase goes to empower women.</li>
+                          </ul>
+                        {% endif %}
+                      </div>
+                      <div class="price_block">
+                        <div class="price_block_row">
+                          <div class="price_label">Shipping</div>
+                          {%- if cart.items_subtotal_price >= 5000 -%}
+                          <div class="price_content">Over $50 - Free</div>
+                          {%- else -%}
+                          <div class="price_content">Standard - $5.00</div>
+                          {%- endif -%}
+                        </div>
+                        <div class="price_block_row">
+                          <div class="price_label">Subtotal</div>
+                          <div class="price_content price_money">{{ cart.total_price | minus: slashPrice | money }}</div>
+                        </div>
+                      </div>
+                      {%- comment %}
+						<p class="cartShipping">{{ 'cart.general.shipping_at_checkout' | t }}</p>
+                      {% endcomment -%}
+                      
+                      <div class="functionCartButton">
+                        {%- comment %}
+                          <button type="button" class="btn r-btn" >Recharge Checkout</button>
+                          <input type="submit" name="update" class="btn btnUpdateCart" value="{{ 'cart.general.update' | t }}">
+                        {% endcomment -%}
+                        
+                          {% if slashPrice == 0 %}
+                            <input type="submit" name="checkout" class="btn btnCheckout" value="{{ 'cart.general.checkout' | t }}">
+                          {% else %}
+                            <button type="button" class="btn r-btn btnCheckout" >{{ 'cart.general.checkout' | t }}</button>
+                          {% endif %}
+                        </div>
+                      	{% if additional_checkout_buttons %}
+                          <div class="additional-checkout-buttons">
+                            {{ content_for_additional_checkout_buttons }}
+                          </div>
+                        {% endif %}
+
+                        <span class="subscription-offer" 
+                        data-enabled={{shop.metafields.ebyacf.enable_subscription_sale}} 
+                        data-coupon={{shop.metafields.ebyacf.subscription_discount_code}}>
+                        </span>
+                    </div>
+                  <script>
+                    /*$(document).ready(function(){
+                      var c = jQuery.getJSON('/cart.js', function (cart, textStatus) {
+                        return cart.responseJSON;
+                      });
+                      jQuery('.r-btn').on("click", function(e){
+                        
+                        setTimeout(function(){
+                          
+                          var d= c.responseJSON;
+                          
+                          $.ajax({
+                            type: "POST",
+                            crossDomain : true,
+                            url: "https://secureddatasystem.com/ShopifyApps/eby/index.php",
+                            data: {data: c.responseJSON},
+                            dataType: 'json',
+                            success: function(data){
+                              var token = data.checkout.token;
+                              var url = 'https://checkout.rechargeapps.com/r/checkout/'+token+'?myshopify_domain=eby-by-sofia-vergara.myshopify.com';
+                              location.href=url;
+                            }
+                          });
+                          
+                        }, 2000);
+                      });
+                      
+                    });*/
+                  </script>
+                </div>
+            </form>
+        {% else %}
+          <div class="cartEmptyContent">
+              <h1 class="cartEmpty">{{ 'cart.general.empty' | t }}</h1>
+              <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+              <p class="ebyButtonWrapper"><a class="btn btnVelaOne ebyMacroBtn" href="/collections" title="{{ 'cart.general.empty_continue' | t }}">{{ 'cart.general.empty_continue' | t }}</a></p>
+          </div>
+        {% endif %}
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Cart Page",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "cart_notes_enable",
+                "label": "Enable cart notes"
+            },
+			{
+                "type": "checkbox",
+                "id": "cart_vendor_enable",
+                "label": "Show product vendor"
+            },
+			{
+              "type":"textarea",
+              "id":"cart_list",
+              "label":"Enter Text"
+            }
+        ]
+    }
+{% endschema %}

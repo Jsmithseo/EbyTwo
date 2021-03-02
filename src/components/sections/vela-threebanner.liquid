@@ -1,0 +1,142 @@
+<div class="velaBanner" style="background-color: {{section.settings.color_bg }};{% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaBannerInner gutter20">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <div class="velaBlock {{ section.settings.effect }}">
+                        <a href="{% if section.settings.links1 != blank %}{{ section.settings.links1 }}{% else %}#{% endif %}" title="{{ block.settings.single_image.alt | default: shop.name }}">
+                            {% if section.settings.single_images1 != blank %}
+                                <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images1 | img_url: 'master' }}" />
+                            {% else %}
+                                <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/770x440.jpg" />
+                            {% endif %}
+                        </a>               
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="rowFlex rowFlexMargin">
+                        <div class="col-xs-6 col-sm-12">
+                            <div class="velaBlock {{ section.settings.effect }}">
+                                <a href="{% if section.settings.links2 != blank %}{{ section.settings.links2 }}{% else %}#{% endif %}" title="{{ block.settings.single_images.alt | default: shop.name }}">
+                                    {% if section.settings.single_images2 != blank %}
+                                        <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images2 | img_url: '2000x' }}" />
+                                    {% else %}
+                                        <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/370x185.jpg" />
+                                    {% endif %}
+                                </a>               
+                            </div>
+                        </div> 
+                        <div class="col-xs-6 col-sm-12">
+                            <div class="velaBlock {{ section.settings.effect }}">
+                                <a href="{% if section.settings.links3 != blank %}{{ section.settings.links3 }}{% else %}#{% endif %}" title="{{ block.settings.single_images.alt | default: shop.name }}">
+                                    {% if section.settings.single_images3 != blank %}
+                                        <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images3 | img_url: '2000x' }}" />
+                                    {% else %}
+                                        <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/370x185.jpg" />
+                                    {% endif %}
+                                </a>               
+                            </div>           
+                        </div>
+                    </div> 
+                </div>       
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Three Banner",
+        "class": "velaFramework",
+        "settings": [
+           {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+               "type": "header",
+               "content": "General Settings"
+            },
+            {
+                "type": "image_picker",
+                "id": "single_images1",
+                "label": "1st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links1",
+                "label": "1st Image Link"
+            },            
+            {
+                "type": "image_picker",
+                "id": "single_images2",
+                "label": "2st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links2",
+                "label": "2st Image Link"
+            },            
+            {
+                "type": "image_picker",
+                "id": "single_images3",
+                "label": "3st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links3",
+                "label": "3st Image Link"
+            },
+            {
+                "type": "select",
+                "id": "effect",
+                "label": "Effect",
+                 "default": "effectOne",
+                "options": [
+                    {
+                        "value": "effectNone",
+                        "label": "None"
+                    },
+                    {
+                        "value": "effectOne",
+                        "label": "Effect one"
+                    },
+                    {
+                        "value": "effectTwo",
+                        "label": "Effect two"
+                    },
+                    {
+                        "value": "effectThree",
+                        "label": "Effect Three"
+                    },
+                    {
+                        "value": "effectFour",
+                        "label": "Effect Four"
+                    },
+                    {
+                        "value": "effectFive",
+                        "label": "Effect Five"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela Three Banner",
+                "category": "4. Vela Image"
+            }
+        ]
+    }
+{% endschema %}

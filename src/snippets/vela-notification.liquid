@@ -1,0 +1,107 @@
+
+    {% section "vela-template-notification" %}
+    <script type="text/javascript">
+        $(window).load(function() {
+            var dateCookie = new Date();
+            var minutes = 60;
+            dateCookie.setTime(dateCookie.getTime() + (minutes * 60 * 1000));
+            setTimeout(function () {
+                if ( document.body.classList.contains('template-collection') && ($("#velaNotifiCollection").length > 0) && ($.cookie('velaNotifiCollectioin') != 'closed')) {
+                    $.fancybox.open({
+                        src  : '#velaNotifiCollection',
+                        opts : {
+                            padding: 0,
+                            beforeLoad: function(){
+                                $('#velaNotifiCollection').removeClass('hidden');
+                            },
+                            href: '#velaNotifiCollection',
+                            helpers:  {
+                                overlay : true
+                            },
+                            afterClose : function(){
+                                $('#velaNotifiCollection').addClass('hidden');
+                                $.cookie('velaNotifiCollectioin', 'closed', {expires:dateCookie, path:'/'});
+                            }
+                        }
+                    });
+                }
+                else if ( document.body.classList.contains('template-blog') && ($("#velaNotifiBlog").length > 0) && ($.cookie('velaNotifiBlog') != 'closed')) {
+                    $.fancybox.open({
+                        src  : '#velaNotifiBlog',
+                        opts : {
+                            padding: 0,
+                            beforeLoad: function(){
+                                $('#velaNotifiBlog').removeClass('hidden');
+                            },
+                            href: '#velaNotifiBlog',
+                            helpers:  {
+                                overlay : true
+                            },
+                            afterClose : function(){
+                                $('#velaNotifiBlog').addClass('hidden');
+                                $.cookie('velaNotifiBlog', 'closed', {expires:dateCookie, path:'/'});
+                            }
+                        }
+                    });
+                }
+                else if (document.body.classList.contains('template-product') && ($("#velaNotifiProduct").length > 0) && ($.cookie('velaNotifiProduct') != 'closed')) {
+                    $.fancybox.open({
+                        src  : '#velaNotifiProduct',
+                        opts : {
+                            padding: 0,
+                            beforeLoad: function(){
+                                $('#velaNotifiProduct').removeClass('hidden');
+                            },
+                            href: '#velaNotifiProduct',
+                            helpers:  {
+                                overlay : true
+                            },
+                            afterClose : function(){
+                                $('#velaNotifiProduct').addClass('hidden');
+                                $.cookie('velaNotifiProduct', 'closed', {expires:dateCookie, path:'/'});
+                            }
+                        }
+                    });
+                }
+                else if ( document.body.classList.contains('template-page') && ($("#velaNotifiPage").length > 0) && ($.cookie('velaNotifiPage') != 'closed')) {
+                    $.fancybox.open({
+                        src  : '#velaNotifiPage',
+                        opts : {
+                            padding: 0,
+                            beforeLoad: function(){
+                                $('#velaNotifiPage').removeClass('hidden');
+                            },
+                            href: '#velaNotifiPage',
+                            helpers:  {
+                                overlay : true
+                            },
+                            afterClose : function(){
+                                $('#velaNotifiPage').addClass('hidden');
+                                $.cookie('velaNotifiPage', 'closed', {expires:dateCookie, path:'/'});
+                            }
+                        }
+                    });
+                }
+                else if (($("#velaNotifi").length > 0) && ($.cookie('velaNotifi') != 'closed')){
+                    $.fancybox.open({
+                        src  : '#velaNotifi',
+                        opts : {
+                            padding: 0,
+                            beforeLoad: function(){
+                                $('#velaNotifi').removeClass('hidden');
+                            },
+                            href: '#velaNotifi',
+                            helpers:  {
+                                overlay : true
+                            },
+                            afterClose : function(){
+                                $('#velaNotifi').addClass('hidden');
+                                $.cookie('velaNotifi', 'closed', {expires:dateCookie, path:'/'});
+                            }
+                        }
+                    });
+                }
+                
+            }, 0);
+        });
+    </script>

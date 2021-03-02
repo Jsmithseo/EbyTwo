@@ -1,0 +1,77 @@
+<div class="top_categories_inner">
+  {% if collection.metafields.ebyacf.enable_coll_subnav %}
+  <ul>
+    {% for value in collection.metafields.ebyacf.collection_subnav_menu_title %}
+    <li>
+      <div class="coll_thumb">
+        <a href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">
+          <div class="coll_thumbImg">{{collection.metafields.ebyacf.collection_subnav_menu_img[forloop.index0]}}</div>
+        </a>
+        <p class="coll_name">
+        	<a class="navDesktopLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.collection_subnav_menu_title[forloop.index0]}}</a>
+        	<a class="navMobileLink" href="{{collection.metafields.ebyacf.collection_subnav_menu_link[forloop.index0]}}">{{collection.metafields.ebyacf.mobile_coll_subnav_menu_title[forloop.index0]}}</a>
+        </p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="ebyCategoryBannerWrapper">
+    <div class="ebyCategoryBanner"><img src="{{ collection.image | collection_img_url: '1440x300' }}"></div>
+    <p class="coll_name ebyCollName">{{ collection.title }}</p>
+  </div>
+  {% endif %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Top Categories Thumbnail",
+    "class": "top_categories",
+    "max_blocks": 10,
+    "settings": [
+      
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "cta_label",
+            "label": "Main Title"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Top Categories Thumbnail",
+        "category": "New",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

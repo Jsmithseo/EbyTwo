@@ -1,0 +1,79 @@
+{% if section.settings.banner_enable %}
+    <section class="velaBannerCollection mb60">
+        <div class="container{% if section.settings.full_width %}-full{% endif %}">
+            <div class="velaBannerCollectionInner">
+                {%- assign collectionYN = false -%}
+                {%- assign collectionImage = "" -%}
+                {%- if section.blocks.size > 0 -%}
+                    {%- for block in section.blocks -%}
+                            {%- if block.settings.collection_handle == collection.handle -%}
+                                {%- assign collectionYN = true -%}
+                                {%- assign collectionImage = block.settings.bgimage -%}
+                                {%- break -%}
+                            {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if template contains 'collection' and collectionYN == true -%}
+                    {%- if collectionImage != blank -%}
+                        <img class="img-responsive"  alt="{{ collectionImage.alt | default: shop.name }}" src="{{ collectionImage | img_url: 'master' }}" />
+                    {%- endif -%}
+                {%- else -%}
+                    {%- if section.settings.bgimage != blank -%}
+                        <img class="img-responsive"  alt="{{ section.settings.bgimage.alt | default: shop.name }}" src="{{ section.settings.bgimage | img_url: 'master' }}" />
+                    {%- else -%}
+                        <img class="img-responsive"  alt="{{ shop.name }}" src="//placehold.it/1920x810" />
+                    {%- endif -%}
+                {%- endif -%}
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% schema %}
+    {
+        "name": "Vela Banner Top",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "banner_enable",
+                "label": "Enable ?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "full_width",
+                "label": "Full Width ?",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background image (Default)",
+                "info": "Default size: 1920x480 pixels"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image",
+                "name": "Image collection",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "bgimage",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    },
+                    {
+                        "type": "collection",
+                        "id": "collection_handle",
+                        "label": "Collection page"
+                    }
+
+                ]
+            }
+        ]
+    }
+{% endschema %}

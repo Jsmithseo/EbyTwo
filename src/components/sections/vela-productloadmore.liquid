@@ -1,0 +1,142 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+{%- assign proPage = section.settings.display | plus:0 -%}
+{%- assign showReview = section.settings.display_reviews -%}
+{%- if section.settings.image_size != blank -%}
+    {%- assign proImageSize = section.settings.image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+<div class="productLoadMore mb60" style="background-color: {{section.settings.color_bg }}; 
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+   <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaProductsMore">
+            <div class="headingGroup pb20">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaHomeTitle">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                {%- if section.settings.subtitle != blank -%}
+                    <span class="subTitle">{{ section.settings.subtitle }}</span>
+                {%- endif -%}
+            </div>
+            <div class="velaContent">
+                {% paginate collections[proCollection].products by proPage %}
+                    <div class="producsLoadMore">
+                        <div class="rowFlexMargin flexRow">
+                            {% for product in collections[proCollection].products %}
+                                <div class="owl-item col-sp-12 col-xs-6 col-sm-6 col-md-3 col-lg-2-4">
+                                    <div class="item">
+                                        {% include 'product-grid-item' %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {%- if paginate.next -%}
+                            <div class="clearfix text-center">
+                                <a class="btnLoadMore" href="{{ paginate.next.url }}" title="{{ section.settings.btn_loadmore | escape }}">
+                                    {{ section.settings.btn_loadmore }}
+                                </a>
+                            </div>
+                        {%- else -%}
+                            <div class="clearfix text-center">
+                                <a class="btnLoadMore disableLoadMore" href="javascript:void(0);" title="{{ section.settings.btn_loadmore | escape }}">
+                                {{ section.settings.btn_loadmore }}
+                             </a>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                    <div class="proLoadMoreBottom"></div>
+                {% endpaginate %}
+            </div>
+        </div>
+    </div>
+</div>
+{%- assign showReview = true -%}
+{% schema %}
+    {
+        "name": "Vela Products More",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title of section"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle",
+                "placeholder": "Subtitle of section"
+            },
+            {
+                "type": "checkbox",
+                "id": "display_reviews",
+                "label": "Show stars review"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "270x320",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "text",
+                "id": "btn_loadmore",
+                "label": "Button text",
+                "placeholder": "Load more"
+            },
+            {
+                "type": "range",
+                "id": "display",
+                "min": 1,
+                "max": 20,
+                "step": 1,
+                "label": "Number of displayed products",
+                "default": 5
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela Products More",
+                "category": "2. Vela Product",
+                "settings": {
+                    "title": "Product Load More",
+                    "collection_handle": "frontpage"
+                }
+            }
+        ]
+    }
+{% endschema %}

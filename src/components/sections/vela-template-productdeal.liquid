@@ -1,0 +1,67 @@
+{%- assign proCollection = section.settings.collection_handle -%}
+{%- assign proLimit = section.settings.limit | plus:0 -%}
+{%- if section.settings.image_size != blank -%}
+    {%- assign proImageSize = section.settings.image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+{%- assign product-grid-itemdeal = 'col-xs-12 col-sm-2 col-md-4' -%}
+
+<div class="productDeals velaBlock">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaProducts productDealsPage">
+            <div class="velaContent ">
+                <div class="rowFlex rowFlexMargin"> 
+                    {% for product in collections[proCollection].products limit:proLimit %}
+                        {% include 'product-deal-item' with product-grid-itemdeal %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela product deal",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading",
+                "placeholder": "Heading"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "370x370",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "text",
+                "id": "limit",
+                "label": "Limit",
+                "default": "8"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,127 @@
+{%- if section.settings.enable -%}
+    <div class="container{% if section.settings.full_with %}-full{% endif %} mb60">
+        <div class="velaAboutService" style="background-color: {{section.settings.color_bg }};
+                                        {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+            <div class="noGutter rowFlex flexAlignCenter">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="aboutThumb">
+                        {%- if section.settings.image != blank  -%}
+                            <img class="img-responsive" src="{{ section.settings.image | img_url:'master' }}" alt="{{ section.settings.image.alt | default: shop.name }}" />
+                        {%- else -%}
+                            <img class="img-responsive" src="//placehold.it/960x563.jpg" alt="" />
+                        {%- endif -%}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="wrap">
+                        {%- if section.settings.title != blank -%}
+                            <h3 class="velaHomeTitle velaTitle text-center">
+                                {{ section.settings.title }}
+                            </h3>
+                        {%- endif -%}
+                        <div class="velaContent">
+                            <div class="rowFlex rowFlexMargin">
+                                {% for block in section.blocks %}
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="boxService d-flex flexAlignCenter">
+                                            {%- if block.settings.icon != blank -%}
+                                                <div class="boxServiceImage">
+                                                    <i class="fa {{ block.settings.icon }}"></i>
+                                                </div>
+                                            {%- endif -%}
+                                            <div class="boxServiceContent">
+                                                {%- if block.settings.box_title != blank -%}
+                                                    <h4 class="boxServiceTitle">{{ block.settings.box_title }}</h4>
+                                                {%- endif -%}
+                                                {%- if block.settings.box_desc != blank -%}
+                                                    <div class="boxServiceDesc">
+                                                        {{ block.settings.box_desc }}
+                                                    </div>
+                                                {%- endif -%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+{% schema %}
+    {
+        "name": "About Service",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable",
+                "label": "Enabel?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Item Progress",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "icon",
+                        "label": "Font Simple Line Icon",
+                        "placeholder": "fa-rocket",
+                        "info": "You can see icon class [here](https://fontawesome.com/v4.7.0/icons/)" 
+                    },
+                    {
+                        "type": "text",
+                        "id": "box_title",
+                        "label": "Box heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "box_desc",
+                        "label": "Box description"
+                    }
+                ]
+
+            }
+        ]
+    }
+{% endschema %}

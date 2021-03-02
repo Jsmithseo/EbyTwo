@@ -1,0 +1,49 @@
+{%- if section.settings.product_review_section_enable -%}
+<div class="testm_slider ebyReviewsListingWrapper">
+  <h2>{{ section.settings.product_review_section_title }}</h2>
+  <div class="rev_sect">
+    <h2>Reviews</h2>
+
+    <div id="stamped-main-widget"   
+         data-widget-style="standard" 
+         data-product-id="{{ product.id }}"   
+         data-name="{{ product.title | escape }}"   
+         data-url="{{ shop.url }}{{ product.url }}"   
+         data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+         data-description="{{ product.description | escape }}"   
+         data-product-sku="{{product.handle}}"
+         data-product-type="{{product.type}}">   
+      {{ product.metafields.stamped.reviews }}   
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Product Review",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Product Review Section"
+        },
+		{
+          "type": "checkbox",
+          "id": "product_review_section_enable",
+          "label": "Show product review section",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "product_review_section_title",
+          "label": "Heading",
+          "default": "What our customers are saying"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

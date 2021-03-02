@@ -1,0 +1,31 @@
+<div class="faq_tab_main">
+  {{ page.metafields.ebyacf.blkTwo_banner_image }}
+</div>
+
+{% schema %}
+  {
+    "name": "Faq Accordian",
+    "class": "faq_Main",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "text",
+        "settings": [
+        {
+          "type":"text",
+          "id":"heading",
+          "label":"Enter Heading"
+        },
+        {
+          "type":"textarea",
+          "id":"acc_content",
+          "label":"Enter Text"
+        }
+        ]
+      }
+    ]
+  }
+{% endschema %}

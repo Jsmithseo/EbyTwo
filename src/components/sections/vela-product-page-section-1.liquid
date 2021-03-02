@@ -1,0 +1,73 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_1 -%}
+{%- if product.metafields.ebyacf.enable_blkOne -%}
+<div class="our-product-block" style="background: {{ product.metafields.comfortbackground.crafted_for_comfort_background }};">
+  <div class="product-blocks" style="background: {{ product.metafields.comfortbackground.crafted_for_comfort_background }};">
+    <div class="product-box">
+    <div class="product-box-img">
+      {%- if section.settings.global_section_1_image_1 != blank or section.settings.global_section_1_image_2 != blank -%}
+        <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blkone_image_content }}</div>
+      {%- else -%}
+      <img class="img-responsive border-radius1 lazyload" alt="{{ shop.name }}" src="{{ 'blank.png' | asset_url }}" data-src="//placehold.it/{{ bannersize }}" />
+      {%- endif -%}
+    </div>
+    <div class="product-box_details">
+      <h3>{{ product.metafields.comforttitle.crafted_for_comfort_title }}</h3>
+      <div class="rich-text">
+      	<p>{{ product.metafields.comfortcontent.crafted_for_comfort_content }}</p>
+      </div>
+      {%- if product.metafields.ebyacf.enable_blkOne_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.comfortbuttonlink.comfort_button_link }}" href="{{ product.metafields.comfortbuttonlink.comfort_button_link }}" >{{ product.metafields.comfortbuttonfield.comfort_button_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 1",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 1"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_1",
+          "label": "Show global section 1",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_1",
+          "label": "Heading",
+          "default": "No Panty Lines"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_1",
+          "label": "Text",
+          "default": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_1_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_1_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

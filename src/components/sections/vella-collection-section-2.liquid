@@ -1,0 +1,67 @@
+{%- if collection.metafields.yourchoicesbg.your_choices_background != blank -%}
+<section id="foot" style="margin-bottom:0; background-color: {{ collection.metafields.yourchoicesbg.your_choices_background }};">
+  <section id="pageContent">
+    <div class="rowFlex rowFlexMargin mt30 pt-md-30 pro_coll_topcats negtiv_mrgin">
+      {%- if collection.metafields.yourchoicesimage.your_choices_image != blank -%}
+      	<div class="last_slider">
+        <div class="left_content">
+          <h2>{{ collection.metafields.yourchoicestitle.your_choices_title }}</h2>
+          {%- if collection.metafields.yourchoicesfield.your_choices_field != blank -%}
+          <a class="btn btn-black" href="{{ collection.metafields.yourchoiceslink.your_choices_link }}">{{ collection.metafields.yourchoicesfield.your_choices_field }}</a>
+          {%- endif -%}
+          
+        </div>
+        <div class="right_content">
+          <img src="{{ collection.metafields.yourchoicesimage.your_choices_image }}" alt="">
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+  </section> 
+</section>
+{%- endif -%}
+
+{% schema %}
+ {
+    "name": "Global Section 2",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Global Section 2"
+        },
+		{
+          "type": "checkbox",
+          "id": "collection_global_section_enable_2",
+          "label": "Show global section 2",
+          "default": true
+		},
+        {
+            "type":"text",
+            "id":"collection_global_section_title_2",
+            "label":"Title"
+        },
+		{
+            "type":"text",
+            "id":"collection_global",
+            "label":"Button Label 1",
+            "default":"Join Now"
+        },
+        {
+            "type":"url",
+            "id":"collection_global_link",
+            "label":"Button Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_global_image",
+          "label": "Image"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

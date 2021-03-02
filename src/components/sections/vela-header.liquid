@@ -1,0 +1,637 @@
+{%- if section.settings.logo_size != blank -%}
+    {% assign logoSize = block.settings.logo_size %}
+{%- else -%}
+    {% assign logoSize = "master" %}
+{%- endif -%} 
+{%- if section.settings.bannertop_enabel -%}
+    <div id="bannerTop" class="bannerTop text-center active">
+        <div class="container-full"><span class="btn-bannerTop">{{ 'general.bannertop.close' | t }}  x</span></div>  
+            <a href="{{ section.settings.bannertop_link }}" title="">
+                {%- if section.settings.bannertop_image != blank -%}
+                    <img class="img-responsive" src="{{ section.settings.bannertop_image | img_url: 'master' }}" alt="" />
+                {%- else -%}
+                    <img class="img-responsive" src="//velatheme.com/demo_banner/netro/bannertop.jpg" alt="" />
+                {%- endif -%}
+            </a>                  
+        </div>
+    </div>
+{%- endif -%}
+{%- if section.settings.topbar_enabel -%}
+    <div id="velaTopbar">
+        <div class="container-full">
+            <div class="velaTopbarInner row flexAlignCenter">
+                <div class="velaTopbarLeft hidden-xs hidden-sm d-flex col-md-4">
+                    {%- if section.settings.topbar_title != blank -%}
+                            {{ section.settings.topbar_title }}
+                    {%- endif -%}
+                </div>
+                <div class="velaTopbarCenter text-center col-xs-12 col-md-4">
+                    {%- if section.settings.topbar_center != blank -%}
+                        {{ section.settings.topbar_center }}
+                    {%- endif -%}
+                </div>
+                <div class="velaTopbarRight hidden-xs hidden-sm d-flex col-md-4">
+                    {%- if settings.show_multiple_currencies -%}
+                        {% include 'vela-currencies' %}
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+{%- if settings.show_motivator_bar -%}
+  <script>
+    function checkBalanceValue(current_price) {
+      var balance = {%- if settings.cart_total_motivator != blank -%}{{ settings.cart_total_motivator }}{%- else -%}50{%- endif -%};
+      return (balance - current_price);
+    }
+  </script>
+  {% assign has_subscriptions = false %}
+  {%- for i in cart.items -%}
+    {%- for p in i.properties -%}
+      {%- if p.first == 'shipping_interval_frequency' -%}
+      	{%- assign has_subscriptions = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor %}
+  {%- unless customer or has_subscriptions == true -%}
+    {% style %}
+      .shappify-motivator-slider{display:none !important}
+      .motivator-bar{
+        display: none;
+        background-color: {{ settings.color_bg_motivator }};
+        padding: {{ settings.padding_bar_motivator }}px 20px;
+        border-bottom: {{ settings.color_border_bottom_motivator }} solid {{ settings.border_bottom_size_motivator }}px;
+        /*position: absolute;
+        top: 0;
+        left: 0;*/
+        width: 100%;
+        top: 0;
+        z-index: 10;
+      }
+      .motivator-bar .initial-message, .motivator-bar .initial-message ~ .ribbon-shipping{
+        color:{{ settings.color_text_motivator }};
+        font-size: {{ settings.font_size_motivator }}px;
+        {% if settings.bold_text_motivator %}font-weight:bold;{% endif %}
+      }
+      .motivator-bar .motivator-message, .motivator-bar .motivator-message ~ .ribbon-shipping{
+        color:{{ settings.color_text_motivator }};
+        font-size: {{ settings.font_size_motivator }}px;
+        {% if settings.bold_text_motivator %}font-weight:bold;{% endif %}
+      }
+      .motivator-bar .motivator-message .balance{
+        color:{{ settings.color_text_balance_motivator }};
+        font-size: {{ settings.font_size_balance_motivator }}px;
+        {% if settings.bold_text_balance_motivator %}font-weight:bold;{% endif %}
+      }
+      .motivator-bar .confirmation-message, .motivator-bar .confirmation-message ~ .ribbon-shipping{
+        color:{{ settings.color_text_confirmation_motivator }};
+        font-size: {{ settings.font_size_confirmation_motivator }}px;
+        {% if settings.bold_text_confirmation_motivator %}font-weight:bold;{% endif %}
+      }
+      .motivator-bar .ribbon-shipping:before{
+        content: "|";
+        margin: 0px 20px;
+      }
+      .motivator-bar .close{
+        color:{{ settings.color_text_motivator }};
+        font-weight:normal;
+        text-transform: lowercase;
+        font-size: 20px;
+        line-height: 19px;
+        margin-right: -15px;
+        cursor: pointer;
+        opacity: 0.7;
+      }
+      .motivator-bar .icon-motivator{
+        vertical-align: middle;
+      }
+      .motivator-bar .icon-motivator.second{
+        margin-left: 5px;
+      }
+      .motivator-bar .icon-motivator img{
+        max-width: 16px;
+      }
+      @media(max-width: 768px){
+        .motivator-bar .initial-message, .motivator-bar .initial-message ~ .ribbon-shipping,
+        .motivator-bar .motivator-message, .motivator-bar .motivator-message ~ .ribbon-shipping{
+          font-size: {{ settings.font_size_motivator_mobile }}px;
+        }
+        .motivator-bar .motivator-message .balance{
+          font-size: {{ settings.font_size_balance_motivator_mobile }}px;
+        }
+        .motivator-bar .confirmation-message, .motivator-bar .confirmation-message ~ .ribbon-shipping{
+          font-size: {{ settings.font_size_confirmation_motivator_mobile }}px;
+        }
+      }
+      @media(max-width: 590px){
+        .motivator-bar{
+          line-height:1.2;
+		      padding: 10px;
+        }
+        .motivator-bar .ribbon-shipping{
+          display: block;
+          line-height: 2;
+        }
+        .motivator-bar .ribbon-shipping:before{
+          content: none;
+        }
+        .motivator-bar .icon-motivator img{
+          /*max-width: 20px;*/
+        }
+        .motivator-bar .icon-motivator.second{
+          /*display:none;*/
+        }
+        .motivator-bar .close {
+          display:none;
+        }
+      }
+    {% endstyle %}
+
+    <div class="motivator-bar__wrapper">
+      <div class="motivator-bar text-center">
+        <span class="close right">X</span>
+        {% if settings.icon_motivator != blank %}<span class="icon-motivator"><img src="{{ settings.icon_motivator | img_url: '30x' }}" srcset="{{ settings.icon_motivator | img_url: '60x' }} 2x"></span>{% endif %}
+        {% if settings.aditional_message != blank %}<span class="ribbon-shipping">{{ settings.aditional_message }}</span>{% endif %}
+        {% if settings.icon_motivator != blank %}<span class="icon-motivator second"><img src="{{ settings.icon_motivator | img_url: '30x' }}" srcset="{{ settings.icon_motivator | img_url: '60x' }} 2x"></span>{% endif %}
+      </div>
+    </div>
+    <script>
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+
+      function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+      function checkMotivatorBanner(current_price){
+
+        var balance = {%- if settings.cart_total_motivator != blank -%}{{ settings.cart_total_motivator }}{%- else -%}50{%- endif -%},
+            message = "<span class=\"initial-message\">{{ settings.initial_message_motivator }}</span>",
+        cookie_motivator = false;
+
+        cookie_motivator = getCookie('_smcust');
+        if(cookie_motivator == "true"){
+          if($('.motivator-bar').hasClass('initial')){
+            $('.motivator-bar').removeClass('initial');
+          }
+          var fire_banner = false, class_banner="";
+          if((checkBalanceValue(current_price)) < 0){
+            if(!$('.motivator-bar').hasClass('confirmation')){
+              fire_banner = true;
+              class_banner = 'confirmation';
+              $('.motivator-bar').removeClass('second');
+            }
+            message = "<span class=\"confirmation-message\">{{ settings.confirmation_message_motivator }}</span>";
+          }else{
+            message = "<span class=\"motivator-message\">{{ settings.before_balance_motivator }}<span class=\"balance\"> $"+ parseFloat(checkBalanceValue(current_price)).toFixed(2) +" </span>{{ settings.after_balance_motivator }}</span>";
+            if(!$('.motivator-bar').hasClass('second')){
+              fire_banner = true;
+              class_banner = 'second';
+              $('.motivator-bar').removeClass('confirmation');
+            }else{
+              $('.motivator-bar .motivator-message').remove();
+              {% if settings.aditional_message != blank %}
+                $(message).insertBefore(".ribbon-shipping");
+              {% else %}
+                $(message).insertBefore(".icon-motivator.second");
+                $('.motivator-bar').addClass(class_banner).show();
+              {% endif %}
+            }
+          }
+        }else{
+          fire_banner = true;
+          class_banner = 'initial';
+          setCookie("_smcust", "true", 1);
+        }
+        if(fire_banner){
+          $('.motivator-bar').removeClass('initial second confirmation');
+          $('.motivator-bar .motivator-message, .motivator-bar .confirmation-message, .motivator-bar .initial-message').remove();
+          {% if settings.aditional_message != blank %}
+            $(message).insertBefore(".ribbon-shipping");
+            $('.motivator-bar').addClass(class_banner).show();
+          {% else %}
+            $(message).insertBefore(".icon-motivator.second");
+            $('.motivator-bar').addClass(class_banner).show();
+          {% endif %}
+          /*height = '-'+$('.motivator-bar').outerHeight()+'px';
+
+          $('.motivator-bar').css( {'opacity': 0, 'margin-top': height, 'position': 'relative' } )
+              .animate( { 'opacity': '1', 'margin-top' : 0 }, 1500 );*/
+        }
+
+
+      }
+
+      $('.motivator-bar .close').on('click', function(){
+        $('.motivator-bar').dequeue().slideUp( 1500 ).removeClass('initial second confirmation');
+      });
+
+      checkMotivatorBanner({{ cart.total_price | divided_by: 100.0 }});
+
+    </script>
+  {%- endunless -%}
+{%- endif -%}
+<header id="velaHeader" class="velaHeader">
+    <section class="headerWrap">
+        <div class="velaHeaderMain headerMenu">
+            <div class="container-full">
+                <div class="headerContent rowFlex rowFlexMargin flexAlignCenter">
+                    <div class="velaHeaderMobile hidden-lg hidden-md col-xs-4 col-sm-3">
+                        <div class="menuBtnMobile d-flex flexAlignCenter">
+                                <div id="btnMenuMobile" class="btnMenuMobile ebyicon-hamburger">
+                                <span class="iconMenu"></span>
+                                <span class="iconMenu"></span>
+                                <span class="iconMenu"></span>
+                                <span class="iconMenu"></span>
+                            </div>
+                            <a class="velaSearchIcon" href="#velaSearchTop" data-toggle="collapse" title="{{ 'general.search.submit' | t }}">
+                                <i class="icons icon-magnifier"></i>
+                            </a> 
+                        </div>
+                    </div>
+                  <div class="velaHeaderLeft d-flex flexAlignCenter col-xs-4 col-sm-6 col-md-5 p-static cus-vela-header-menu">
+                        <div class="velaMainmenuhidden-xs hidden-sm ">
+                            {%- include 'vela-header-menu' -%}
+                        </div>
+                    </div>
+                    <div class="velaHeaderLeft d-flex flexAlignCenter col-xs-4 col-sm-6 col-md-2 p-static">
+                      {%- if template == 'index' -%}
+                              <h1 class="velaLogo" itemscope itemtype="http://schema.org/Organization">
+                          {%- else -%}
+                              <div class="velaLogo" itemscope itemtype="http://schema.org/Organization">
+                          {%- endif -%}
+                          {%- if section.settings.logo -%}
+                              <a href="/" itemprop="url" class="velaLogoLink">
+                                  <span class="text-hide">{{ shop.name }}</span>
+                                  {%- if section.settings.logo_retina -%}
+                                      <img src="{{ section.settings.logo | img_url: logoSize }}"
+                                          srcset="{{ section.settings.logo | img_url:'master' }} 1x, {{ section.settings.logo_retina | img_url:'master' }} 2x"
+                                          alt="{{ section.settings.logo.alt | default: shop.name }}"
+                                          itemprop="logo">
+                                  {%- else -%}
+                                      <img class="img-responsive" src="{{ section.settings.logo | img_url: logoSize }}" 
+                                          srcset="{{ section.settings.logo | img_url:'master' }}"
+                                          alt="{{ section.settings.logo.alt | default: shop.name }}"
+                                          itemprop="logo">
+                                  {%- endif -%}
+                              </a>
+                          {%- else -%}
+                              <a href="/" itemprop="url" class="velaLogoLink">{{ shop.name }}</a>
+                          {%- endif -%}
+                          {%- if template != 'index' -%}
+                              </div>
+                          {%- else -%}
+                              </h1>
+                          {%- endif -%}
+                    </div>
+                    
+                    
+                  <div class="velaHeaderRight col-xs-4 col-sm-3 col-md-5"> 
+                    {% comment %}
+                      <a href="/pages/reviews" title="Testimonials" class="ebyHeaderLink"><span>Reviews</span></a>
+                      <a class="velaSearchIcon hidden-xs hidden-sm" href="#velaSearchTop" data-toggle="collapse" title="{{ 'general.search.submit' | t }}">
+                        <i class="icons icon-magnifier"></i>
+                      </a>                        
+                    	{% include 'vela-carttop' %}
+                    {% endcomment %}
+                    {% if shop.customer_accounts_enabled %}                      
+                    {% include 'vela-toplinks' %}
+                    {%- endif -%}
+                    {% include 'vela-carttop' %}
+                  </div>
+                </div>
+            </div>
+        </div>  
+    </section>
+</header>
+<a class="searchClose collapsed" href="#velaSearchTop" data-toggle="collapse">&nbsp;</a>
+{% include 'vela-searchtop' %} 
+{%- if section.settings.velamenu_enable -%}
+    {% include 'vela-menu-mobile' %}
+{%- endif -%} 
+{% schema %}
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "header",
+                "content": "bannerTop"
+            },
+            {
+                 "type": "checkbox",
+                 "id": "bannertop_enabel",
+                 "label": "Enabel?",
+                 "default": true
+            },
+            {
+                 "type": "image_picker",
+                 "id": "bannertop_image",
+                 "label": "Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "bannertop_link",
+                "label": "Link"
+            },         
+            {
+                "type": "header",
+                "content": "Topbar"
+            },
+            {
+                "type": "checkbox",
+                "id": "topbar_enabel",
+                "label": "Enabel?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "topbar_title",
+                "label": "Text Left"
+            }, 
+            {
+                "type": "text",
+                "id": "topbar_center",
+                "label": "Text Center"
+            }, 
+            {
+                "type": "header",
+                "content": "Logo"
+            },
+            {
+                "type": "text",
+                "id": "logo_size",
+                "label": "Logo size",
+                "placeholder":"100x100"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Upload logo"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_retina",
+                "label": "Upload logo (Retina version)"
+            },
+            {
+                "type": "header",
+                "content": "Main menu"
+            },
+            {
+                "type": "checkbox",
+                "id": "velamenu_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "link_list",
+                "id": "velamenu_linklist",
+                "label": "Menu navigation",
+                "default": "main-menu"
+            },
+			{
+                "type": "link_list",
+                "id": "vela_megamenu_linklist",
+                "label": "Mega Menu navigation"
+            },
+			{
+                "type": "link_list",
+                "id": "vela_megamenu_mobile",
+                "label": "Mobile Menu navigation"
+            },
+            {
+                "type": "text",
+                "id": "velamenu_menumobile_title",
+                "label": "Menu mobile title",
+                "placeholder": "Menu Mobile Title",
+                "default": "Menu Mobile"
+            }
+
+        ],
+        "blocks": [
+            {
+                "type": "text",
+                "name": "Megamenu Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "velamenu_item",
+                        "label": "Menu item name",
+                        "info": "Menu item of main-menu. Menu item has dropdown megamenu."
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "velamenu_bg_image",
+                        "label": "Background Image"
+                    },
+                    {
+                        "type": "header",
+                        "content": "Block navigation",
+                        "info": "Admin -> Navigation -> Menu. Position:1"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "velamenu_menu_enable",
+                        "label": "Enable navigation"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_menu_col",
+                        "label": "Class for block",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_menu_menucol",
+                        "label": "Class for each menu",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "header",
+                        "content": "Block products",
+                        "info": "Position:2"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "velamenu_product_enable",
+                        "label": "Enable products"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_product_col",
+                        "label": "Class for block",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_product_title",
+                        "label": "Block heading"
+                    },
+                    {
+                        "type": "collection",
+                        "id": "velamenu_product_collection",
+                        "label": "Collection"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_product_item",
+                        "label": "Limit",
+                        "default": "2"
+                    },
+                    {
+                        "type": "header",
+                        "content": "Block html",
+                        "info": "Position:3"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "velamenu_html_enable",
+                        "label": "Enable html"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_html_col",
+                        "label": "Class for block",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_html_title",
+                        "label": "Block heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "velamenu_html_content",
+                        "label": "Content HTML",
+                        "info": "You can input HTML code, img tag, video code, ..."
+                    },
+                    {
+                        "type": "header",
+                        "content": "Block banner",
+                        "info": "Position:4"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "velamenu_banner_enable",
+                        "label": "Enable banner"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_banner_col",
+                        "label": "Class for block",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "text",
+                        "id": "image_size",
+                        "label": "Image size",
+                        "default": "255x300",
+                        "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "velamenu_banner",
+                        "label": "Banner image"
+                    },
+                    {
+                        "type": "url",
+                        "id": "velamenu_banner_link",
+                        "label": "Banner URL"
+                    },
+                    {
+                        "type": "header",
+                        "content": "Block Collection",
+                        "info": "Position:5"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "velamenu_collection_enable",
+                        "label": "Enable Block Collection"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_collection_col",
+                        "label": "Class for Block",
+                        "info": "Ex: 'col-sm-3'. The width of the block is 25%"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_collection_title",
+                        "label": "Block Title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "velamenu_collectionitem_col",
+                        "label": "Width for item",
+                        "info": "25% or 50px. default is 100%"
+                    },
+                    {
+                       "type": "collection",
+                       "id": "velamenu_list_collection1",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection2",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection3",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection4",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection5",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection6",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection7",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection8",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection9",
+                       "label": "Select Collection"
+                     },
+                     {
+                       "type": "collection",
+                       "id": "velamenu_list_collection10",
+                       "label": "Select Collection"
+                     }
+                ]
+            }
+        ]
+    }
+{% endschema %}

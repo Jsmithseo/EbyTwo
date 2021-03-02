@@ -1,0 +1,183 @@
+<div id="loading" style="display:none;"></div>
+{%- if settings.ajax_cart_method == "modal" -%}
+    <div class="headerCartModal">
+        <div class="overlayCart"></div>
+        <div class="headerCartContent rowFlex flexAlignCenter">
+            <a class="closeCartModal" href="javascript:void(0)"></a>
+            <div class="cartProductImage">
+                <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/100x100" />
+            </div>
+            <div class="cartProductContent">
+                <div class="productTitle"></div>
+                <div class="alertCartModal">{{ 'cart.general.added_to_cart' | t }}</div>
+                <div class="cartModalButtons">
+                    <a class="btn btnVelaCart btnViewCart" href="/cart">{{ 'cart.general.viewcart' | t }}</a>
+                    <a class="btn btnVelaCart btnCheckout" href="/checkout">{{ 'cart.general.checkout' | t }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+<div id="newsletterAlert" class="modal fade" style="display:none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="alert alert-success">
+                <div class="newsletterAlert">{{ 'general.newsletter_form_popup.alertsuccess' | t }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if template contains 'collection' %}
+<div id="velaQuickAdd" style="display:none;">
+  <form action="/cart/add" method="post" enctype="multipart/form-data" class="formAddToCart formQuickview form-ajaxtocart">
+    <div class="proVariantsQuickview"><select name='id' style="display:none"></select></div>
+    <input type="hidden" name="properties[Shipping Option]" value="pickup Ecommerce WH">
+    <div class="proButton">
+      <button type="submit" name="add" class="btn btnAddToCart">
+        <span>{{ 'products.product.add_to_cart' | t }}</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+{%- if settings.quickview_enable -%}
+    {% assign count_images = product.images | size %}
+    {% assign column_center = 'col-sm-12 col-md-12' %}
+    <div id="velaQuickView" style="display:none;">
+        <div class="quickviewOverlay"></div>
+        <div class="jsQuickview"></div>
+        <div id="quickviewModal" class="quickviewProduct" style="display:none;">
+            <a title="Close" class="quickviewClose btnClose" href="javascript:void(0);"></a>
+            <div class="proBoxPrimary row">
+                <div class="proBoxImage col-xs-12 col-sm-12 col-md-5">
+                    <div class="proFeaturedImage">
+                        <a class="proImage" title="" href="#">
+                            <img class="img-responsive proImageQuickview" src="{{ 'loading.gif' | asset_url }}" alt="Quickview"  />
+                            <span class="loadingImage"></span>
+                        </a>
+                    </div>
+                    <div class="proThumbnails proThumbnailsQuickview clearfix">
+                        <div class="owl-thumblist">
+                            <div class="owl-carousel">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="proBoxInfo col-xs-12 col-sm-12 col-md-7">
+                    <h3 class="quickviewName">&nbsp;</h3>
+                    <div class="proAttr quickviewAvailability{% if settings.quickview_availability == false %} hidden{% endif %}"></div>
+                    <div class="proAttr quickViewVendor{% if settings.quickview_vendor == false %} hidden{% endif %}"></div>
+                    <div class="proAttr quickViewType{% if settings.quickview_protype == false %} hidden{% endif %}"></div>
+                    <div class="proAttr quickViewSKU{% if settings.quickview_prosku == false %} hidden{% endif %}"></div>
+                    <div class="proShortDescription rte"></div>
+                    <form action="/cart/add" method="post" enctype="multipart/form-data" class="formQuickview form-ajaxtocart">
+                      <span class="mw-product-options"></span>
+                        <div class="proPrice clearfix">
+                            <span class="priceProduct pricePrimary"></span>
+                            <span class="priceProduct priceCompare"></span>
+                        </div>
+                        <div class="proVariantsQuickview"><select name='id' style="display:none"></select></div>
+                        <div class="proQuantity">
+                            <label for="Quantity" class="qtySelector">{{ 'products.product.quantity' | t }}</label>
+                            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="qtySelector">
+                        </div>
+                        <div class="proButton">
+                            <button type="submit" name="add" class="btn btnAddToCart">
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+{%- endif -%}
+{% endif %}
+{%- if settings.gotop_enable -%}
+    <div id="goToTop" class="ebyScrollUpBtn"><span class="fa fa-angle-up"></span></div>
+{%- endif -%}
+{%- if settings.loading_enable -%}
+    <div id="velaPreLoading">
+        <span></span>
+        <div class="velaLoading">
+            <span class="velaLoadingIcon one"></span>
+            <span class="velaLoadingIcon two"></span>
+            <span class="velaLoadingIcon three"></span>
+            <span class="velaLoadingIcon four"></span>
+        </div>
+    </div>
+{%- endif -%}
+{% if settings.vela_newslettermodal_enable %}
+    {% if template contains 'index' %}
+        <div id="velaNewsletterModal" class="hidden">
+            <div class="newsletterModal text-center">
+                <div class="velaBlock velaNewsletterModal">
+                    <h3 class="velaTitle">{{ settings.vela_newslettermodal_title }}</h3>
+                    <div class="velaContent">
+                        {% if settings.vela_newslettermodal_description != blank %}
+                            <div class="newsletterDescription">{{ settings.vela_newslettermodal_description }}</div>
+                        {% endif %}
+                        {% if settings.vela_newslettermodal_mailchimp %}
+                            {% assign form_action = settings.newsletter_formmodal_action %}
+                            <form action="{{ form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="formNewsletter clearfix">
+                                <div class="form-group">
+                                    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="EMAIL" id="mail" class="form-control" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                                    <button id="subscribe" class="btn btnNewsletter" type="submit">
+                                        <i class="pe-7s-paper-plane"></i>
+                                        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            {% form 'customer' %}
+                                <div class="form-group">
+                                    <input class="form-control" id="newsletter-input" type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                                    <button class="btn btnNewsletter" type="submit">
+                                        <span>{{ 'general.newsletter_form.submit' | t }}</span>
+                                    </button>
+                                    <input type="hidden" name="action" value="0">
+                                </div>
+                            {% endform %}
+                        {% endif %}
+                        <div class="checkbox clearfix pull-right">
+                            <input id="chkNewsletterModal" name="show-again" type="checkbox"> {{ settings.vela_newslettermodal_chk }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(window).load(function() {
+                var dateCookie = new Date();
+                var minutes = {{ settings.vela_newslettermodal_cookie }};
+                var chkShowAgain = $('#chkNewsletterModal');
+                dateCookie.setTime(dateCookie.getTime() + (minutes * 60 * 1000));
+                setTimeout(function () {
+                    if ($.cookie('newLetterModal') != 'closed') {
+                        $.fancybox.open({
+                            src  : '#velaNewsletterModal',
+                            opts : {
+                                padding: 0,
+                                beforeLoad: function(){
+                                    $('#velaNewsletterModal').removeClass('hidden');
+                                },
+                                href: '#velaNewsletterModal',
+                                helpers:  {
+                                    overlay : true
+                                },
+                                afterClose : function(){
+                                    $('#velaNewsletterModal').addClass('hidden');
+                                    if(chkShowAgain.is(':checked')){
+                                        $.cookie('newLetterModal', 'closed', {expires:dateCookie, path:'/'});
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }, 0);
+            });
+        </script>
+    {% endif %}
+{% endif %}

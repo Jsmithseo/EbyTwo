@@ -1,0 +1,180 @@
+{%- if section.settings.velamenu_enable -%}
+    <section id="velaMegamenu" class="velaMegamenu">
+        <nav class="menuContainer">
+            <ul class="nav hidden-xs hidden-sm">
+                {%- for velaLink in linklists[section.settings.velamenu_linklist].links -%}
+                    {%- assign isMega = false -%}
+                    {%- for block in section.blocks -%}
+                        {%- assign menuItem = velaLink.title -%}
+                        {%- if block.settings.velamenu_item contains menuItem -%}
+                            {% include 'vela-megamenu' %}
+                            {% assign isMega = true %}
+                            {% break %}
+                        {%- endif -%}
+                    {%- endfor -%}
+                    {%- if isMega == false -%}
+                        {%- if velaLink.links != blank -%}
+                            {% comment %}====== MENU DROPDOWN LEVEL I ======{% endcomment %}
+                            <li class="hasMenuDropdown{% if velaLink.active %} active{% endif %}">
+                                <a href="{{ velaLink.url }}" class="vela__link" title="{{ velaLink.title }}">
+                                    <span>{{ velaLink.title }}</span>
+                              </a>
+                              <div class="menuDropdown menuDropdownWrapper">
+							  <ul class="menuDropdownInner">
+                                    {%- for velaLink1 in velaLink.links -%}
+                                        {%- if velaLink1.links != blank -%}
+                                            {% comment %}====== MENU DROPDOWN LEVEL II ======{% endcomment %}
+                                            <li class="hasMenuDropdown{% if velaLink1.active %} active{% endif %}">
+                                              	<a href="{{ velaLink1.url }}" class="vela__link" title=""><span>{{ velaLink1.title }}</span></a>
+                                                <ul class="menuDropdown">
+                                                    {%- for velaLink2 in velaLink1.links -%}
+                                                        {%- if velaLink2.links != blank -%}
+                                                            {% comment %}====== MENU DROPDOWN LEVEL III ======{% endcomment %}
+                                                            <li class="hasMenuDropdown{% if velaLink2.active %} active{% endif %}">
+                                                              <a href="{{ velaLink2.url }}" class="vela__link" title=""><span>{{ velaLink2.title }}</span></a>
+                                                                <ul class="menuDropdown">
+                                                                    {%- for velaLink3 in velaLink2.links -%}
+                                                                        <li class="{% if velaLink3.active %}active{% endif %}">
+                                                                          	<a href="{{ velaLink3.url }}" class="vela__link" title=""><span>{{ velaLink3.title }}</span></a>
+                                                                        </li>
+                                                                    {%- endfor -%}
+                                                                </ul>
+                                                            </li>
+                                                        {%- else -%}
+                                                            <li class="{% if velaLink2.active %}active{% endif %}">
+                                                              <a href="{{ velaLink2.url }}" class="vela__link" title=""><span>{{ velaLink2.title }}</span></a>
+                                                            </li>
+                                                        {%- endif -%}
+                                                    {%- endfor -%}
+                                                </ul>
+                                            </li>
+                                        {%- else -%}
+                                            <li class="{% if velaLink1.active %}active{% endif %}">
+                                              	<a href="{{ velaLink1.url }}" class="vela__link" title=""><span>{{ velaLink1.title }}</span></a>
+                                            </li>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </ul>
+                                </div>
+                            </li>
+                        {%- else -%}
+                            <li class="{% if velaLink.active %}active{% endif %}">
+                                <a href="{{ velaLink.url }}" class="vela__link" title="">
+                                    <span>{{ velaLink.title }}</span>
+                                    {%- if settings[labelItem] != blank -%}
+                                        <span class="{%- if settings[selectItem] == 'yes' -%}textNew{%- else -%}textHot{%- endif -%}"> {{ settings[labelItem] }}</span>
+                                    {%- endif -%}
+                                </a>
+                              
+                            </li>
+                        {%- endif -%}
+                    {%- endif -%}
+                {%- endfor -%}
+            </ul>
+          
+          <div class="cus-mega-menu-section cus-mega-menu-section-{{ forloop.index }}" >
+            <div class="cus-submega-menu-section">
+              <div class="cus-mega-menu-list cus-nav-menu-list">
+                <ul class="cus-menu-item-list">
+                  {% assign cus = forloop.index %}
+                  {%- for velaLink1 in linklists[section.settings.vela_megamenu_linklist].links -%}
+                  {%- if velaLink1.links != blank -%}
+                      {% comment %}====== MENU DROPDOWN LEVEL II ======{% endcomment %}
+                      <li class="hasMenuDropdown{% if velaLink1.active %} active{% endif %}">
+                        <a href="{{ velaLink1.url }}"  title=""><span>{{ velaLink1.title }}</span></a>
+                        <ul class="menuDropdown">
+                          {%- for velaLink2 in velaLink1.links -%}
+                          {%- if velaLink2.links != blank -%}
+                          {% comment %}====== MENU DROPDOWN LEVEL III ======{% endcomment %}
+                          <li class="hasMenuDropdown{% if velaLink2.active %} active{% endif %}">
+                            <a href="{{ velaLink2.url }}" title=""><span>{{ velaLink2.title }}</span></a>
+                            <ul class="menuDropdown">
+                              {%- for velaLink3 in velaLink2.links -%}
+                              <li class="{% if velaLink3.active %}active{% endif %}">
+                                <a href="{{ velaLink3.url }}" title=""><span>{{ velaLink3.title }}</span></a>
+                              </li>
+                              {%- endfor -%}
+                            </ul>
+                          </li>
+                          {%- else -%}
+                          <li class="{% if velaLink2.active %}active{% endif %}">
+                            <a href="{{ velaLink2.url }}" title=""><span>{{ velaLink2.title }}</span></a>
+                          </li>
+                          {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      </li>
+                  {%- else -%}
+                  {% assign coll = velaLink1.url | remove :'/collections/' %}
+                  {% assign collection = collections[coll] %}
+
+                  <li class="{% if collection.products.size > 0 %} cus-menu-nav {% endif %}cus-menu-item cus-menu-item-{{ forloop.index }} {% if forloop.first %}active{% endif %}">
+                    <a href="{{ velaLink1.url }}" data-class="{{ velaLink1.title }}"  title="" data-link=".cus-mega-menu-item-list-{{ forloop.index }}{{cus}}" ><span>{{ velaLink1.title }}</span></a>
+                  </li>
+                  {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+
+              {%- for velaLink1 in linklists[section.settings.vela_megamenu_linklist].links -%}
+              {% assign coll = velaLink1.url | remove :'/collections/' %}
+              {% assign collection = collections[coll] %}
+              {% if collection.products.size > 0 %}
+              <div class="cus-mega-menu-list cus-mega-div cus-mega-menu-item-list-{{ forloop.index }}{{cus}} {% if forloop.first %}active-tab-product {% endif %}">
+                {% for product in collection.products limit:3 %}
+                <div onclick="location.href='{{ product.url }}';" class="cus-mega-menu-item-list " style="background-image: url({{product.images[0].src|product_img_url:'master'}});">
+                  <a href="{{ product.url }}" ><span>{{product.title}}</span></a>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+              {%- endfor -%}
+              <div class="cus-mega-menu-close-section" ><a class="cus-close-icon" href="javascript:void(0);" ><svg role="button" aria-label="Close" class="fju31y-0 bLvnaf lbyl8m-0 lfEsfh" width="24" height="24" viewBox="0 0 24 24" tabindex="-1"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="#000000" d="M13.45 12l7.25 7.25a1.025 1.025 0 1 1-1.45 1.45L12 13.45 4.75 20.7a1.025 1.025 0 1 1-1.45-1.45L10.55 12 3.3 4.75A1.025 1.025 0 0 1 4.75 3.3L12 10.55l7.25-7.25a1.025 1.025 0 0 1 1.45 1.45L13.45 12z"></path></g></svg></a></div>
+            </div>
+          </div>
+        </nav>
+    </section>
+{%- endif -%}
+<script>
+$(document).on("click",".hasMenuDropdown a.menu-parent",function(){
+  	var sel = $(this);
+  	
+  	if($(this).hasClass('dropdown-active')){
+    	$(".cus-mega-menu-section").toggleClass("cus-mega-menu-active");
+      	$(this).removeClass('dropdown-active');
+      	$("body").css("overflow","unset");
+    }else{
+       var val=$(this).attr("title");
+       $('.cus-menu-nav a[data-class="'+val+'"]').trigger("click");
+      	$(".hasMenuDropdown a.menu-parent").removeClass('dropdown-active');
+       $(this).addClass('dropdown-active');
+       $(".cus-mega-menu-section").addClass("cus-mega-menu-active");
+       $("body").css("overflow","hidden");
+    }
+   /*
+    if($(this).parent().find(".cus-mega-menu-section").hasClass('cus-mega-menu-active')){
+      	$(this).parent().find(".cus-mega-menu-section").removeClass("cus-mega-menu-active");
+      	$("body").css("overflow","unset");
+    }else{
+        $(".cus-mega-menu-section.cus-mega-menu-active").removeClass("cus-mega-menu-active");
+        setTimeout(function() {   
+   			sel.parent().find(".cus-mega-menu-section").addClass("cus-mega-menu-active");
+          	$("body").css("overflow","hidden");
+        },400);	
+    }*/
+});
+$(document).on("click",".cus-mega-menu-close-section a.cus-close-icon",function(){
+  	$(".cus-mega-menu-section").removeClass("cus-mega-menu-active");
+  	$("body").css("overflow","unset");
+});
+$(document).on("click",".cus-menu-nav a",function(e){
+   e.preventDefault();
+   if(!$(this).parent().hasClass('active')){
+     $(this).parent().parent().find(".cus-menu-item").removeClass("active");
+     $(this).parent().addClass("active");
+   }
+   var val = $(this).attr("data-link");
+  	$(this).parents(".cus-mega-menu-section").find(".cus-mega-div").removeClass("active-tab-product");
+    $(val).addClass("active-tab-product");
+});  
+</script>

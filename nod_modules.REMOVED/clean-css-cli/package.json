@@ -1,0 +1,82 @@
+{
+  "_args": [
+    [
+      "clean-css-cli@5.2.0",
+      "/Users/admin/Development/Eby/themekit-webpack"
+    ]
+  ],
+  "_development": true,
+  "_from": "clean-css-cli@5.2.0",
+  "_id": "clean-css-cli@5.2.0",
+  "_inBundle": false,
+  "_integrity": "sha512-c7TQ+Lq8azYtThXtWlf0m9Iw66wBLQ0LPUJIEKHWTn8HB2tQlbqY6BMoKdgW4NJVZOYquwQrrRszTqH8NjHgTg==",
+  "_location": "/clean-css-cli",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "clean-css-cli@5.2.0",
+    "name": "clean-css-cli",
+    "escapedName": "clean-css-cli",
+    "rawSpec": "5.2.0",
+    "saveSpec": null,
+    "fetchSpec": "5.2.0"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/clean-css-cli/-/clean-css-cli-5.2.0.tgz",
+  "_spec": "5.2.0",
+  "_where": "/Users/admin/Development/Eby/themekit-webpack",
+  "author": {
+    "name": "Jakub Pawlowicz",
+    "email": "contact@jakubpawlowicz.com"
+  },
+  "bin": {
+    "cleancss": "bin/cleancss"
+  },
+  "bugs": {
+    "url": "https://github.com/jakubpawlowicz/clean-css-cli/issues"
+  },
+  "dependencies": {
+    "clean-css": "^5.1.0",
+    "commander": "7.x",
+    "glob": "^7.1.6"
+  },
+  "description": "A command-line interface to clean-css CSS optimization library",
+  "devDependencies": {
+    "http-proxy": "1.x",
+    "jshint": "^2.12.0",
+    "source-map": "0.5.x",
+    "vows": "^0.8.3"
+  },
+  "engines": {
+    "node": ">= 10.12.0"
+  },
+  "files": [
+    "bin",
+    "History.md",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "homepage": "https://github.com/jakubpawlowicz/clean-css-cli#readme",
+  "keywords": [
+    "css",
+    "optimizer",
+    "minifier"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "clean-css-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakubpawlowicz/clean-css-cli.git"
+  },
+  "scripts": {
+    "check": "jshint ./bin/cleancss .",
+    "prepublish": "npm run check",
+    "test": "vows"
+  },
+  "version": "5.2.0"
+}

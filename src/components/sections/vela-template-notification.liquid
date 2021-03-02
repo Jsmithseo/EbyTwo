@@ -1,0 +1,121 @@
+
+{%- if section.settings.notification_enable -%}
+        {%- if template contains 'page' and section.settings.bgimage_page != blank  -%}
+                <div id="velaNotifiPage" class="velaNotification hidden">
+                    <a href="{{ section.settings.bgimage_page_url }}" >
+                        <img class="img-responsive"  alt="{{ section.settings.bgimage_page.alt | default: shop.name }}" src="{{ section.settings.bgimage_page | img_url: 'master' }}" />
+                    </a>
+                </div>
+        {%- elsif template contains 'collection' and section.settings.bgimage_collection != blank  -%}
+                <div id="velaNotifiCollection" class="velaNotification hidden">
+                    <a href="{{ section.settings.bgimage_collection_url }}" >
+                        <img class="img-responsive"  alt="{{ section.settings.bgimage_collection.alt | default: shop.name }}" src="{{ section.settings.bgimage_collection | img_url: 'master' }}" />
+                    </a>
+                </div>
+        {%- elsif template contains 'blog' and section.settings.bgimage_article != blank -%}
+                <div id="velaNotifiBlog" class="velaNotification hidden">
+                    <a href="{{ section.settings.bgimage_article_url }}" >
+                        <img class="img-responsive"  alt="{{ section.settings.bgimage_article.alt | default: shop.name }}" src="{{ section.settings.bgimage_article | img_url: 'master' }}" />
+                    </a>
+                </div>  
+        {%- elsif template contains 'product' and section.settings.bgimage_product  -%}
+            <div id="velaNotifiProduct" class="velaNotification hidden">
+                <a href="{{ section.settings.bgimage_product_url }}" >
+                    <img class="img-responsive"  alt="{{ section.settings.bgimage_product.alt | default: shop.name }}" src="{{ section.settings.bgimage_product | img_url: 'master' }}" />
+                </a>
+            </div>
+        {%- elsif section.settings.bgimage != blank -%}
+            <div id="velaNotifi" class="velaNotification hidden">
+                <a href="{{ section.settings.bgimage_url }}" >
+                    <img class="img-responsive"  alt="{{ section.settings.bgimage.alt | default: shop.name }}" src="{{ section.settings.bgimage | img_url: 'master' }}" />
+                </a>
+           </div>
+        {%- endif -%}
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Vela Notification",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "notification_enable",
+                "label": "Enable ?",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Default for all page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Image (Default)"
+            },
+            {
+                "type": "url",
+                "id": "bgimage_url",
+                "label": "Link"
+            },
+            {
+                "type": "header",
+                "content": "Collection Page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_collection",
+                "label": "Image in Collection"
+            },
+            {
+                "type": "url",
+                "id": "bgimage_collection_url",
+                "label": "Link"
+            },
+            {
+                "type": "header",
+                "content": "Product Page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_product",
+                "label": "Image in Product"
+            },
+            {
+                "type": "url",
+                "id": "bgimage_product_url",
+                "label": "Link"
+            },
+            {
+                "type": "header",
+                "content": "Blog Page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_article",
+                "label": "Image in Blog"
+            },
+            {
+                "type": "url",
+                "id": "bgimage_article_url",
+                "label": "Link"
+            },
+            {
+                "type": "header",
+                "content": "Other Page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_page",
+                "label": "Image in Page"
+            },
+            {
+                "type": "url",
+                "id": "bgimage_page_url",
+                "label": "Link"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,137 @@
+<li class="hasMenuDropdown hasMegaMenu{% if velaLink.active %} active{% endif %}">
+	<a href="{{ velaLink.url }}" title="">
+        <span>{{ velaLink.title }}</span>
+        {%- if settings[labelItem] != blank -%}
+            <span class="{%- if settings[selectItem] == 'yes' -%}textNew{%- else -%}textHot{%- endif -%}"> {{ settings[labelItem] }}</span>
+        {%- endif -%}
+    </a>
+    <a class="btnCaret hidden-lg hidden-md" data-toggle="collapse" href="#megaDropdown2{{ ifor }}{{ forloop.index }}"></a>
+    
+	<div id="megaDropdown2{{ ifor }}{{ forloop.index }}" class="menuDropdown megaMenu collapse"{% if block.settings.velamenu_bg_image != blank %} style="background-image: url({{ block.settings.velamenu_bg_image | img_url:'master' }});"{% endif %}>
+		<div class="menuGroup row">
+			{% if block.settings.velamenu_menu_enable %}
+				<div class="{{ block.settings.velamenu_menu_col }}">
+					<div class="row">
+                      	{%- for velaLink1 in velaLink.links -%}
+                            {% assign linkHandle = velaLink1.title | handleize %}
+                            <div class="col-xs-12 {{ block.settings.velamenu_menu_menucol }}">
+                                <ul class="velaMenuLinks">
+                                    <li class="menuTitle">
+                                        <a href="{{ velaLink1.url }}" title="">{{ velaLink1.title }}</a>
+                                    </li>
+                                    {%- for velaLink2 in velaLink1.links -%}
+                                        <li>
+                                            <a href="{{ velaLink2.url }}" title="">{{ velaLink2.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+					</div>
+				</div>
+			{% endif %}
+			{% if block.settings.velamenu_product_enable %}
+				<div class="{{ block.settings.velamenu_product_col }}">
+					<div class="velaMenuProducts">
+                        {% if block.settings.velamenu_product_title != blank %}
+                            <div class="menuTitle"><span>{{ block.settings.velamenu_product_title }}</span></div>
+                        {% endif %}
+                        <div class="listProduct">
+                            {% assign collectionTitle = block.settings.velamenu_product_collection %}
+                            {%- if block.settings.velamenu_product_item != blank -%}
+                                {% assign productLimit = block.settings.velamenu_product_item %}
+                            {%- else -%}
+                                {% assign productLimit = 4 %}
+                            {%- endif -%}
+                            {% assign productImageSize = '270x' %}
+                            {% for product in collections[collectionTitle].products limit:productLimit %}
+                                {% assign onSale = false %}
+                                {% if product.compare_at_price > product.price %}
+                                    {% assign onSale = true %}
+                                {% endif %}
+                                <div class="blockProMenu">
+                                    <div class="proImage proImageMenu">
+                                        <a class="proImageLink" href="{{ product.url }}" title="">
+                                            <img class="img-responsive" src="{{ product.featured_image | product_img_url:'small' }}" alt="{{ product.featured_image.alt }}">
+                                        </a>
+                                    </div>
+                                    <div class="proMeta proMetaMenu">
+                                        <h5 class="proName">
+                                            <a href="{{ product.url }}" title="">{{ product.title }}</a>
+                                        </h5>
+                                        {% if settings.product_reviews_enable %}
+                                            <div class="proReviews">
+                                                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                                            </div>
+                                        {% endif %}
+                                        <div class="boxProPrice">
+                                            {% if onSale %}
+                                                <span class="oldPrice proPrice">{{ product.compare_at_price | money }}</span>
+                                            {% endif %}
+                                            <span class="curPrice proPrice">{{ product.price | money }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+				</div>
+			{% endif %}
+			{% if block.settings.velamenu_html_enable %}
+				<div class="{{ block.settings.velamenu_html_col }}">
+                  	<div class="velaMenuHtml">
+                        {% if block.settings.velamenu_html_title != blank %}
+                            <div class="menuTitle"><span>{{ block.settings.velamenu_html_title }}</span></div>
+                        {% endif %}
+                        <div class="htmlContent mb10">
+                            {{ block.settings.velamenu_html_content }}
+                        </div>
+                    </div>
+				</div>
+			{% endif %}
+			{% if block.settings.velamenu_banner_enable %}
+                {% if block.settings.image_size != blank %}
+                    {%- assign bannerSize = block.settings.image_size -%}
+                {% else %}
+                    {%- assign bannerSize = 'master' -%}
+                {% endif %}
+          		<div class="{{ block.settings.velamenu_banner_col }}">
+                  	<div class="velaMenuBanner mb10">
+                      	{% if block.settings.velamenu_banner_link != blank %}<a href="{{ block.settings.velamenu_banner_link }}">{% endif %}
+                      		{% if block.settings.velamenu_banner != blank %}
+                      			<img class="img-responsive" alt="{{ block.settings.velamenu_banner.alt | default: shop.name }}" src="{{ block.settings.velamenu_banner | img_url: bannerSize }}" />
+                      		{% else %}
+                      			<img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/{{ bannerSize }}" />
+                      		{% endif %}
+                      	{% if block.settings.velamenu_banner_link != blank %}</a>{% endif %}
+                  	</div>
+          		</div>
+            {% endif %}
+            {% if block.settings.velamenu_collection_enable %}
+                <div class="{{ block.settings.velamenu_collection_col }}">
+                    <div class="velaMenuListCollection">
+                        {% if block.settings.velamenu_collection_title != blank %}
+                            <div class="menuTitle"><span>{{ block.settings.velamenu_collection_title }}</span></div>
+                        {% endif %}
+                        <div class="velaMenuListContent rowFlex">
+                            {% for i in (1..10) %}
+                              {% assign listcollection = 'velamenu_list_collection' | append:i %}
+                              {% assign collectionTitle = block.settings[listcollection] %}
+                              {% if collectionTitle != blank %}
+                                <div class="coll-item" {% if block.settings.velamenu_collectionitem_col != blank %}style="width: {{ block.settings.velamenu_collectionitem_col }};" {% endif %}>
+                                  <div class="collImage">
+                                    <a href="{{ collections[collectionTitle].url }}">
+                                      <img class="img-responsive" alt="{{ collections[collectionTitle].title }}" src="{{ collections[collectionTitle].image | collection_img_url: 'master' }}" />
+                                    </a>
+                                  </div>
+                                  <h5 class="collTitle"><a href="{{ collections[collectionTitle].url }}" title="{{ collections[collectionTitle].title }}"> {{ collections[collectionTitle].title }}</a></h5>
+                                </div>
+                              {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+		</div>
+	</div>
+</li>

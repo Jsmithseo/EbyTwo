@@ -1,0 +1,76 @@
+{%- unless proImageSize -%}
+	{%- assign proImageSize = 'large' -%}
+{%- endunless -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+<div class="proDealItem velaProBlock text-center {{ product-grid-itemdeal }}" data-price="{{ product.price | money_without_currency }}">
+    <div class="velaProBlockInner">
+      	<div class="proHImage d-flex flexJustifyCenter">
+            <a class="proFeaturedImage" href="{{ product.url }}">
+                <img
+                        class="productDealMainImage img-responsive"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        src="{{ product.featured_image | product_img_url:proImageSize }}"
+                />
+            </a>
+            {%- if on_sale and settings.productgrid_sale -%}
+                <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+            {%- endif -%}
+            {%- include 'vela-product-countdown' -%}
+        </div>
+      	<div class="proContent">
+            {%- if product.type != blank and settings.productgrid_type -%}
+                <div class="productType">{{ product.type | link_to_type }}</div>
+            {%- endif -%}
+            <h5 class="proName">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+            </h5>
+            {%- if settings.product_reviews_enable and settings.productgrid_review -%}
+                <div class="proReviews">
+                    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+            {%- endif -%}
+            <div class="proPrice">
+                <div class="priceProduct priceSale">{{ product.price | money }}</div>
+                {%- if on_sale -%}
+                    <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                {%- endif -%}
+            </div>               
+            <div class="proButton">
+                {%- assign variantCount = product.variants | size -%}
+                <form action="/cart/add" data-productid="{{ product.id }}" method="post" enctype="multipart/form-data" class="formAddToCart">
+<!-- Begin ReCharge code -->
+{% if product.available %}{% include 'subscription-product' %}{% endif %}
+<!-- End ReCharge code -->
+
+                    <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+                    {%- if sold_out -%}
+                        <button class="btn btnAddToCart disabled" type="submit" value="Submit" disabled>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>{{ 'products.product.sold_out' | t }}</span>
+                        </button>
+                    {%- else -%}
+                        {%- if variantCount > 1 -%}
+                            <a class="btn btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="select_options">{{ 'products.product.select_options' | t }}</span>
+                            </a>
+                        {%- else -%}
+                            <button class="btn btnAddToCart" type="submit" value="Submit">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        {%- endif -%}
+                    {%- endif -%}
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>

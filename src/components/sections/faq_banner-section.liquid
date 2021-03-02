@@ -1,0 +1,33 @@
+<div class="faq_banner_block pageTop">
+  <div class="ebyacfWrapper">
+    {{ page.metafields.ebyacf.blkOne_page_title.en }}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Faq Banner",
+    "class": "faq_Main",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "image",
+        "settings": [
+        {
+          "type": "image_picker",
+          "id":"faq_banner_img",
+          "label":"Select images"
+        }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,63 @@
+{%- if section.settings.newsletter_section_enable -%}
+  <div class="footerCenter">
+    <div class="container-full">
+      <div class="footerCenterInner">
+        <div class="rowFlex rowFlexMargin">
+          <div class="col-xs-12 col-sm-3 col-md-2 mb30"></div><div class="col-xs-12 col-sm-6 col-md-7 mb30"><div class="velaNewsletterFooter">
+          <div class="velaNewsletterInner clearfix">
+            <div class="velaContent">
+              <div class="rowFlex rowFlexMargin">
+                <div class="col-xs-12 col-sm-12 col-md-5">
+                  {%- if section.settings.newsletter_section_html != blank -%}
+                  <div>
+                  	{{ section.settings.newsletter_section_html}}
+                  </div>
+                  {%- endif -%}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-xl-5">
+                  <div class="privy-embed-form" data-campaign="1716982"></div>
+                </div></div>
+            </div>
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "News Letter Section",
+    "settings": [
+        {
+          "type": "header",
+          "content": "News Letter"
+        },
+		{
+          "type": "checkbox",
+          "id": "newsletter_section_enable",
+          "label": "Show newsletter section",
+          "default": true
+		},
+        {
+          "type": "html",
+          "id": "newsletter_section_html",
+          "label": "Heading",
+          "default": "<h4 class='newsletterTitle'>Join the <i class='fa fa-bolt' aria-hidden='true'></i> movement</h4>"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

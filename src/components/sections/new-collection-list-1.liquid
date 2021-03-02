@@ -1,0 +1,98 @@
+<section class="velaBannerCollection mb60">
+  <div class="container{% if section.settings.full_width %}-full{% endif %}">
+    <div class="rowFlex rowFlexMargin mt30 pt-md-30 pro_coll_topcats velaOwlRow owlCarouselPlay">
+      <div class="owl-carousel"   data-nav="false" 
+           data-autoplay="true"
+           data-columnone="4" 
+           data-columntwo="5" 
+           data-columnthree="6"
+           data-columnfour="6">
+        {%- for collection in collections -%}
+        <div class="item">
+          <div class="collections_item">
+            <div class="velaBoxCollection mb30 pb-md-30">
+              {%- if section.settings.collection_image -%}
+              <div class="velaBoxCollectionImage">
+                <a href="{{ collection.url }}">
+                  {%- if collection.image -%}
+                  <img class="img-responsive" alt="{{ collection.title }}" src="{{ collection.image | collection_img_url: 'master' }}" />
+                  {%- else -%}
+                  {%- if section.settings.image_default != blank -%}
+                  <img class="img-responsive" alt="{{ section.settings.image_default.alt | default: shop.name }}" src="{{ section.settings.image_default | img_url: 'master' }}" />
+                  {%- else -%}
+                  <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/425x510" />
+                  {%- endif -%}
+                  {%- endif -%}
+                </a>
+              </div>
+              {%- endif -%}
+              <div class="velaBoxCollectionContent">
+                <h3 class="collectionTitle">
+                  <a href="{{ collection.url }}" title="{{ collection.title | escape }}">{{ collection.title }}</a>
+                </h3>
+                {%- if section.settings.product_count -%}
+                <div class="collectionProductCount">{{ 'collections.general.products_with_count' | t: count:collection.products_count }}</div>
+                {%- endif -%}
+                {%- if collection.description != blank and section.settings.collection_desc -%}
+                <div class="collectionShortDesc">
+                  {{ collection.description | strip_html | truncatewords: 20 }}
+                </div>
+                {%- endif -%}
+                {%- if section.settings.collection_btntext != blank -%}
+                <div class="collectionButtonDetail">
+                  <a href="{{ collection.url }}" title="{{ section.settings.collection_btntext | escape }}">
+                    {{ section.settings.collection_btntext }}
+                  </a>
+                </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Collection List 1",
+    "settings": [
+		{
+          "type": "checkbox",
+          "id": "full_width",
+          "label": "Full Width ?",
+          "default": true
+		},
+		{
+          "type": "checkbox",
+          "id": "collection_image",
+          "label": "Show collection image",
+          "default": true
+		},
+		{
+          "type": "checkbox",
+          "id": "collection_desc",
+          "label": "Show short description",
+          "default": true
+		},
+		{
+          "type": "checkbox",
+          "id": "product_count",
+          "label": "Show product count",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "collection_btntext",
+          "label": "Collection button"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

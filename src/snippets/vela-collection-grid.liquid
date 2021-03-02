@@ -1,0 +1,26 @@
+<div class="proList">
+  <div class="velaOwlRow rowFlex owlCarouselPlay">
+      {% for product in collection.products %}
+        {%- assign lastItemPro = forloop.index | modulo: intProColumns -%}
+      	{% if intProColumns == 1 %}
+      	  {% include 'product-grid-item' with 'col-xs-12' %}
+      	{% else %}
+      	  {% include 'product-grid-item' with strGridItem %}
+      	{% endif %}
+      {% else %}
+        <div class="collNoProduct col-xs-12">
+          <div class="alert alert-warning">
+            {{ 'collections.general.no_matches' | t }}
+          </div>
+        </div>
+      {% endfor %}
+    {% comment %}
+    <div class="owl-carousel"   data-nav="true" 
+         data-autoplay="true"
+         data-columnone="3" 
+         data-columntwo="3" 
+         data-columnthree="3"
+         data-columnfour="2"></div>
+    {% endcomment %}
+  </div>
+</div>

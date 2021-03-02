@@ -1,5 +1,5 @@
 const context = require.context(
-    '../src',
+    '../src/components',
     true,
     /(collection|footer|featured-product|featured-collection|header|message)\.liquid$/
 );

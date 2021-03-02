@@ -1,0 +1,126 @@
+<div class="grid-item col-xs-6 col-sm-6 col-md-{{ gridcol }}">
+    <div class="grid-item-content">
+        <div class="velaProBlock grid1">
+            <div class="velaProBlockInner">
+                <div class="proHImage">
+                    <a class="proFeaturedImage" href="{{ product.url }}">
+                        <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:proImageSize1 }}" />
+                    </a>
+                    {%- unless settings.free_gift_enabled == true and product.id == all_products[settings.free_gift_product].id -%}
+                    {% if settings.quickview_enable %}
+                        <div class="productQuickView">
+                            <a class="btn btnProduct btnProductQuickview" href="#velaQuickView" data-handle="{{ product.handle }}" title="{{ 'general.quickview.title' | t }}">
+                                <span class="icon">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            width="16px" height="16px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+                                        <g>
+                                            <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M35.181,18.05
+                                                c0,9.424-7.639,17.061-17.06,17.061c-9.42,0-17.057-7.637-17.057-17.061C1.064,8.631,8.701,1,18.121,1
+                                                C27.542,1,35.181,8.631,35.181,18.05z"/>
+                                            
+                                                <line fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="30.528" y1="31.236" x2="46.936" y2="47"/>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+                    {% endif %}
+                    {%- assign variantCount = product.variants | size -%}
+                    <form action="/cart/add" data-productid="{{ product.id }}" method="post" enctype="multipart/form-data" class="formAddToCart">
+<!-- Begin ReCharge code -->
+{% if product.available %}{% include 'subscription-product' %}{% endif %}
+<!-- End ReCharge code -->
+
+                        <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+                        {%- if sold_out -%}
+                            <button class="btn btnProduct btnAddToCart disabled" type="submit" value="Submit" disabled>
+                                <span class="icon">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                            width="16px" height="16px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <g>
+                                                    <path d="M15.771,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352s2.354-1.053,2.354-2.352
+                                                        S17.069,14.278,15.771,14.278z M33.132,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352
+                                                        c1.301,0,2.354-1.053,2.354-2.352S34.433,14.278,33.132,14.278z M42.778,11.654c0-1.538-1.256-2.791-2.793-2.791H33.56
+                                                        C33.313,3.935,29.239,0,24.253,0s-9.059,3.935-9.305,8.863H8.022c-1.541,0-2.793,1.253-2.789,2.687L2.001,45.207
+                                                        C2.001,46.746,3.255,48,4.796,48h38.416c1.539,0,2.793-1.254,2.787-2.896L42.778,11.654z M24.253,2.171
+                                                        c3.791,0,6.902,2.959,7.145,6.692H17.11C17.351,5.13,20.464,2.171,24.253,2.171z M43.212,45.83H4.796
+                                                        c-0.344,0-0.623-0.279-0.629-0.52l3.232-33.656c0-0.343,0.279-0.622,0.623-0.622h31.963c0.342,0,0.623,0.279,0.627,0.727
+                                                        l3.223,33.448C43.835,45.551,43.556,45.83,43.212,45.83z"/>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </button>
+                        {%- else -%}
+                            {%- if variantCount > 1 -%}
+                                <a class="btn btnProduct btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                    <span class="icon">
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                width="16px" height="16px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <g>
+                                                        <path d="M15.771,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352s2.354-1.053,2.354-2.352
+                                                            S17.069,14.278,15.771,14.278z M33.132,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352
+                                                            c1.301,0,2.354-1.053,2.354-2.352S34.433,14.278,33.132,14.278z M42.778,11.654c0-1.538-1.256-2.791-2.793-2.791H33.56
+                                                            C33.313,3.935,29.239,0,24.253,0s-9.059,3.935-9.305,8.863H8.022c-1.541,0-2.793,1.253-2.789,2.687L2.001,45.207
+                                                            C2.001,46.746,3.255,48,4.796,48h38.416c1.539,0,2.793-1.254,2.787-2.896L42.778,11.654z M24.253,2.171
+                                                            c3.791,0,6.902,2.959,7.145,6.692H17.11C17.351,5.13,20.464,2.171,24.253,2.171z M43.212,45.83H4.796
+                                                            c-0.344,0-0.623-0.279-0.629-0.52l3.232-33.656c0-0.343,0.279-0.622,0.623-0.622h31.963c0.342,0,0.623,0.279,0.627,0.727
+                                                            l3.223,33.448C43.835,45.551,43.556,45.83,43.212,45.83z"/>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </a>
+                            {%- else -%}
+                                <button class="btn  btnProduct btnAddToCart" type="submit" value="Submit">
+                                    <span class="icon">
+                                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                width="16px" height="16px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+                                            <g>
+                                                <g>
+                                                    <g>
+                                                        <path d="M15.771,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352s2.354-1.053,2.354-2.352
+                                                            S17.069,14.278,15.771,14.278z M33.132,14.278c-1.299,0-2.352,1.053-2.352,2.352s1.053,2.352,2.352,2.352
+                                                            c1.301,0,2.354-1.053,2.354-2.352S34.433,14.278,33.132,14.278z M42.778,11.654c0-1.538-1.256-2.791-2.793-2.791H33.56
+                                                            C33.313,3.935,29.239,0,24.253,0s-9.059,3.935-9.305,8.863H8.022c-1.541,0-2.793,1.253-2.789,2.687L2.001,45.207
+                                                            C2.001,46.746,3.255,48,4.796,48h38.416c1.539,0,2.793-1.254,2.787-2.896L42.778,11.654z M24.253,2.171
+                                                            c3.791,0,6.902,2.959,7.145,6.692H17.11C17.351,5.13,20.464,2.171,24.253,2.171z M43.212,45.83H4.796
+                                                            c-0.344,0-0.623-0.279-0.629-0.52l3.232-33.656c0-0.343,0.279-0.622,0.623-0.622h31.963c0.342,0,0.623,0.279,0.627,0.727
+                                                            l3.223,33.448C43.835,45.551,43.556,45.83,43.212,45.83z"/>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </button>
+                            {%- endif -%}
+                        {%- endif -%}
+                    </form>
+                    {%- endunless -%}
+                </div>
+                <div class="boxContent text-center">
+                    <h5 class="proName">
+                        <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h5>
+                    {%- if settings.product_reviews_enable and settings.productgrid_review -%}
+                        <div class="proReviews">
+                            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                        </div>
+                    {%- endif -%}
+                    <div class="proPrice">
+                        <div class="priceProduct priceSale">{{ product.price | money }}</div>
+                        {%- if on_sale -%}
+                            <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

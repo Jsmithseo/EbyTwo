@@ -1,0 +1,121 @@
+{%- unless proImageSize -%}
+    {%- assign proImageSize = '800x' -%}
+{%- endunless -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+{%- if product.description contains '[SHORTDESCRIPTION]' -%}
+    {%- assign shortDescription = product.description | split:'[SHORTDESCRIPTION]' | first  -%}
+    {%- assign shortDescription = shortDescription | truncatewords: 10  -%}
+{%- else -%}
+    {%- assign shortDescription = product.description | strip_html | truncatewords: 20 -%}
+{%- endif -%}
+<div class="velaProBlock list1" data-price="{{ product.price | money_without_currency }}">
+    <div class="rowFlex rowFlexMargin">
+        <div class="col-xs-5 col-sm-5">
+            <div class="proHImage">
+                <a class="proFeaturedImage" href="{{ product.url }}">
+                    <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:proImageSize }}" />
+                  	{%- if product.images.size > 1 and settings.product_second_image -%}
+                        <span class="hidden-sm hidden-xs">
+                            {% for image in product.images %}
+                                {%- if forloop.first != true -%}
+                                    <img class="img-responsive" alt="{{ image.alt }}" src="{{ image.src | product_img_url:proImageSize }}">
+                                    {% break %}
+                                {%- endif -%}
+                            {% endfor %}
+                        </span>
+                  	{%- endif -%}
+                </a>
+                {%- if on_sale and settings.productgrid_sale -%}
+                    <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+                {%- endif -%}
+                
+                {%- if settings.productgrid_swatch -%}
+                    <div class="velaSwatchCus">
+                        {% for option in product.options %}
+                            {%- if option == 'Color' or option == 'color' -%}
+                                {%- assign optionIndex = forloop.index0 -%}
+                                {%- assign valueList = '' -%}
+                                {%- assign value = '' -%}
+                                {%- if product.variants.size > 1 -%}
+                                    <ul class="velaSwatchProduct">
+                                        {% for variant in product.variants %}
+                                            {%- assign value = variant.options[optionIndex] -%}
+                                            {%- unless valueList contains value -%}
+                                                <li>
+                                                    <label style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.png' | file_url }})"></label>
+                                                    <div class="hidden">
+                                                        <a href="{% if variant.image.src != blank %}{{ variant.image.src | product_img_url:'large' }}{% else %}#{% endif %}"></a>
+                                                    </div>
+                                                </li>
+                                                {%- assign valueList = valueList | join: ',' -%}
+                                                {%- assign valueList = valueList | append: ',' | append: value -%} 
+                                                {%- assign valueList = valueList | split: ',' -%}
+                                            {%- endunless -%}
+                                        {% endfor %}
+                                    </ul>
+                                {%- endif -%}
+                            {%- endif -%}
+                        {% endfor %}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="col-xs-7 col-sm-7">
+            <div class="proContent">
+                {%- if product.type != blank and settings.productgrid_type -%}
+                    <div class="productType">{{ product.type | link_to_type }}</div>
+                {%- endif -%}
+                <h4 class="proName">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                </h4>
+                {%- if settings.product_reviews_enable and settings.productgrid_review -%}
+                    <div class="proReviews">
+                        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                    </div>
+                {%- endif -%}
+                <div class="proPrice">
+                    <div class="priceProduct priceSale">{{ product.price | money }}</div>
+                    {%- if on_sale -%}
+                        <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                    {%- endif -%}
+                </div>
+                {%- if shortDescription != blank -%}
+                    <div class="proDescription">{{ shortDescription }}</div>
+                {%- endif -%}
+                {%- assign variantCount = product.variants | size -%}
+                <form action="/cart/add" data-productid="{{ product.id }}" method="post" enctype="multipart/form-data" class="formAddToCart">
+<!-- Begin ReCharge code -->
+{% if product.available %}{% include 'subscription-product' %}{% endif %}
+<!-- End ReCharge code -->
+
+                    <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+                    {%- if sold_out -%}
+                        <button class="btn btnProduct btnAddToCart disabled" type="submit" value="Submit" disabled>
+                            <span class="icons icon-handbag"></span>
+                            <span>{{ 'products.product.sold_out' | t }}</span>
+                        </button>
+                    {%- else -%}
+                        {%- if variantCount > 1 -%}
+                            <a class="btn btnProduct btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                <span class="icons icon-handbag"></span>
+                                <span class="select_options">{{ 'products.product.select_options' | t }}</span>
+                            </a>
+                        {%- else -%}
+                            <button class="btn btnProduct btnAddToCart" type="submit" value="Submit">
+                                <span class="icons icon-handbag"></span>
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        {%- endif -%}
+                    {%- endif -%}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

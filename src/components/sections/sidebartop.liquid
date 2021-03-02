@@ -1,0 +1,77 @@
+{%- if section.settings.sidebar_categories_enable -%}
+	{%- assign velaCategories = section.settings.sidebar_categories_menu -%}
+	<div id="velaCategories" class="velaCategoriesSidebar velaBlock">
+  		<h3 class="titleSidebar">{{ section.settings.sidebar_categories_title }}</h3>
+      	{%- if linklists[velaCategories] != empty -%}
+            <div class="velaContent">
+                <ul class="sidebarListCategories list-unstyled">
+                    {% for linkItem in linklists[velaCategories].links %}
+                        {%- assign hasDropdown = false -%}
+                        {%- assign subItem = forloop.index -%}
+                        {%- if linklists[linkItem.handle] != empty -%}
+                            {%- assign hasDropdown = true -%}
+                        {%- endif -%}
+                        <li class="sidebarCateItem{% if hasDropdown %} hasSubCategory{% endif %}{% if linkItem.active %} active{% endif %}">
+                            <a {% if linkItem.active %} class="active" {% endif %} href="{{ linkItem.url }}">{{ linkItem.title }}</a>
+                            {%- if hasDropdown -%}
+                                <span class="collapsed" data-toggle="collapse" data-target="#subCategory{{ forloop.index }}"></span>
+                                <div id="subCategory{{ forloop.index }}" class="collapse">
+                                    <ul class="sidebarListCategories subListCategories list-unstyled">
+                                        {% for linkChildItem in linklists[linkItem.handle].links %}
+                                            {%- assign hasDropdown = false -%}
+                                            {%- if linklists[linkChildItem.handle] != empty -%}
+                                                {%- assign hasDropdown = true -%}
+                                            {%- endif -%}
+                                            <li class="sidebarCateItem{% if hasDropdown %} hasSubCategory{% endif %}{% if linkItem.active %} active{% endif %}">
+                                                <a  {% if linkChildItem.active %} class="active" {% endif %} href="{{ linkChildItem.url }}">{{ linkChildItem.title }}</a>
+                                                {%- if hasDropdown -%}
+                                                    <span class="collapsed" data-toggle="collapse" data-target="#subCategory{{ subItem }}{{ forloop.index }}"></span>
+                                                    <div id="subCategory{{ subItem }}{{ forloop.index }}" class="collapse">
+                                                        <ul class="sidebarListCategories subListCategories list-unstyled">
+                                                            {% for linkChildItem2 in linklists[linkItem.handle].links %}
+                                                                <li class="sidebarCateItem{% if linkItem.active %} active{% endif %}">
+                                                                    <a href="{{ linkChildItem2.url }}">{{ linkChildItem2.title }}</a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {%- endif -%}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {%- endif -%}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+      	{%- endif -%}
+	</div>
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Sidebar Categories",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Sidebar Categories"
+            },
+            {
+                "type": "checkbox",
+                "id": "sidebar_categories_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "sidebar_categories_title",
+                "label": "Heading"
+            },
+            {
+                "type": "link_list",
+                "id": "sidebar_categories_menu",
+                "label": "Category menu",
+                "info": "Choose menu for block. Add new menu: Admin->Navigation->Menu"
+            }
+        ]
+    }
+{% endschema %}

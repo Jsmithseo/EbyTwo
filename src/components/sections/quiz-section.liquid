@@ -1,0 +1,214 @@
+<script>
+  window.quizCollections = [];
+  {%- assign collectionList = 'first-box-at-mx-quarterly-assortment,first-box-at-nu-quarterly-assortment,first-box-at-mx-semi-annual-assortment,first-box-ab-nu-quarterly-assortment,first-box-ab-mx-quarterly-assortment,first-box-ab-mx-semi-annual-assortment,first-box-mx-nu-quarterly-assortment,first-box-mx-mx-quarterly-assortment,first-box-mx-mx-semi-annual-assortment,first-box-hw-nu-quarterly-assortment,first-box-hw-mx-quarterly-assortment,first-box-hw-mx-semi-annual-assortment,first-box-fc-nu-quarterly-assortment,first-box-fc-mx-quarterly-assortment,first-box-fc-mx-semi-annual-assortment' -%}
+  {%- assign collectionListArr = collectionList | split: ',' -%}
+  
+  {% comment %}
+  		{%- assign productVariantMetafield = product.metafields.subscriptions.original_to_hidden_variant_map | json -%}
+  		{%- if productVariantMetafield != 'null' -%}
+  		  {{- productVariantMetafield -}}
+  		{%- else -%}
+  		  {{- product.handle -}}
+  		{%- endif -%}
+  {% endcomment %}
+  
+  {%- for c in collectionListArr -%}
+    {%- capture products -%}
+      {%- for product in collections[c].products -%}  
+  		{{- product.handle -}}  
+  		{%- unless forloop.last -%}|{%- endunless -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+  
+    window.quizCollections["{{ collections[c].handle }}"] = '{{ products }}';
+  {%- endfor -%}
+</script>
+
+<div class="quiz_section">
+  <div class="rowFlex rowFlexMargin ebyQuizApp">
+    <div class="col-md-9 ebyQuizBackWrapper">
+      <div class="img_section">
+        <div class="image_wrapper">
+          <div class="steps">
+            <div class="step active" data-step="1" data-index="1">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Style---Land_2x_6fc09c2c-7283-4c41-a0a7-b3d2de8d5edc.jpg?v=1601016264" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Style---Land_2x_6fc09c2c-7283-4c41-a0a7-b3d2de8d5edc.jpg?v=1601016264"/>
+              </div>
+            </div>
+            <div class="step" data-step="2" data-index="2">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Size---Landing_2x_b741b216-e4b7-49c7-803f-036c7b42eb6e.jpg?v=1601016264" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Size---Landing_2x_b741b216-e4b7-49c7-803f-036c7b42eb6e.jpg?v=1601016264"/>
+              </div>
+            </div>
+            <div class="step" data-step="3" data-index="3">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Color---Land_2x_1c2dc453-4c9a-4678-b30b-2209e97ae431.jpg?v=1601016265" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Color---Land_2x_1c2dc453-4c9a-4678-b30b-2209e97ae431.jpg?v=1601016265"/>
+              </div>
+              <div class="pick-style-outerwrapper hide">
+                {% include 'quiz-pick-style-wrapper' %}
+              </div>
+            </div>
+            <div class="step" data-step="4" data-index="4">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Quarterly---Neutrals_2x_47bb4aa6-82aa-464d-b805-5067efd39863.jpg?v=1601016263" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Quarterly---Neutrals_2x_47bb4aa6-82aa-464d-b805-5067efd39863.jpg?v=1601016263"/>
+              </div>
+            </div>
+            <div class="step" data-step="5" data-index="5">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Upsell---Mask_2x_d8386e1a-2459-4dab-9843-97610ec2a59e.jpg?v=1601016264" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Upsell---Mask_2x_d8386e1a-2459-4dab-9843-97610ec2a59e.jpg?v=1601016264"/>
+              </div>
+            </div>
+            <div class="step" data-step="6" data-index="6">
+              <div class="feature_img">
+                <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Review_2x_a10e7af7-5965-4c0b-9f63-238f7e910a8c.jpg?v=1601016265" data-ogsrc="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Review_2x_a10e7af7-5965-4c0b-9f63-238f7e910a8c.jpg?v=1601016265"/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 right-side ebyQuizPanelWrapper">
+      <div class="std_sec">
+        <form method="post" action="/cart/add" id="oldID" accept-charset="UTF-8" class="formAddToCart" enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <div class="selection_wrapper">
+            <div class="sticky-top">
+              <button class="back-btn hide" type="button">
+                <span class="back-icon">Back</span>
+              </button>
+              <div class="ebyBoxCrumbs">
+              	<span class="style-selection">Membership</span>
+                <span class="prev-selection"></span>
+              </div>
+            </div>
+
+            <div class="steps">
+              <div class="step quiz-style active selection-list-wrapper" data-group="style" data-step="1" data-index="1">
+                <div class="step-top-h">
+                  <h2>Select Your Styles</h2>
+                  <p>What’s your style? Choose your must-have fit and we’ll curate a collection just for you. Or mix it up with a customized box.</p>
+                  <a class="sty_guide" href="javascript:void(0);">Style Guide</a>
+                </div>
+                {% include 'quiz-style-selection' %}
+              </div>
+              <div class="step quiz-size" data-group="size" data-step="2" data-index="2">
+                {% include 'quiz-size-selection' %}
+              </div>
+              <div class="step quiz-color" data-group="color" data-step="3" data-index="3">
+                {% include 'quiz-color-selection' %}
+              </div>
+              <div class="step quiz-pick-style" data-group="pick-style" data-step="3" data-index="3">
+                {% include 'quiz-pick-style-selection' %}
+              </div>
+              <div class="step quiz-plan" data-group="plan" data-step="4" data-index="4">
+                {% include 'quiz-plan-selection' %}
+              </div>
+              <div class="step quiz-upsell" data-group="upsell" data-step="5" data-index="5">
+                {% include 'quiz-upsell-selection' %}
+              </div>
+              <div class="step quiz-summary" data-group="summary" data-step="6" data-index="6">
+                {% include 'quiz-summary' %}
+              </div>
+            </div>
+
+            <div class="sticky-bottom hide">
+              <button class="next-btn btn" type="button">Next</button>
+              <div class="final-step hide">
+                <input type="hidden" name="id" value="" id="productSelect">
+                <input type="hidden" name="properties[Shipping Option]" value="Subscription First Box WH">
+                <input type="hidden" name="properties[shipping_interval_unit_type]" id="productUnitType" value="Month">
+                <input type="hidden" name="properties[shipping_interval_frequency]" id="productInterval" value="3">
+                <input type="hidden" name="properties[subscription_ids]" id="subscription_ids" value="">
+                <input type="hidden" name="properties[product_type]" value="Main Subscription">
+                <input type="hidden" name="price" id="productPrice" value="">
+                <div class="quizOrderSummaryButtonWrapper">
+                  <button type="button" class="btn btnAddToCart" disabled="disabled">Add To Cart</button>
+                  <button type="button" class="edit-selection">Edit Selections</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<span class="subscription-offer" 
+data-enabled={{shop.metafields.ebyacf.enable_subscription_sale}}
+data-price={{shop.metafields.ebyacf.subscription_sale_price | round}}
+data-coupon={{shop.metafields.ebyacf.subscription_discount_code}}>
+</span>
+
+<div class="pop_style">
+  <div class="pop_inner">
+    <div class="pop_wrap">
+      <span class="colz_pop">&times;</span>
+      <div class="ebyGuideChartWrapper">
+        {% for value in shop.metafields.ebyacf.eby_guide_chart-style %}
+        {{ shop.metafields.ebyacf.eby_guide_chart-style[forloop.index0].en }}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="pop_wrapper_backing">&nbsp;</div>
+  </div>
+</div>
+
+<div class="pop_size">
+  <div class="pop_inner">
+    <div class="pop_wrap">
+      <span class="colz_pop">&times;</span>
+      <div class="ebyGuideChartWrapper">
+        {{ shop.metafields.ebyacf.eby_size_chart-panty.en }}
+      </div>
+    </div>
+    <div class="pop_wrapper_backing">&nbsp;</div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Quiz Section",
+	"class":"quiz-section",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+<script>
+  jQuery(document).on('click', '.sty_guide', function(){
+    if(jQuery('.pop_style').is(':visible'))
+    {
+      jQuery('.pop_style').fadeOut()
+    }
+    else{
+      jQuery('.pop_style').fadeIn()
+    }
+    return false;
+  });
+  jQuery(document).on('click', '.size_guide', function(){
+    if(jQuery('.pop_size').is(':visible'))
+    {
+      jQuery('.pop_size').fadeOut()
+    }
+    else{
+      jQuery('.pop_size').fadeIn()
+    }
+    return false;
+  });
+  jQuery('.pop_wrapper_backing').click(function(){
+    jQuery('.pop_size').fadeOut();
+    jQuery('.pop_style').fadeOut();
+  });
+  jQuery('span.colz_pop').click(function(){
+    jQuery('.pop_size').fadeOut();
+    jQuery('.pop_style').fadeOut();
+  });
+</script>

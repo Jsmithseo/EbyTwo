@@ -1,0 +1,148 @@
+{%- if section.settings.enable -%}
+    {%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+        {% capture bgColor %}
+            background-color: {{ section.settings.color_bg }};
+        {% endcapture %}
+    {%- endif -%}
+    {%- if section.settings.bgimage != blank -%}
+        {% capture bgImage %}
+            background-image: url({{ section.settings.bgimage | img_url:'master' }});
+        {% endcapture %}
+    {%- endif -%}
+    {%- if section.settings.padding_block != blank -%}
+        {% capture paddingblock %}
+            padding: {{section.settings.padding_block}};
+        {% endcapture %}
+    {%- endif -%}
+    {%- assign owlColumn1 = 1 -%}
+    {%- assign owlColumn2 = 1 -%}
+    {%- assign owlColumn3 = 1 -%}
+    {%- assign owlColumn4 = 1 -%}
+    {%- assign owlColumn5 = 1 -%}
+
+    <div class="velaAboutTestimonials velaTestimonials" style="{{ bgColor }}{{ bgImage }}{{ paddingblock }}">
+        <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">
+            <div class="velaAboutTestimonialsInner">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaTitle velaHomeTile text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                <div class="velaContent">
+                    <div class="velaOwlRow owlCarouselPlay">
+                        <div class="owl-carousel" 
+                            data-nav="true" 
+                            data-dots="true" 
+                            data-margin="0" 
+                            data-autoplay="true"
+                            data-columnone="{{ owlColumn1 }}" 
+                            data-columntwo="{{ owlColumn2 }}" 
+                            data-columnthree="{{ owlColumn3 }}" 
+                            data-columnfour="{{ owlColumn4 }}" 
+                            data-columnfive="{{ owlColumn5 }}">
+                            {% for block in section.blocks %}
+                                {%- assign number = block.settings.number | plus:0 -%}
+                                <div class="item text-center">
+                                    <div class="testimonialItem">
+                                        <div class="testimonialAvatar d-flex flexJustifyCenter mb30">
+                                            {%- if block.settings.avatar != blank -%}
+                                                <img class="img-responsive img-circle" src="{{ block.settings.avatar | img_url:'150x150' }}" alt="{{ block.settings.avatar.alt | default: block.settings.name }}">
+                                            {%- else -%}
+                                                <img class="img-responsive img-circle" src="{{ 'avata-default.png' | asset_img_url: '150x150' }}" />
+                                            {%- endif -%}
+                                        </div>
+                                        <h4 class="testimonialName mb20">{{ block.settings.name }}</h4>
+                                        <div class="testimonialRating mb30">
+                                        {% for i in (1..5) %}
+                                            <span class="fa fa-star {% if number >= i %}rate{% endif %}"></span>
+                                        {% endfor%}   
+                                        </div>
+                                        <div class="testimonialContent">
+                                            <div class="testimonialReview mb30">
+                                                {{ block.settings.review }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Vela testimonial",
+        "class": "velaFramework",
+		"max_blocks": 10,
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable",
+                "label": "Enabel?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background image",
+                "info": "Default size: 1920x1080 pixels"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            }
+        ],
+		"blocks": [
+			{
+                "type": "item",
+                "name": "Testimonial Item",
+                "settings": [
+					{
+                        "type": "image_picker",
+                        "id": "avatar",
+                        "label": "Avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "name",
+                        "label": "Customer name"
+                    },
+					{
+                        "type": "range",
+                        "id": "number",
+                        "min": 0,
+                        "max": 5,
+                        "step": 1,
+                        "label": "progress",
+                        "default": 5
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "review",
+                        "label": "Customer review"
+                    }
+                ]
+            }
+		]
+    }
+{% endschema %}

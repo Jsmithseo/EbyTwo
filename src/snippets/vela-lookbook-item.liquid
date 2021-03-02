@@ -1,0 +1,21 @@
+<div class="lookbItem" style="left:{{ percelX }}%;top:{{ percelY }}%;">
+    <div class="lookbItemButton">{{ counterItem }}</div>
+    <div class="lookbItemContent {{ displayType }}">
+        <div class="productLookBookImage">
+            <a href="{{ productLookbook.url }}">
+                <img class="img-responsive" alt="{{ productLookbook.featured_image.alt | escape }}" src="{{ productLookbook.featured_image | product_img_url:'master' }}" />
+            </a>
+        </div>
+        <div class="productLookBookTitle">
+            <a href="{{ productLookbook.url }}">{{ productLookbook.title }}</a>
+        </div>
+        <div class="productLookBookPrice">
+            <div class="proPrice">
+                <div class="priceProduct priceSale">{{ productLookbook.price | money }}</div>
+                {%- if on_sale -%}
+                    <div class="priceProduct priceCompare">{{ productLookbook.compare_at_price | money }}</div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>

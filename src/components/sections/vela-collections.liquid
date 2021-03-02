@@ -1,0 +1,127 @@
+
+<div class="velaCollectionsInfo mb50" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="wrapper">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle text-center">
+                    <span >
+                        {{ section.settings.title }}
+                    </span>
+                </h3>
+            {%- endif -%}
+            <div class="velaContent gutter-10">
+                {%- if section.blocks.size > 0 -%}
+                    <div class="rowFlex rowFlexMargin flexJustifyCenter">
+                        {% for block in section.blocks %}
+                            {%- assign proCollection = block.settings.collection_handle -%}
+                            {%- if proCollection != blank -%}
+                                <div class="col-xs-6 col-md-3">
+                                    <div class="velaCollectionInfoInner velaItem">
+                                        <div class="velaCollectionInfoImage clearfix">
+                                            <a href="{{ collections[proCollection].url }}" title="{{ collections[proCollection].title }}">
+                                                {%- if block.settings.image != blank -%}
+                                                    <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:'master' }}" />
+                                                        
+                                                {%- else -%}
+                                                    {%- if collections[proCollection].image -%}
+                                                        <img class="img-responsive" alt="{{ collection.title }}" src="{{ collections[proCollection].image | collection_img_url: 'master' }}" />
+                                                    {%- else -%}
+                                                        <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/470x300.jpg" />
+                                                    {% endif %}
+                                                {%- endif -%}
+                                            </a>
+                                        </div>
+                                        <div class="boxCollectionInner">
+                                            <div class="wrap">
+                                                {%- if block.settings.title != blank  or proCollection != blank -%}
+                                                    <h4 class="boxCollectionTitle text-uppercase">
+                                                        <a href="{{ collections[proCollection].url }}" title="{{ collections[proCollection].title }}">
+                                                            {%- if block.settings.title != blank %}
+                                                                {{ block.settings.title }}
+                                                            {% else  %}
+                                                                {{ collections[proCollection].title }}
+                                                            {% endif %}
+                                                        </a>
+                                                    </h4>
+                                                    <div class="collectionCount">{{ collections[proCollection].products_count}} {%if collections[proCollection].products_count> 1%}{{ 'general.collectioninfo.product' | t}}{%else%}{{ 'general.collectioninfo.products' | t}}{%endif%}</div>
+                                                {%- endif -%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {%- endif -%}
+                        {% endfor %}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Collection Info",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Collection",
+                "settings": [
+                    {
+                        "type": "collection",
+                        "id": "collection_handle",
+                        "label": "Collection"
+                    },                    
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Box heading"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Box image"
+                    }
+                ]
+            }
+        ],
+		"presets": [
+            {
+                "name": "Collection Info",
+                "category": "2. Vela Product"
+            }
+        ]
+    }
+{% endschema %}

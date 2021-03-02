@@ -1,0 +1,20 @@
+{{ 'jquery.2.2.3.js' | asset_url | script_tag }}
+<script>
+    window.money = '{{ shop.money_format }}';
+    window.money_format = '{{ shop.money_with_currency_format }}';
+    window.currency = '{{ shop.currency }}';
+    window.shop_money_format = {{ shop.money_format | strip_html | json }};
+    window.shop_money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
+    window.loading_url = "{{ 'loading.gif' | asset_url}}";
+    window.file_url = "{{''|file_url}}";
+    window.asset_url = "{{'Vela'|asset_url|remove:'Vela'}}";
+    window.ajaxcart_type = '{{ settings.ajax_cart_method }}';
+    window.cart_empty = {{ 'cart.general.empty' | t | json }};
+    window.swatch_enable = {{ settings.product_swatch }};
+    window.swatch_show_unvailable = {{ settings.product_swatch_unvailable }};
+    window.sidebar_multichoise = {{ settings.sidebar_filtercustag_multi }};
+    window.float_header = {{ settings.header_float_enable }};
+    window.review = {{ settings.product_reviews_enable }};
+    window.currencies = {{ settings.show_multiple_currencies }};
+    window.countdown_format = "<ul class='list-unstyle list-inline'><li><span class='number'>%D</span><span>Days</span></li><li><span class='number'>%H</span><span>Hours</span></li><li><span class='number'>%M</span><span>Mins</span></li><li><span class='number'>%S</span><span>Secs</span></li></ul>";
+</script>

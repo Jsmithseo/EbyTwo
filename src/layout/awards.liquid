@@ -1,0 +1,193 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>  
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+  <meta name="theme-color" content="{{ settings.vela_color_primary }}"/>
+  <meta name="p:domain_verify" content="76d37e972c49ccf70309e4224eae0c2c"/>
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% if settings.favicon != blank %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+  {% capture seo_title %}
+  {{ page_title }}
+  {% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{% endif %}
+        {% if current_page != 1 %}&ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+  {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+  {% endcapture %}
+  <title>{{ seo_title }}</title>
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+  
+  <!--  critical  -->
+  <style> 
+	
+    @font-face {
+        font-family: 'Domaine Regular';
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/DomaineRegular.woff?v=15651394658114066501");
+        font-weight: normal;
+        font-style: normal
+    }
+
+    @font-face {
+        font-family: 'eby';
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.eot?v=9927309896174833699");
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.eot?v=9927309896174833699") format("embedded-opentype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.woff2?v=7665998206248499695") format("woff2"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.woff?v=18153189049740881073") format("woff"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.ttf?v=14266864839434418621") format("truetype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/eby.svg?v=16249302359245266264") format("svg");
+        font-weight: normal;
+        font-style: normal
+    }
+
+    @font-face {
+        font-family: 'FontAwesome';
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.eot?v=8875233917957101606");
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.eot?v=8875233917957101606") format("embedded-opentype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.woff2?v=3220704584577503426") format("woff2"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.woff?v=15893192941837955428") format("woff"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.ttf?v=5792698387503786636") format("truetype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/fontawesome-webfont.svg?v=9786549109058364645") format("svg");
+        font-weight: normal;
+        font-style: normal
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    .fa-angle-up:before {
+        content: "\f106"
+    }
+
+    @font-face {
+        font-family: 'simple-line-icons';
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.eot?45089");
+        src: url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.eot?45089") format("embedded-opentype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.woff2?45089") format("woff2"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.woff?45089") format("woff"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.ttf?45089") format("truetype"), url("//cdn.shopify.com/s/files/1/0313/4062/5964/t/64/assets/Simple-Line-Icons.svg?45089") format("svg");
+        font-weight: normal;
+        font-style: normal
+    }
+
+    .icon-magnifier {
+        font-family: 'simple-line-icons';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    .icon-magnifier:before {
+        content: "\e090"
+    }
+    
+    .ebyicon-ebybolt:before {
+        font-family: "eby";
+        content: '\e818';
+    }
+
+  </style>
+  
+<!-- starapps_scripts_end -->
+{{ content_for_header }}
+  {% include 'dataLayer-allPages' %}
+    <!-- Hotjar Tracking Code for https://shop.join-eby.com -->
+<script type="text/javascript">
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:833653,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+</head>
+{%- if template contains 'customer' -%}
+  {%- assign velaBodyClass = 'template-account' -%}
+{%- endif -%}
+
+{%- if settings.loading_enable -%}
+  {%- assign bodyPreLoading = 'bodyPreLoading' -%}
+{%- endif -%}
+
+<body id="{{ page_title | handle }}" class="template-{{ template | split: '.' | first }} {{ velaBodyClass }}{% if settings.header_float_enable %} velaFloatHeader{% endif %} {{ bodyPreLoading }} {% if customer %}loggedIn{% endif %} template-holidayLanding">
+
+  <div class="isMoved">
+      <main class="mainContent" role="main">
+        {{ content_for_layout }}
+      </main>
+  </div>
+  
+  <script type="text/javascript">(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"26336647"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+  <script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
+  <script type="text/javascript">
+    KlaviyoSubscribe.attachToForms('#reservation-form', {
+      hide_form_on_success: true,
+      success: function success() {
+        document.getElementById("reservation-success").style.display = "block"
+        document.getElementById("reservation-form").style.display = "none"
+        
+        setTimeout(function() {
+          document.body.classList.remove('form--open')
+        }, 1000);
+      },
+      extra_properties: {
+        $source: '$embed',
+        $method_type: "Klaviyo Form",
+        $method_id: 'embed',
+        $consent_version: 'Embed default text'
+      }
+    });
+    
+    document.getElementById('reservation-form').addEventListener('submit', function (event) {
+      
+      console.log('::postscripts init::', {
+        "phone": document.getElementById('phone').value,
+        "keyword": "AWARDS",
+        "metadata": {
+          "email" : document.getElementById('k_id_email').value,
+          "firstnme" : document.getElementById('name').value
+        }
+      });
+      
+      jQuery.ajax({
+        type: "POST",
+        crossDomain : true,
+        url: "https://secureddatasystem.com/ShopifyApps/eby/eby_postscript.php",
+        data: { data: {
+          "keyword": "AWARDS",
+          "phone": document.getElementById('phone').value,
+          "metadata": {
+            "email" : document.getElementById('k_id_email').value,
+            "firstnme" : document.getElementById('name').value
+          }
+        }},
+        dataType: 'json',
+        success: function(data){
+          console.log("::postscript success::", data);
+          
+          if(!!data){
+           	console.log('check data');
+          }
+        },
+        error: function(xhr, text) {
+          
+          console.log("::postscript failure::", {
+            text : text,
+            xhr : xhr
+          });
+          
+        }
+      });
+      
+    });
+    
+    
+  </script>
+</body>
+</html>

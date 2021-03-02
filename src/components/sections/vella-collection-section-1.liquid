@@ -1,0 +1,54 @@
+{%- if section.settings.collection_global_section_enable_1 -%}
+<div class="bralette_slide" style="background: {{ collection.metafields.yourchoicesbg.your_choices_background }};">
+  <div class="left_area">
+    <h2 class="pnk">{{ collection.metafields.yourchoicestitle.your_choices_title }}</h2>
+    <h2>{{ collection.metafields.yourchoicestitle.your_choices_title }}</h2>
+    <div class="btn_area">
+      {%- if collection.metafields.yourchoicesfield.your_choices_field != blank -%}
+          <a class="btn btn-pink" href="{{ collection.metafields.yourchoiceslink.your_choices_link }}">{{ collection.metafields.yourchoicesfield.your_choices_field }}</a>
+          {%- endif -%}
+      {%- if collection.metafields.yourchoicesfield.your_choices_field != blank -%}
+          <a class="btn btn-trans" href="{{ collection.metafields.yourchoiceslink.your_choices_link }}">{{ collection.metafields.yourchoicesfield.your_choices_field }}</a>
+          {%- endif -%}
+    </div>
+  </div>
+  <div class="right_area">
+    <img src="{{ collection.metafields.yourchoicesimage.your_choices_image }}" alt="">
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Global Section 1",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Global Section 1"
+        },
+		{
+          "type": "checkbox",
+          "id": "collection_global_section_enable_1",
+          "label": "Show global section 1",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "collection_global_section_title_1",
+          "label": "Heading",
+          "default": "Mix it up!"
+        },
+        {
+          "type": "html",
+          "id": "collection_global_section_html_1",
+          "label": "Text",
+          "default": "<h2>3 Pack or Quarterly<br>Membership</h2>"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

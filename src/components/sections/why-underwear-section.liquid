@@ -1,0 +1,32 @@
+<div style="background-color: {{ page.metafields.ebyacf.blkFive_background_color }};">
+  {{ page.metafields.ebyacf.blkFive_copy_statement_editor.en }}
+</div>
+
+{% schema %}
+  {
+    "name": "Why Underwear",
+    "class": "underwearMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+    {
+      "type":"richtext",
+      "id":"count_content",
+      "label":"Enter Count Content"
+    },
+    {
+      "type": "image_picker",
+      "id":"underwear_img_01",
+      "label":"Select images"
+    },
+    {
+      "type": "image_picker",
+      "id":"underwear_img_02",
+      "label":"Select images"
+    }
+    ]
+  }
+{% endschema %}

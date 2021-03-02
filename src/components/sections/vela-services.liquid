@@ -1,0 +1,126 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {% capture bgColor %}
+        background-color: {{ section.settings.color_bg }};
+    {% endcapture %}
+{%- endif -%}
+{%- if section.settings.padding_block != blank -%}
+    {% capture paddingblock %}
+        padding: {{section.settings.padding_block}};
+    {% endcapture %}
+{%- endif -%}
+{%- if section.settings.iconsize != blank -%}
+    {%- assign size = section.settings.iconsize -%}
+{%- else -%}
+    {%- assign size = 'master' -%}}
+{%- endif -%}
+<div class="velaServices mb30" style="{{ bgColor }}{{ paddingblock }}">
+    <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">
+        <div class="velaServicesInner">
+            <div class="velaContent">
+                {%- if section.blocks.size > 0 -%}
+                    <div class="rowFlex rowFlexMargin">
+                        {% for block in section.blocks %}
+                            <div class="{% if section.settings.class != blank %}{{ section.settings.class }}{% else %}col-xs-12 col-sm-4{% endif %} mb30">
+                                <div class="boxService ">
+                                    <div class="boxServiceContent mb30 text-center">
+                                        {%- if block.settings.icon != blank -%}
+                                            <div class="boxServiceImage d-flex flexJustifyCenter">
+                                                <span>
+                                                    <img class="img-responsive" src={{ block.settings.icon | img_url : size }} alt="">
+                                                </span>
+                                            </div>
+                                        {%- endif -%}
+                                        {%- if block.settings.box_title != blank -%}
+                                            <h4 class="boxServiceTitle">{{ block.settings.box_title }}</h4>
+                                        {%- endif -%}
+                                        {%- if block.settings.box_desc != blank -%}
+                                            <div class="boxServiceDesc">
+                                                {{ block.settings.box_desc }}
+                                            </div>
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Service",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "class",
+                "label": "Class name",
+                "default": "col-xs-12 col-sm-3",
+                "info": "Grid class bootstrap"
+            },
+            {
+                "type": "text",
+                "id": "iconsize",
+                "label": "Icon Size",
+                "default": "65x45"
+            }
+
+        ],
+        "blocks": [
+            {
+                "type": "Icon",
+                "name": "Service item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "icon",
+                        "label": "Icon"
+                    },
+                    {
+                        "type": "text",
+                        "id": "box_title",
+                        "label": "Box heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "box_desc",
+                        "label": "Box description"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Our services",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

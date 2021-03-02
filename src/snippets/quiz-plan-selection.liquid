@@ -1,0 +1,65 @@
+<div class="selection-list-wrapper">
+  <div class="step-top-h">
+  	<h2>How often do you want your new undies?</h2>
+  	<p>Cancel or skip anytime. Free shipping, always.</p>
+  </div>
+  <div class="plans-error quiz_error">
+
+  </div>
+  <ul class="selection-list">
+    <li id="quarterly">
+      <input type="radio" name="plans" data-pack="3" data-mx-img="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Quarterly---Mixed_2x_fc0313a9-7740-4852-b9fe-66d4c6210e15.jpg?v=1601016263" data-nu-img="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Quarterly---Neutrals_2x_47bb4aa6-82aa-464d-b805-5067efd39863.jpg?v=1601016263" value="Every 3 Months" id="Every 3 Months">
+      <label class="waves-effect waves-dark" data-label="Every 3 Months" for="Every 3 Months">
+        <span class="price"></span>
+        3 Pair – we’ll send you 3 underwear every 3 months for only $15 per panty. You save $10.50.
+      </label>
+    </li>
+    <li id="semi-annual">
+      <input type="radio" name="plans" data-pack="5" data-mx-img="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Semi---Mixed_2x_ed655d92-43bc-4054-8990-43624580c959.jpg?v=1601016263" data-nu-img="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/Quiz---Plan---Semi---Mixed_2x_ed655d92-43bc-4054-8990-43624580c959.jpg?v=1601016263" value="Every 6 Months" id="Every 6 Months">
+      <label class="waves-effect waves-dark" data-label="Every 6 Months" for="Every 6 Months">
+        <span class="price"></span>
+        5 Pair – we’ll send you 5 underwear every 6 months for only $15 per panty. You save $17.50.
+      </label>
+    </li>
+  </ul>
+  <div class="plan-accordian">
+    <ul class="collapsible">
+      <li>
+        {%- if page.metafields.membershipworktitle.how_membership_works_title != blank -%}
+        <h3 class="collapsible-header">{{ page.metafields.membershipworktitle.how_membership_works_title }}</h3>
+        {%- endif -%}
+        <ul class="collapsible-body">
+          <li>
+            {%- if page.metafields.membershipwocontent.how_membership_works_content != blank -%}
+            {{ page.metafields.membershipwocontent.how_membership_works_content }}
+            {%- endif -%}
+          </li>
+        </ul>
+      </li>
+      <li>
+        {%- if page.metafields.faqtitle.faq_title != blank -%}
+        <h3 class="collapsible-header">{{ page.metafields.faqtitle.faq_title }}</h3>
+        {%- endif -%}
+        <ul class="collapsible-body">
+          <li>
+            {%- if page.metafields.faqcontent.faq_content != blank -%}
+            {{ page.metafields.faqcontent.faq_content }}
+            {%- endif -%}
+          </li>
+        </ul>
+      </li>
+      <li>
+        {%- if page.metafields.reviewstitle.reviews_title != blank -%}
+        <h3 class="collapsible-header">{{ page.metafields.reviewstitle.reviews_title }}</h3>
+        {%- endif -%}
+        <ul class="collapsible-body">
+          <li>
+            {%- if page.metafields.reviewscontent.reviews_content != blank -%}
+            {{ page.metafields.reviewscontent.reviews_content }}
+            {%- endif -%}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

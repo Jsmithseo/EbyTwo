@@ -1,0 +1,29 @@
+{% assign proImageSize = 'small' %}
+{% if product.compare_at_price > product.price %}
+    {% assign on_sale = true %}
+{% endif %}
+{% assign sold_out = true %}
+{% if product.available %}
+    {% assign sold_out = false %}
+{% endif %}
+    <div class="velaProBlock media">
+        <div class="proHImage pull-left">
+            <a class="proFeaturedImage" href="{{ product.url }}">
+                <img class="img-responsive {%if intItem == 2 %}image-primay{% endif %}" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:proImageSize }}" />
+            </a>
+        </div> 
+        <div class="proContent media-body">
+            {%- if product.type != blank and settings.productgrid_type -%}
+                <div class="productType">{{ product.type | link_to_type }}</div>
+            {%- endif -%}
+            <h5 class="proName">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+            </h5>                    
+            <div class="proPrice">
+                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                {% if on_sale %}
+                    <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                {% endif %}
+            </div> 
+        </div>
+    </div>

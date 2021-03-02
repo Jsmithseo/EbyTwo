@@ -1,0 +1,85 @@
+<div style="background-color: {{ page.metafields.backgroundcolor.background_color }};">
+  {{ page.metafields.blkninecontent.blk_nine_content }}
+</div>
+
+{% schema %}
+  {
+    "name": "Grows Year",
+    "class": "growsYearMain",
+    "settings": [
+      {
+        "type":"text",
+        "id":"heading",
+        "label":"Enter Heading"
+      },
+      {
+        "type":"text",
+        "id":"headed_number",
+        "label":"Enter Count Content"
+      },
+  	  {
+        "type":"textarea",
+        "id":"impact_text_content",
+        "label":"Enter text"
+      },
+      {
+        "type":"text",
+        "id":"on_repeat_title",
+        "label":"Enter Heading"
+      },
+      {
+        "type":"text",
+        "id":"on_repeat_content",
+        "label":"Enter Text"
+      },
+      {
+        "type":"text",
+        "id":"join_now_btn",
+        "label":"Button Label"
+      },
+      {
+        "type": "url",
+        "id": "join_now_link",
+        "label": "Link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "country_name",
+            "label": "Enter Country"
+          },
+          {
+            "type":"richtext",
+            "id":"work_text",
+            "label":"Text"
+          },
+          {
+            "type": "text",
+            "id": "year_01",
+            "label": "Enter Year 01"
+          },
+          {
+            "type": "text",
+            "id": "year_02",
+            "label": "Enter Year 02"
+          },
+          {
+            "type": "text",
+            "id": "year_03",
+            "label": "Enter Year 03"
+          },
+          {
+            "type": "image_picker",
+            "id":"grows_img",
+            "label":"Select images"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,642 @@
+{% layout 'offers' %}
+
+{% assign header = page.metafields.bfcm_landing_header %}
+{% assign hero = page.metafields.bfcm_landing_hero %}
+{% assign product_block = page.metafields.bfcm_landing_product %}
+{% assign usp_block = page.metafields.bfcm_landing_usp_t %}
+{% assign testimonial_block = page.metafields.bfcm_landing_t_c %}
+{% assign video_block = page.metafields.bfcm_landing_video_b %}
+{% assign text_image = page.metafields.bfcm_landing_ti %}
+{% assign subscription_block = page.metafields.bfcm_landing_sub_b %}
+
+{% if subscription_block.title == blank %}
+  {% assign is_subscription_landing = false %}
+{% else %}
+  {% assign is_subscription_landing = true %}
+{% endif %}
+
+{% assign quiz_url = '/pages/build-your-box' %}
+
+<div class="landing-offers{% if is_subscription_landing %} subscription-landing{% endif %}">
+  <div class="header bg-white">
+    <div class="header-container">
+	  <div class="header-container-innerwrapper">
+      <div class="header-links-desktop{% if customer %} loggedin{% endif %}">
+        <div class="header-block">
+          <a href="/"><img src="{{ header.logo }}" alt="EBY" title="EBY" /></a>
+        </div>
+        <div class="header-block">
+          {%- if customer -%}
+          <a class="sign_in_btn ebyHeaderLink signinLink" href="/account" title="{{ 'layout.header.account' | t }}">
+            <span>My Account</span>
+          </a>
+          {%- elsif is_subscription_landing == false -%}
+          <a href="/account/login" title="Login" class="sign_in_btn ebyHeaderLink signinLink"><span>Sign In</span></a>
+          {%- endif -%}
+        </div>        
+      </div>
+      <div class="header-links-mobile">
+        <div class="header-block">
+          {%- if customer -%}
+          <a class="sign_in_btn ebyHeaderLink signinLink" href="/account" title="{{ 'layout.header.account' | t }}">
+            <span>My Account</span>
+          </a>
+          {%- elsif is_subscription_landing == false -%}
+          <a href="/account/login" title="Login" class="sign_in_btn ebyHeaderLink signinLink"><span>Sign In</span></a>
+          {%- endif -%}
+        </div>
+        <div class="header-block">
+          <a href="/"><img src="{{ header.logo }}" alt="EBY" title="EBY" /></a>
+        </div>
+        <div class="header-block">
+          <div class="header-minicart-wrapper{% if cart.item_count <= 0 or is_subscription_landing == true %} shop{% else %} checkout{% endif %}">
+            {% include 'vela-carttop' %}
+          </div>
+        </div>  
+      </div>
+      <div class="header-inline-content">
+        {% if header.content %}
+          <div class="content navy">{{ header.content }}</div>
+        {% endif %}
+        {% if header.cta_url and header.cta_label %}
+          <span class="header-checkoutbtn-wrapper{% if cart.item_count <= 0 or is_subscription_landing == true %} shop{% else %} checkout{% endif %}">
+            <a data-ebycat="bfcm-primaryScollBtn" data-ebylab="-" data-ebyval="$0.00" href="{{ header.cta_url }}" class="btn white-btn shop ebyBtnTracker">{{ header.cta_label }}</a>
+            {% if is_subscription_landing == false %}
+            <a data-ebycat="bfcm-checkoutNowBtn" data-ebylab="cartAmount-{{ cart.item_count }}" data-ebyval="{{ cart.total_price | money }}" href="//shop.join-eby.com/checkout" class="btn white-btn checkout ebyBtnTracker">Check Out</a>
+            {% endif %}
+          </span>
+        {% endif %}  
+        <div class="header-minicart-wrapper{% if cart.item_count <= 0 or is_subscription_landing == true %} shop{% else %} checkout{% endif %}">
+          {% include 'vela-carttop' %}
+        </div>      
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="intro">
+            {%if hero.header %}
+              <div class="navy preheader">{{ hero.header }}</div>
+            {% endif %}
+            <h1 class="navy">
+              {{ hero.title }}
+            </h1>
+            {%if hero.subtitle %}
+              <span class="info">{{ hero.subtitle }}</span>
+            {% endif %}
+            <div class="rate">
+              {% assign rating = hero.rating | plus: 0 %}
+              {% for counter in (1..5) %}
+                <i class="fa fa-star{% if (rating < counter) %} grey{% endif %}"></i>
+              {% endfor %}
+            </div>
+            {% if hero.review and hero.review_author %}
+              <span class="review navy">"{{ hero.review }}"</span>
+              <span class="author navy">— {{ hero.review_author }}</span>
+            {% endif %}
+            {% if hero.cta_url and hero.cta_label %}
+              <a data-ebycat="bfcm-secondaryScollBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ hero.cta_url }}">{{ hero.cta_label }}</a>              
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-sm-6 hero-image-container">
+          <img src="{{ hero.image }}" alt="{{ hero.cta_label }}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if page.metafields.bfcm_landing_review.logo and page.metafields.bfcm_landing_review.logo.size > 0 %}
+    <div class="bg-navy">
+      <div class="container reviews-block">
+        {% for review in page.metafields.bfcm_landing_review.logo %}
+          <div class="review">
+            <div class="logo-box">
+              <img src="{{ page.metafields.bfcm_landing_review.logo[forloop.index0] }}" alt="{{ review.content }}"/>
+            </div>
+            <p class="white">"{{ page.metafields.bfcm_landing_review.content[forloop.index0] }}"</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="triangle"></div>
+  {% endif %}
+
+    <div class="deals text-center">
+        <h2 class="navy title">{{ product_block.title }}</h2>
+        <div class="content{% if request.path contains "/seamless-intimates" %} with-border{% endif %}">
+            {{ product_block.intro }}
+            {{ product_block.description }}
+        </div>
+
+    {% if is_subscription_landing == true %}
+    <div id="showcase-products-anchor"></div>
+    <div class="quarterly-products">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="product-card">
+                    <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-2.jpg?v=1609276424" alt="Custom Box"/>
+                    <div class="product-info">
+                        <h4 class="product-name">Mixed Styles Box</h4>
+                        <div class="product-price">
+                          <span class="previous-price">
+                              $45
+                          </span>
+                            <span class="current-price">
+                              $20
+                          	</span>
+                          <!-- </span>
+                            <span class="sale">
+                              Save 55%
+                          </span> -->
+                        </div>
+                        <a href="/pages/build-your-box?style=Mixed%20Styles" class="get-offer" type="button">
+                          <span>Get offer</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="product-card">
+                    <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-1.jpg?v=1609276424" alt="Briefs Box"/>
+                    <div class="product-info">
+                        <h4 class="product-name">Briefs Box</h4>
+                        <div class="product-price">
+                          <span class="previous-price">
+                              $45
+                          </span>
+                            <span class="current-price">
+                              $20
+                          </span>
+                            <!-- <span class="sale">
+                              Save 55%
+                          </span> -->
+                        </div>
+                        <a href="/pages/build-your-box?style=All%20Briefs" class="get-offer" type="button">
+                          <span>Get offer</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="product-card">
+                    <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-3.jpg?v=1609276424" alt="Highwaisted Box"/>
+                    <div class="product-info">
+                        <h4 class="product-name">Highwaisted Box</h4>
+                        <div class="product-price">
+                            <span class="previous-price">$45</span>
+                            <span class="current-price">$20</span>
+                            <!-- <span class="sale">Save 55%</span> -->
+                        </div>
+                        <a href="/pages/build-your-box?style=All%20High%20Waisted" class="get-offer" type="button">
+                          <span>Get offer</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% assign rebuy_ids = product_block.rebuy_widget_id | split: "," %}
+    {% assign is_mix_and_match = false %}
+    {% assign is_mask_packs = false %}
+
+    {% assign rebuy_widgets_count = rebuy_ids | size %}
+
+    {% if rebuy_widgets_count > 1 %}
+      {% if rebuy_ids contains '4203' or rebuy_ids contains '4546' %}
+        {% assign is_mix_and_match = true %}
+      {% elsif rebuy_ids contains '4477' %}
+        {% assign is_mask_packs = true %}
+      {% endif %}
+    {% endif %}
+
+    {% if is_subscription_landing == false %}
+    <div id="showcase-products-anchor"></div>
+    {% for rebuy_id in rebuy_ids %}
+    <div class="products">
+      {% if is_mix_and_match == true %}
+      {% if forloop.first == true %}
+        <h2 class="mix-and-match-title">Choose Your Top</h2>
+      {% else %}
+        <h2 class="mix-and-match-title">Choose Your Bottom</h2>
+      {% endif %}
+      {% endif %}
+      {% assign selected_product_handles = page.metafields.bfcm_landing_product.products[0] | split: '|' %}
+      <div class="ebyProductListingWidget ebyProductWrapper">
+        <div data-rebuy-id="{{ rebuy_id }}" id="rebuy-id-{{ rebuy_id }}">
+            <div class="rebuy-widget"
+              v-cloak
+              v-on:click="stopPropagation($event)"
+              v-bind:id="'rebuy-widget-' + id"
+              v-bind:class="['widget-type-' + config.type.replace('_','-'), 'widget-display-' + config.display_type, products.length > 0 ? 'is-visible' : 'is-hidden']">
+
+              <div
+                  class="rebuy-widget-container"
+                  v-cloak
+                  v-bind:class="['widget-display-' + config.display_type, visible ? 'is-visible' : 'is-hidden' ]"
+                  v-on:click.self="hide()">
+
+                  <div class="rebuy-widget-content">
+                      <div class="rebuy-modal-close" v-on:click="hide()">
+                          <i class="fas fa-times"></i>
+                      </div>
+
+                      <h4 class="super-title" v-if="config.language.super_title != ''" v-html="config.language.super_title"></h4>
+
+                      <h3 class="primary-title" v-if="config.language.title != ''" v-html="config.language.title"></h3>
+
+                      <div class="rebuy-product-grid" v-bind:class="layoutClasses">
+
+                      <div class="rebuy-product-block" v-for="product in products" v-bind:class="[product.handle, 'product-id-' + product.id, cartHasProduct(product) ? 'cart-has-item' : '']">
+                              <div class="rebuy-product-media">
+                                  <a class="rebuy-product-image" v-bind:href="learnMoreURL(product)" v-bind:style="imageStyles" v-on:click="learnMore(product);" v-bind:class="[hasLearnMore() ? 'clickable' : '']">
+                                      <img v-bind:src="itemImage(product, product.selected_variant, '400x400')" v-bind:alt="product.title">
+                                  </a>
+                              </div>
+                              <!-- <div class="rebuy-product-moreInfo">
+                                <p>When you choose this Surprise-Me Pack, we'll surprise you with a unique assortment of our most coveted styles and colors</p>
+                              </div> -->
+                              <div class="rebuy-product-info">
+                                  <!-- <div class="description" v-if="config.language.description != ''" v-html="config.language.description"></div> -->
+                                  <a class="rebuy-product-title" v-bind:href="learnMoreURL(product)" v-on:click="learnMore(product);" v-html="product.title.lastIndexOf(' E') === (product.title.length - 2) ? product.title.substring(0, product.title.length - 2) : product.title" v-bind:class="[hasLearnMore() ? 'clickable' : '']"></a>
+                                  <div class="rebuy-variant-title" v-html="product.selected_variant.title"></div>
+                                  <div v-if="product.product_type == 'Core Bralette' || product.product_type == 'Core Underwear' || product.product_type == 'Surprise Panty Pack'">
+                                    <a class="siz_guid" v-bind:data-product-type="product.product_type" href="#">Size Guide</a>
+                                  </div>
+                                  <div class="rebuy-product-review" v-if="hasProductReviews(product)">
+                                      <span class="rebuy-star-rating">
+                                          <span class="rebuy-star-rating-background"></span>
+                                          <span class="rebuy-star-rating-foreground" v-bind:style="{ width: productReviewRatingPercentage(product) }"></span>
+                                      </span>
+                                      <span class="rebuy-review-count" v-html="productReviewCount(product)"></span>
+                                  </div>
+                                  <div class="rebuy-product-price">
+                                      <div v-if="variantOnSale(product, product.selected_variant)">
+                                          <span class="rebuy-money sale" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                          <span class="rebuy-money compare-at" v-html="formatMoney(variantCompareAtPrice(product, product.selected_variant))"></span>
+                                      </div>
+                                      <div v-if="!(variantOnSale(product, product.selected_variant))">
+                                          <span class="rebuy-money" v-html="formatMoney(variantPrice(product, product.selected_variant))"></span>
+                                      </div>
+                                  </div>
+                                  <div class="rebuy-product-description" v-html="text(product.body_html)"></div>
+                              </div>
+                              <div class="rebuy-product-options" v-if="showVariantSelect(product)">
+                                  <select
+                                      class="rebuy-select"
+                                      v-model="product.selected_variant_id"
+                                      v-on:change="selectVariant(product)">
+                                      <option v-for="variant in product.variants" v-bind:value="variant.id">{% raw %}{{ variant.title }}{% endraw %}</option>
+                                  </select>
+                              </div>
+                              <div class="rebuy-product-actions">
+
+                                  <div class="subscription-checkbox" v-if="showSubscriptionOptions(product)">
+                                      <label class="rebuy-checkbox">
+                                          <input
+                                              class="checkbox-input"
+                                              v-model="product.subscription"
+                                              v-on:change="toggleSubscription(product)"
+                                              type="checkbox" />
+                                          <span class="checkbox-label" v-html="upgradeToSubscriptionLabel(product)"></span>
+                                      </label>
+                                  </div>
+
+                                  <div class="subscription-frequency" v-if="showSubscriptionFrequency(product)">
+                                      <select
+                                          class="rebuy-select"
+                                          v-model="product.subscription_frequency">
+                                          <option v-for="frequency in product.subscription_frequencies" v-bind:value="frequency">{{ frequencyLabel(frequency, product.subscription_interval) }}</option>
+                                      </select>
+                                  </div>
+
+                                  <button
+                                      class="rebuy-button"
+                                      v-bind:class="{ working: (product.status != 'ready' && product.status != 'selecting') }"
+                                      v-bind:disabled="!(variantAvailable(product.selected_variant)) || (product.status != 'ready' && product.status != 'selecting')"
+                                      v-on:click="addUpsellToCart(product)"
+                                      type="button">
+                                          <span class="to-cart-mobile">Add</span>
+                                          <span class="to-cart-desktop">Add to cart</span>
+                                  </button>
+
+                                  <button
+                                      class="rebuy-button decline"
+                                      v-on:click="declineOffer(product)"
+                                      type="button">
+                                          <span v-html="declineLabel(product)"></span>
+                                  </button>
+
+                              </div>
+                          </div>
+
+                      </div>
+
+                  </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if text_image.title == blank and is_subscription_landing == false %}
+    
+    <div class="keep-shopping navy">
+      <h2>Keep Shopping</h2>
+      <p>Browse our entire seamless collection of masks, panties, and bralettes</p>
+      <a class="btn navy-btn ebyBtnTracker landingPageCta" href="/collections" title="Shop All">Shop All</a>
+    </div>
+
+    {% endif %}
+
+  </div>
+
+  {% if is_subscription_landing == true %}
+  <div class="subscription-block text-center">
+      <div class="subscription-block-container">
+          <h2>{{ subscription_block.title }}</h2>
+          <div class="bg-white background">
+              <div class="row">
+                {% for benefit in page.metafields.bfcm_landing_sub.benefit %}
+                  <div class="col-sm-4{% if forloop.index == 1 %} col-sm-push-4{% elsif forloop.index == 2 %} col-sm-pull-4{% endif %}">
+                    <div class="block">
+                      {{ page.metafields.bfcm_landing_sub.benefit[forloop.index0] }}
+                    </div>
+                  </div>
+                {% endfor %}                  
+              </div>
+          </div>
+
+          <!-- <div class="shop-all-style">
+              <h2>Shop All Style Options</h2>
+              <p>Browse our entire collection of seamless style options</p>
+              {% if subscription_block.cta_url and subscription_block.cta_label %}
+              <a data-ebycat="bfcm-secondaryScollBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ hero.cta_url }}">{{ hero.cta_label }}</a>
+              {% endif %}
+          </div> -->
+      </div>
+  </div>
+  <div class="bg-navy subscription-reviews">
+    <h2>Over 7,200 5 Star Reviews!</h3>
+    <div class="container reviews-block">
+        <div class="review">
+          <p class="white">"Best Panties EVER! I only wear EBY's!"</p>
+          <p class="author">Josie W.</p>
+        </div>
+      
+        <div class="review">
+          <p class="white">"The most comfortable underwear ever! I can't wear anyting else!" </p>
+          <p class="author">Aimee S.</p>
+        </div>
+      
+        <div class="review">
+          <p class="white">"I wasnt sure if they would live up to the hype, but these are the freaking best panties. OMG!"</p>
+          <p class="author">Caroline S.</p>
+        </div>
+      
+        <div class="review">
+          <p class="white">"No lines! The no-slip grip is literally the best!"</p>
+          <p class="author">Amanda T.</p>
+        </div>
+      
+        <div class="review">
+          <p class="white">"FINALLY found undies that hugged in all the right places without riding up or visible panty lines."</p>
+          <p class="author">Mindy E.</p>
+        </div>
+      
+    </div>
+  </div>
+  {% endif %}
+
+  {% if text_image.title %}
+  <div class="bg-white">
+    <div class="textimage text-center">
+      <h2 class="navy">{{ text_image.title }}</h2>
+      <div class="row">
+          <div class="col-sm-6">
+            <div class="image-container">
+              <img src="{{ text_image.image_url }}" alt="{{ text_image.title }}"/>
+            </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="details">
+                {{ text_image.content }}                  
+              </div>
+          </div>
+          {% if testimonial_block.cta_url and testimonial_block.cta_label %}
+          <a data-ebycat="bfcm-secondaryScollBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ testimonial_block.cta_url }}">{{ testimonial_block.cta_label }}</a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if page.metafields.bfcm_landing_usp.usp_content[1] %}
+  <div class="bg-white text-center">
+
+      {% if is_subscription_landing == true %}
+        <div class="subscription-packs">
+          <h2 class="navy">Why go to the store to buy undies when you don’t even try them on?</h2>
+
+            <div class="packs">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <h5>First Box</h5>
+                        <div class="image-container">
+                            <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-1.jpg?v=1609276424" alt="Product Box - First Box"/>
+                            <div class="sale">
+                                $20
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>3 months</h5>
+                        <div class="image-container">
+                            <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-3.jpg?v=1609276424" alt="Product Box - 3 months"/>
+                        	<div class="sale defaultPrice">
+                                $45
+                            </div>
+                      	</div>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>6 months</h5>
+                        <div class="image-container">
+                            <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-2.jpg?v=1609276424" alt="Product Box - 6 months"/>
+                          	<div class="sale defaultPrice">
+                                $45
+                            </div>
+                      	</div>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>9 months</h5>
+                        <div class="image-container">
+                            <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/product-box-3.jpg?v=1609276424" alt="Product Box - 9 months"/>
+                          	<div class="sale defaultPrice">
+                                $45
+                            </div>
+                      	</div>
+                    </div>
+                </div>
+            </div>
+          <h4>We deliver <u>3 pair</u> every <u>3 months</u> right to your door</h4>
+            <img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/down-arrow.svg?v=1609277082" alt="Intuition"/>
+        </div>
+      {% endif %}
+
+      <div class="usp-block">
+      <h2 class="title navy">{{ usp_block.title }}</h2>
+      <div class="usp-block-container">
+        <div class="row">
+          {% for usp in page.metafields.bfcm_landing_usp.usp_content %}
+            <div class="col-md-6">
+              <div class="card navy">
+                <img src="{{ page.metafields.bfcm_landing_usp.usp_image[forloop.index0] }}" alt="{{ usp_block.title }}"/>
+                <div class="content">
+                  {{ page.metafields.bfcm_landing_usp.usp_content[forloop.index0] }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>      
+      {% if usp_block.cta_url and usp_block.cta_label %}
+        <a data-ebycat="bfcm-cardBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ usp_block.cta_url }}">{{ usp_block.cta_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="reviews text-center">
+    <h2 class="title navy">
+      {{ testimonial_block.title }}
+    </h2>
+
+
+    <div class="block">
+      {% for usp in page.metafields.bfcm_landing_t_t.testimonial %}
+        <div class="review navy">
+          <div class="quote-box">
+            <span class="quote">“</span>
+          </div>
+          <p>{{ page.metafields.bfcm_landing_t_t.testimonial[forloop.index0] }}</p>
+          <span class="author">{{ page.metafields.bfcm_landing_t_t.author[forloop.index0] }}</span>
+        </div>
+      {% endfor %}
+    </div>
+    {% if testimonial_block.additional_info %}
+      <div class="subheader navy">{{ testimonial_block.additional_info }}</div>
+    {% endif %}
+    {% if testimonial_block.cta_url and testimonial_block.cta_label %}
+      <a data-ebycat="bfcm-quoteBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ testimonial_block.cta_url }}">{{ testimonial_block.cta_label }}</a>
+    {% endif %}
+
+    <!-- <div class="membership">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="membership-card">
+                    <h4>Intuition</h4>
+                    <img src="{{ 'content-flavors-1.jpg' | asset_url }}" alt="Intuition"/>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="membership-card">
+                    <img src="{{ 'content-flavors-2.jpg' | asset_url }}" alt="Surrender"/>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="membership-card">
+                    <img src="{{ 'content-flavors-3.jpg' | asset_url }}" alt="Acceptance"/>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="membership-card">
+                    <img src="{{ 'content-flavors-4.jpg' | asset_url }}" alt="True Passion"/>
+                </div>
+            </div>
+        </div>
+
+        <h3>With your membership you get access to tools to help alleviate emotional distress, a $250 value.</h3>
+
+        <h2>Created exclusively for EBY members by Deepak Chopra</h2>
+
+        {% if testimonial_block.cta_url and testimonial_block.cta_label %}
+        <a data-ebycat="bfcm-quoteBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker" href="{{ testimonial_block.cta_url }}">{{ testimonial_block.cta_label }}</a>
+        {% endif %}
+    </div> -->
+
+<!--    <div class="info">-->
+<!--      <h2 class="navy">Women <u>E</u>mpowered <u>B</u>y <u>Y</u>ou</h2>-->
+<!--      <p>EBY is a women’s empowerment company. If fact, EBY stands for <i>Empowered By You</i>. 10% of all EBY proceeds-->
+<!--          support microfinance loans for women to start their own businesses.</p>-->
+<!--      <p>This isn’t a charity. Our women are warriors. With a loan of as little as $90, a woman can start a-->
+<!--          business that will allow her to lift her family out of poverty, build a better community for-->
+<!--          everyone.</p>-->
+<!--      <p>Your purchase today, can better the life of another woman forever.</p>-->
+<!--      {% if testimonial_block.cta_url and testimonial_block.cta_label %}-->
+<!--      <a data-ebycat="bfcm-quoteBtn" data-ebylab="-" data-ebyval="$0.00" class="btn navy-btn ebyBtnTracker"-->
+<!--         href="{{ testimonial_block.cta_url }}">{{ testimonial_block.cta_label }}</a>-->
+<!--      {% endif %}-->
+<!--    </div>-->
+  </div>
+
+</div>
+
+<div class="pop_size" style="display: none;" >
+  <div class="pop_inner">
+    <div class="pop_wrap pop_rebuy_id_{{ rebuy_ids[0] }}">
+      <span class="colz_pop">×</span>
+      <div class="ebyGuideChartWrapper">
+        <div class="ebyDesktop-guideWrapper">
+          <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+          <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+        </div>
+        <div class="ebyTablet-guideWrapper">
+          <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+          <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+        </div>
+        <div class="ebyMobile-guideWrapper">
+          <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+          <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+        </div>
+      </div>
+    </div>
+    <div class="pop_wrapper_backing">&nbsp;</div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).on('click', '.siz_guid', function(e){
+    e.preventDefault();
+
+    if (jQuery(this).data('product-type') == 'Core Bralette') {
+      jQuery(".ebyPantyGuide").hide();
+      jQuery(".ebyBraletteGuide").show();
+    } else {
+      jQuery(".ebyBraletteGuide").hide();
+      jQuery(".ebyPantyGuide").show();
+    }
+    
+    if(jQuery('.pop_size').is(':visible')) {
+      jQuery('.pop_size').fadeOut()
+    } else {
+      jQuery('.pop_size').fadeIn()
+    }
+  });
+
+  jQuery('.pop_wrapper_backing').click(function(){
+    jQuery('.pop_size').fadeOut();
+  });
+  
+  jQuery('span.colz_pop').click(function(){
+    jQuery('.pop_size').fadeOut();
+  });
+</script>

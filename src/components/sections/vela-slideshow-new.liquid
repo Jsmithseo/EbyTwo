@@ -1,0 +1,556 @@
+<div class="test banner-slideShow mb60" {% if section.settings.padding_block !=blank %}style="padding:{{section.settings.padding_block}};" {% endif %}>
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaSlideshow">
+            <div data-section-id="{{ section.id }}" data-section-type="velaSlideshowSection">
+                {%- if section.blocks.size > 0 -%}
+                    <div class="velaSlideshowWrapper">
+                        {%- comment -%}
+                            <button type="button" class="btnssPause" data-id="{{ section.id }}">
+                                <span class="btnssPauseStop">
+                                    <i class="fa fa-play"></i>
+                                    <span class="iconText">{{ 'layout.slideshow.pause_slideshow' | t }}</span>
+                                </span>
+                                <span class="btnssPausePlay">
+                                    <i class="fa fa-pause"></i>
+                                    <span class="iconText">{{ 'layout.slideshow.play_slideshow' | t }}</span>
+                                </span>
+                            </button>
+                        {%- endcomment -%}
+                        <div id="velaSlideshows{{ section.id }}" class="vela--slideshow velaSliderLoading" 
+                            data-autoplay="{{ section.settings.autoplay }}"
+                            data-pauseOnHover="false"
+                            data-speed="{{ section.settings.autoplay_speed }}"
+                            data-navigation="{{ section.settings.navigation }}"
+                            data-pagination="{{ section.settings.pagination }}">
+                            {%- assign imageSize = section.settings.image_size -%}
+                            {% for block in section.blocks %}
+                                {%- assign is_background_video = false -%}
+                                {% if block.type == 'video' %}
+                                    {% if block.settings.video_type == 'background' or block.settings.video_type =='background-chrome' %}
+                                        {%- assign is_background_video = true -%}
+                                    {% endif %}
+                                {% endif %}
+                                <div class="velassSlide velassSlide{{ block.id }}{% if is_background_video %} velassSlideBackgroundVideo{% endif %}" {{ block.shopify_attributes }}>
+                                    {% if block.type == 'video' %}
+                                        {% if block.settings.video_url.id != blank %}
+                                            <div class="video-loader"></div>
+                                        {% endif %}
+                                        {% unless block.settings.video_type == 'background' %}
+                                            <button type="button" class="btnssVideoControl btnssVideoControlClose" data-controls="velassVideo{{ block.id }}">
+                                                <i class="fa fa-close"></i>
+                                                <span class="iconText">{{ 'layout.slideshow.close_video' | t }}</span>
+                                            </button>
+                                        {% endunless %}
+                                        {% if block.settings.video_url.id != blank %}
+                                            <div id="velassVideo{{ block.id }}" class="velassVideo {% if is_background_video %}velassVideoBackground{% endif %} velassVideo-{{ block.settings.video_type }}"
+                                                data-id="{{ block.settings.video_url.id }}"
+                                                data-type="{{ block.settings.video_type }}"
+                                                data-slideshow="velaSlideshows{{ section.id }}"></div>
+                                        {% endif %}
+                                    {% endif %}
+                                    
+                                          <div class="vela_new_slider">
+                                          {% if block.settings.image != blank %}
+                                          <a href="{{ block.settings.block_link1 }}" style="color:{{ block.settings.title_color }};">
+                                          <div class="velassImage left-section test" data-image="{{ block.settings.image | img_url:'master' }}">
+                                            {% if block.settings.image != blank %}
+                                            {% if block.settings.image_tab != blank %}
+                                            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:imageSize }}" />
+                                            {% else %}
+                                            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:imageSize }}" />
+                                            {% endif %}
+                                            {% else %}
+                                            <div class="velassNoImagePlaceholder">
+                                              <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/{{ imageSize }}" />
+                                            </div>
+                                            {% endif %}
+                                            {%- if block.settings.title != blank -%}
+                                            <div class="velassCaption caption-{{ block.settings.alignment }}">
+                                              <h2 class="velassHeading {{ block.settings.slides_effect }}-2" style="color:{{ block.settings.title_color }};">
+                                                {%- if block.settings.block_link1 != blank -%}
+                                                    {{ block.settings.title }}
+                                                {%- endif -%}
+                                              </h2>
+                                            </div>
+                                            </a>
+                                            {% endif %}
+                                          </div>
+                                          {% endif %}
+                                          {% if block.settings.image_second != blank %}
+                                          <a href="{{ block.settings.block_link2 }}" style="color:{{ block.settings.title2_color }};">
+                                          <div class="velassImage right-section test" data-image="{{ block.settings.image_second | img_url:'master' }}">
+                                            {% if block.settings.image_second != blank %}
+                                            {% if block.settings.image_tab != blank %}
+                                            <img class="img-responsive" alt="{{ block.settings.image_second.alt | default: shop.name }}" src="{{ block.settings.image_second | img_url:imageSize }}" />
+                                            {% else %}
+                                            <img class="img-responsive" alt="{{ block.settings.image_second.alt | default: shop.name }}" src="{{ block.settings.image_second | img_url:imageSize }}" />
+                                            {% endif %}
+
+                                            {% else %}
+                                            <div class="velassNoImagePlaceholder">
+                                              <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/{{ imageSize }}" />
+                                            </div>
+                                            {% endif %}
+                                            {%- if block.settings.title2 != blank -%}
+                                            <div class="velassCaption caption-{{ block.settings.alignment }}">
+                                              <h2 class="velassHeading {{ block.settings.slides_effect }}-3" style="color:{{ block.settings.title2_color }};">
+                                                {%- if block.settings.block_link2 != blank -%}
+                                                    {{ block.settings.title2 }}
+                                                {%- endif -%}
+                                              </h2>
+                                            </div>
+                                            </a>
+                                            {% endif %}
+                                          </div>
+                                          {% endif %}
+                                          </div>
+                                    <div class="velassCaption bottom_caption">
+                                        <div class="container">
+                                            <div class="velassCaptionContent">
+                                                <div class="velassCaptionInner">
+                                                  {% if block.type == 'video' %}
+                                                    {%- unless block.settings.title == blank -%}
+                                                        <h2 class="velassHeading {{ block.settings.slides_effect }}-2" style="color:{{ block.settings.title_color }};">
+                                                            {{ block.settings.title }}
+                                                        </h2>
+                                                    {%- endunless -%}
+                                                    {%- unless block.settings.title2 == blank -%}
+                                                        <h3 class="velassHeading {{ block.settings.slides_effect }}-3" style="color:{{ block.settings.title2_color }};">
+                                                            {{ block.settings.title2 }}
+                                                        </h3>
+                                                    {%- endunless -%}
+                                                  {% endif %}
+                                                    
+                                                    {%- unless block.settings.btn_text == blank -%}
+                                                        <a class="btn btnVelaSlider {{ block.settings.slides_effect }}-5" 
+                                                            href="{{ block.settings.btn_link }}"
+                                                            style="border-color: {{ block.settings.btn_border_color }}; 
+                                                            background-color: {{ block.settings.btn_bg_color }}; 
+                                                            color: {{ block.settings.btn_text_color }};
+                                                            {% if block.settings.btn_padding != blank %}padding: {{ block.settings.btn_padding }}; {% endif %}">
+                                                            {{ block.settings.btn_text }}
+                                                        </a>
+                                                    {%- endunless -%}
+													{%- unless block.settings.btn2_text == blank -%}
+                                                        <a class="btn btnVelaSlider btn_slidr2 {{ block.settings.slides_effect }}-5" 
+                                                            href="{{ block.settings.btn2_link }}"
+                                                            style="border-color: {{ block.settings.btn2_border_color }}; 
+                                                            background-color: {{ block.settings.btn2_bg_color }}; 
+                                                            color: {{ block.settings.btn2_text_color }};
+                                                            {% if block.settings.btn2_padding != blank %}padding: {{ block.settings.btn2_padding }}; {% endif %}">
+                                                            {{ block.settings.btn2_text }}
+                                                        </a>
+                                                    {%- endunless -%}
+                                                    {%- if block.type == 'video' -%}
+                                                        {% unless block.settings.video_type == 'background' %}
+                                                            <div class="btnssVideoControlPlayWrap{% if block.settings.title != blank or block.settings.subheading != blank %} velassHasCaption{% endif %}">
+                                                                <button type="button" class="btnssVideoControl btnssVideoControlPlay" data-controls="velassVideo{{ block.id }}">
+                                                                    {% include 'icon-play-video' %}
+                                                                    <span class="iconText">{{ 'layout.slideshow.play_video' | t }}</span>
+                                                                </button>
+                                                            </div>
+                                                        {% endunless %}
+                                                    {%- endif -%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Vela slideshow New",
+    "class": "velaFramework velaFramework_new",
+    "max_blocks": 4,
+    "settings": [
+        {
+            "type": "header",
+            "content": "Design Section"
+        },
+        {
+            "type": "checkbox",
+            "id": "full_with",
+            "label": "Enabel Full Width?"
+        },
+        {
+            "type": "text",
+            "id": "padding_block",
+            "label": "Padding",
+            "placeholder": "0px 0px"
+        },
+        {
+            "type": "checkbox",
+            "id": "navigation",
+            "label": "Show Prev/Next arrows",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "pagination",
+            "label": "Show dot indicators",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Autoplay",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "autoplay_speed",
+            "label": "Change slides every",
+            "info": "Required field number. Ex: 8000",
+            "default": "8000"
+        },
+        {
+            "type": "text",
+            "id": "image_size",
+            "label": "Image size",
+            "default": "1920x730",
+            "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image slide",
+            "settings": [
+				{
+                    "type": "header",
+                    "content": "First View Image Section"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "First View Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading 1",
+                    "default": "Slideshow"
+                },
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Heading 1 color",
+                    "default": "#000"
+                },
+				{
+                    "type": "url",
+                    "id": "block_link1",
+                    "label": "Link"
+                },
+				{
+                    "type": "header",
+                    "content": "Second View Image Section"
+                },
+				{
+                    "type": "image_picker",
+                    "id": "image_second",
+                    "label": "Second View Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title2",
+                    "label": "Heading 2",
+                    "default": "Slideshow"
+                },
+                {
+                    "type": "color",
+                    "id": "title2_color",
+                    "label": "Heading 2 color",
+                    "default": "#000"
+                },
+				{
+                    "type": "url",
+                    "id": "block_link2",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Caption"
+                },
+                {
+                    "type": "select",
+                    "id": "alignment",
+                    "label": "Caption alignment",
+                    "default": "center",
+                    "options": [
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "left",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "right",
+                            "label": "Right"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "slides_effect",
+                    "label": "Caption effect",
+                    "options": [
+                        {
+                            "value": "default",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "leftright",
+                            "label": "Left to Right"
+                        },
+                        {
+                            "value": "rightleft",
+                            "label": "Right to Left"
+                        },
+                        {
+                            "value": "topbottom",
+                            "label": "Top to Bottom"
+                        },
+                        {
+                            "value": "bottomtop",
+                            "label": "Bottom to Top"
+                        }
+                    ],
+                    "default": "leftright"
+                },
+                {
+                    "type": "header",
+                    "content": "Button"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_link",
+                    "label": "Button URL"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_padding",
+                    "label": "Button padding",
+                    "placeholder": "10px 30px",
+                    "default": "10px 30px"
+                },
+                {
+                    "type": "color",
+                    "id": "btn_text_color",
+                    "label": "Button text color",
+                    "default": "#fff"
+                },                
+                {
+                    "type": "color",
+                    "id": "btn_border_color",
+                    "label": "Button border color",
+                    "default": "#000"
+                },                
+                {
+                    "type": "color",
+                    "id": "btn_bg_color",
+                    "label": "Button background color",
+                    "default": "#000"
+                },
+				{
+                    "type": "header",
+                    "content": "Button 2"
+                },
+                {
+                    "type": "text",
+                    "id": "btn2_text",
+                    "label": "Button2 text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn2_link",
+                    "label": "Button2 URL"
+                },
+                {
+                    "type": "text",
+                    "id": "btn2_padding",
+                    "label": "Button2 padding",
+                    "placeholder": "10px 30px",
+                    "default": "10px 30px"
+                },
+                {
+                    "type": "color",
+                    "id": "btn2_text_color",
+                    "label": "Button2 text color",
+                    "default": "#fff"
+                },                
+                {
+                    "type": "color",
+                    "id": "btn2_border_color",
+                    "label": "Button2 border color",
+                    "default": "#000"
+                },                
+                {
+                    "type": "color",
+                    "id": "btn2_bg_color",
+                    "label": "Button2 background color",
+                    "default": "#000"
+                }
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video slide",
+            "settings": [
+                {
+                    "type": "video_url",
+                    "id": "video_url",
+                    "label": "YouTube video URL",
+                    "accept": ["youtube"],
+                    "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+                    "info": "[Example](https://www.youtube.com/watch?v=_9VUPq3SxOc)."
+                },
+                {
+                    "type": "select",
+                    "id": "video_type",
+                    "label": "Style",
+                    "options": [
+                        {
+                            "value": "chrome",
+                            "label": "Image with play button"
+                        },
+                        {
+                            "value": "background-chrome",
+                            "label": "Background video with play button"
+                        },
+                        {
+                            "value": "background",
+                            "label": "Background video"
+                        }
+                    ]
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+                    "info": "Fallback when autoplaying video is not supported on mobile devices"
+                },
+                {
+                    "type": "header",
+                    "content": "Caption"
+                },
+                {
+                    "type": "select",
+                    "id": "alignment",
+                    "label": "Caption alignment",
+                    "default": "center",
+                    "options": [
+                        {
+                            "value": "center",
+                            "label": "Center"
+                        },
+                        {
+                            "value": "left",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "right",
+                            "label": "Right"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "slides_effect",
+                    "label": "Caption effect",
+                    "options": [
+                        {
+                            "value": "default",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "leftright",
+                            "label": "Left to Right"
+                        },
+                        {
+                            "value": "rightleft",
+                            "label": "Right to Left"
+                        },
+                        {
+                            "value": "topbottom",
+                            "label": "Top to Bottom"
+                        },
+                        {
+                            "value": "bottomtop",
+                            "label": "Bottom to Top"
+                        }
+                    ],
+                    "default": "leftright"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading 1",
+                    "default": "Slideshow"
+                },
+                {
+                    "type": "color",
+                    "id": "title_color",
+                    "label": "Heading 1 color",
+                    "default": "#000"
+                },
+                {
+                    "type": "text",
+                    "id": "title2",
+                    "label": "Heading 2",
+                    "default": "Slideshow"
+                },
+                {
+                    "type": "color",
+                    "id": "title2_color",
+                    "label": "Heading 2 color",
+                    "default": "#000"
+                },
+                {
+                    "type": "html",
+                    "id": "desc",
+                    "label": "Description",
+                    "info": "Text or HTML code"
+                },
+                {
+                    "type": "color",
+                    "id": "desc_color",
+                    "label": "Description color",
+                    "default": "#000"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Vela slideshow New",
+            "category": "1. Vela Slideshow",
+            "settings": {
+                "autoplay": true
+            },
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

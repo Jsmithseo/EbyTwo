@@ -1,0 +1,73 @@
+{
+  "_args": [
+    [
+      "transform-class-properties@1.0.0-beta",
+      "/Users/admin/Development/Eby/themekit-webpack"
+    ]
+  ],
+  "_development": true,
+  "_from": "transform-class-properties@1.0.0-beta",
+  "_id": "transform-class-properties@1.0.0-beta",
+  "_inBundle": false,
+  "_integrity": "sha512-oAVpS2SpCxDk4Q/VmVdwwwt4YAIip96meKj/wNCvQIHyjHJH3pqNpyOY+rvbOlN2WN63qn2v5XnU4CunPVzlnw==",
+  "_location": "/transform-class-properties",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "transform-class-properties@1.0.0-beta",
+    "name": "transform-class-properties",
+    "escapedName": "transform-class-properties",
+    "rawSpec": "1.0.0-beta",
+    "saveSpec": null,
+    "fetchSpec": "1.0.0-beta"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/transform-class-properties/-/transform-class-properties-1.0.0-beta.tgz",
+  "_spec": "1.0.0-beta",
+  "_where": "/Users/admin/Development/Eby/themekit-webpack",
+  "author": {
+    "name": "Lindomar Oliveira",
+    "email": "lindomar.souza1999@gmail.com",
+    "url": "https://about.me/lindomar"
+  },
+  "bugs": {
+    "url": "https://github.com/lindomar-oliveira/transform-class-properties/issues"
+  },
+  "description": "Automatically transforms values of class properties.",
+  "devDependencies": {
+    "@types/node": "^14.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^3.9.7"
+  },
+  "files": [
+    "lib/"
+  ],
+  "homepage": "https://github.com/lindomar-oliveira/transform-class-properties#readme",
+  "keywords": [
+    "class",
+    "decorators",
+    "properties",
+    "transform",
+    "typescript",
+    "utils"
+  ],
+  "license": "MIT",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "name": "transform-class-properties",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lindomar-oliveira/transform-class-properties.git"
+  },
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json"
+  },
+  "version": "1.0.0-beta"
+}

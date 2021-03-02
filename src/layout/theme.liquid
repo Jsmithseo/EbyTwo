@@ -1,0 +1,87 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>  
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="{{ settings.vela_color_primary }}"/>
+  <meta name="p:domain_verify" content="76d37e972c49ccf70309e4224eae0c2c"/>
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% if settings.favicon != blank %}
+  	<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+  
+  {% capture seo_title %}
+  {{ page_title }}
+  {% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}{% endif %}
+  {% if current_page != 1 %}&ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+  {% unless page_title contains shop.name %}&ndash; {{ shop.name }}{% endunless %}
+  {% endcapture %}
+  
+  <title>{{ seo_title }}</title>
+  
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+  
+  {% include 'preload-snippet' %}
+  {% include 'social-meta-tags' %}
+  {% include 'vela-header-styles' %}
+  {% include 'vela-header-javascript' %}
+  
+  <!-- starapps_scripts_start -->
+<!-- This code is automatically managed by StarApps Studio -->
+<!-- Please contact support@starapps.studio for any help -->
+{% include "starapps-language-meta" %}
+<script type="text/javascript" src="https://bcdn.starapps.studio/apps/vsk/eby-by-sofia-vergara/script-1614120419.js?shop={{shop.permanent_domain}}" async></script>
+<!-- starapps_scripts_end -->
+{{ content_for_header }}
+  {% include 'dataLayer-allPages' %}
+
+</head>
+{%- if template contains 'customer' -%}
+  {%- assign velaBodyClass = 'template-account' -%}
+{%- endif -%}
+
+{%- if settings.loading_enable -%}
+  {%- assign bodyPreLoading = 'bodyPreLoading' -%}
+{%- endif -%}
+
+<body id="{{ page_title | handle }}" class="template-{{ template | split: '.' | first }} {{ velaBodyClass }}{% if settings.header_float_enable %} velaFloatHeader{% endif %} {{ bodyPreLoading }} {% if customer %}loggedIn{% else %}loggedOut{% endif %}">
+  {% include 'vela-template' %}
+  <div id="pageContainer" class="isMoved">
+    {% unless page.handle == 'build-your-box' %}
+    	{% include 'vela-header-section' %}
+    {% endunless %}
+    
+      <main class="mainContent" role="main">
+        {{ content_for_layout }}
+      </main>
+    {% unless page.handle == 'build-your-box' %}
+    <section class="newslsec newslsec-{{ template }}">
+      {% section 'new-letter-section' %}
+    </section>
+    {% section 'vela-footer' %}
+    {% include 'vela-notification' %}
+    {% endunless %}
+  </div>
+    
+  {% include 'vela-ajaxcart' %}
+  {% include 'vela-modal' %}
+  {% include 'vela-footer-javascript' %}
+  <!-- Begin ReCharge code -->
+  {% include 'subscription-theme-footer' %}
+  <!-- End ReCharge code -->
+  {% include 'smile-initializer' %}
+  
+  {% comment %}
+    {% include 'mw_PO_objects' %}
+  {% endcomment %}
+
+  <!-- Begin FreeGift code -->
+  {% include 'free-gift-product' %}
+  <!-- End FreeGift code -->
+      
+</body>
+</html>

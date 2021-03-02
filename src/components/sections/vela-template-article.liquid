@@ -1,0 +1,315 @@
+{%- assign sidebarTemplate = section.settings.sidebar_template -%}
+{%- assign number_of_comments = article.comments_count -%}
+<div class="row">
+    {% if sidebarTemplate == 'sidebarleft' %}
+        <aside class="velaSidebar velaBlogSidebar col-xs-12 col-sm-4 col-md-3 col-xl-2 mb30">
+            {% include 'vela-blogsidebar' %}
+        </aside>
+    {% endif %}
+    {% if sidebarTemplate == 'sidebarnone' %}
+        {%- assign postColumn = 'col-xs-12 mb30' -%}
+    {% else %}
+        {%- assign postColumn = 'col-xs-12 col-sm-8 col-md-9 col-xl-10 mb30' -%}
+    {% endif %}
+    <div class="{{ postColumn }}">
+        <article class="articleItem" itemscope itemtype="http://schema.org/Article">
+            <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://google.com/article"/>
+            <meta itemprop="headline" content="{{ article.title }}">
+            <meta itemprop="author" content="{{ article.author }}">
+            <meta itemprop="datePublished" content="{{ article.published_at | date: '%d %b, %Y' }}">
+            <meta itemprop="dateModified" content="{{ article.published_at | date: '%d %b, %Y' }}">
+            <div class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+                <meta itemprop="url" content="http:{{ article.image | img_url: 'master' }}">
+                <meta itemprop="width" content="1170">
+                <meta itemprop="height" content="800">
+            </div>
+            <div class="hidden" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+                    <meta itemprop="url" content="http:{{ 'logo.png' | file_img_url: 'master' }}">
+                </div>
+                <meta itemprop="name" content="{{ article.author }}">
+            </div>
+            {%- if section.settings.article_featuredimage -%}
+                {%- if article.image -%}
+                    <div class="articleFeaturedImage">
+                        <img class="img-responsive" src="{{ article.image | img_url: 'master' }}" alt="{{ article.title }}" />
+                    </div>
+                {%- endif -%}
+            {%- endif -%}
+            
+            <header class="articleHeader">
+                <h1 class="velaArticleTitle">{{ article.title }}</h1>
+                <div class="articleMeta">
+                    <span class="articlePublish text-primary">{{ article.published_at | date:'%b %d, %Y' }}</span> 
+                    <span class="articleComment"><i class="fa fa-comment-o"></i>{{ article.comments_count }}</span>
+                    
+                    <!-- <a href="{{ blog.url }}" class="articleCollection">{{ 'blogs.article.collection_html' | t:collection:blog.title }}</a> -->
+                </div>
+            </header>
+            <div class="articleDetailContent">
+                <div class="rte" itemprop="description">
+                    {{ article.content }}
+                </div>
+                <div class="articlePostBottom clearfix">
+                    {%- if section.settings.article_tags -%}
+                        {% include 'vela-article-tags' %}
+                    {%- endif -%}
+                    {% capture author %}<span>{{ article.author }}</span>{% endcapture %}
+                    {%- if section.settings.article_sharing -%}
+                        <div class="articleSocialSharing pull-left">
+                            <span>{{ 'blogs.article.social_title' | t }}:</span>
+                            <div class="articleFacebookShare">
+                                <div class="fb-share-button" 
+                                    data-href="{{ canonical_url }}" 
+                                    data-mobile_iframe= true 
+                                    data-layout="button_count">
+                                </div>
+                            </div>
+                            <div class="articleTwitterShare">
+                                <a class="twitter-share-button"
+                                    href="https://twitter.com/intent/tweet?text={{ article.title | url_escape }}&url={{ canonical_url | url_escape }}" target="_blank">
+                                    <i class="fa fa-twitter"></i> Tweet
+                                </a>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                </div>
+                {%- if section.settings.article_nav -%}
+                    {%- if blog.next_article or blog.previous_article -%}
+                        <div class="articleBoxExtend clearfix">
+                            {%- if blog.previous_article -%}
+                                <div class="articleExtend articleExtendLeft">
+                                    {%- if blog.previous_article.image -%}
+                                        <div class="articleExtendImage">
+                                            <a href="{{ blog.previous_article.url }}">
+                                                <img class="img-responsive" src="{{ blog.previous_article.image | img_url: 'master' }}" alt="{{ blog.previous_article.title }}" />
+                                            </a>
+                                        </div>
+                                    {%- endif -%}
+                                    <div class="articleExtendTitle">
+                                        <a href="{{ blog.previous_article.url }}">
+                                            {{ blog.previous_article.title }}
+                                        </a>
+                                    </div>
+                                    <div class="articleExtendNavText">
+                                        {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+                                    </div>
+                                </div>
+                            {%- endif -%}
+                            {%- if blog.next_article -%}
+                                <div class="articleExtend articleExtendRight">
+                                    {%- if blog.next_article.image -%}
+                                        <div class="articleExtendImage">
+                                            <a href="{{ blog.next_article.url }}">
+                                                <img class="img-responsive" src="{{ blog.next_article.image | img_url: 'master' }}" alt="{{ blog.next_article.title }}" />
+                                            </a>
+                                        </div>
+                                    {%- endif -%}
+                                    <div class="articleExtendTitle">
+                                        <a href="{{ blog.next_article.url }}">
+                                            {{ blog.next_article.title }}
+                                        </a>
+                                    </div>
+                                    <div class="articleExtendNavText">
+                                        {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}
+                                    </div>
+                                </div>
+                            {%- endif -%}
+                        </div>
+                    {%- endif -%}
+                {%- endif -%}
+            </div>
+        </article>
+        {% include 'vela-article-comment' %}
+    </div>
+    {% if sidebarTemplate == 'sidebarright' %}
+        <aside class="velaSidebar velaBlogSidebar col-xs-12 col-sm-4 col-md-3 col-xl-2">
+            {% include 'vela-blogsidebar' %}
+        </aside>
+    {% endif %}
+</div>
+{% schema %}
+    {
+        "name": "Vela Blog Detail",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Blog Detail Settings"
+            },
+            {
+                "type": "select",
+                "id": "sidebar_template",
+                "label": "Sidebar template",
+                "default": "sidebarright",
+                "options": [
+                    {
+                        "label": "No Sidebar",
+                        "value": "sidebarnone"
+                    },
+                    {
+                        "label": "Sidebar Right",
+                        "value": "sidebarright"
+                    },
+                    {
+                        "label": "Sidebar Left",
+                        "value": "sidebarleft"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "article_featuredimage",
+                "label": "Show featured image",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "article_nav",
+                "label": "Show Next/Prev post",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "article_sharing",
+                "label": "Show button share",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "article_tags",
+                "label": "Show tags",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Blog Sidebar Search"
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_search_title",
+                "label": "Block heading",
+                "default": "Search"
+            },
+            {
+                "type": "checkbox",
+                "id": "blogsidebar_search_enable",
+                "label": "Enable box search",
+				"default": true
+            },
+            {
+                "type": "header",
+                "content": "Blog Sidebar Author"
+            },
+            {
+                "type": "checkbox",
+                "id": "blogsidebar_author_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_author_title",
+                "label": "Block heading",
+                "default": "About autor"
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_author_name",
+                "label": "Author Name"
+            },
+            {
+                "type": "url",
+                "id": "blogsidebar_author_fb_link",
+                "label": "Facebook Link"
+            },
+            {
+                "type": "url",
+                "id": "blogsidebar_author_tw_link",
+                "label": "Twitter Link"
+            },
+            {
+                "type": "url",
+                "id": "blogsidebar_author_in_link",
+                "label": "Linkedin Link"
+            },
+            {
+                "type": "url",
+                "id": "blogsidebar_author_gg_link",
+                "label": "Google Link"
+            },
+            {
+                "type": "header",
+                "content": "Blog Sidebar Recent Articles"
+            },
+            {
+                "type": "checkbox",
+                "id": "blogsidebar_recentarticles_enable",
+                "label": "Enable recent articles",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_recentarticles_title",
+                "label": "Block heading",
+                "default": "Recent Articles"
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_recentarticles_limit",
+                "placeholder": "Ex: 6",
+                "label": "Number of article limit",
+                "default": "6"
+            },
+            {
+                "type": "header",
+                "content": "Blog Sidebar Tags"
+            },
+            {
+                "type": "checkbox",
+                "id": "blogsidebar_tags_enable",
+                "label": "Enable tags list",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_tags_title",
+                "label": "Block heading",
+                "default": "Articles tags"
+            },
+            {
+                "type": "text",
+                "id": "blogsidebar_tags_limit",
+                "placeholder": "Ex: 6",
+                "label": "Number of tags limit",
+                "default": "10"
+            },
+            {
+                "type": "header",
+                "content": "Blog Sidebar Banner"
+            },
+            {
+                "type": "checkbox",
+                "id": "blog_banner_enable",
+                "label": "Enable banner",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "blog_banner_size",
+                "label": "Image size",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)",
+                "default": "270x270"
+            },
+            {
+                "type": "url",
+                "id": "blog_banner_link",
+                "label": "Banner link"
+            },
+            {
+                "type": "image_picker",
+                "id": "blog_sidebar_image",
+                "label": "Banner image"
+            }
+        ]
+    }
+{% endschema %}

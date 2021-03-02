@@ -1,0 +1,47 @@
+{%- if section.settings.product_related_enable -%}
+	{%- assign proImageSize = 'large' -%}
+	{%- assign proLimit = section.settings.product_related_limit | plus: 0 -%}
+	{%- assign currentProduct = product -%}
+	{%- if collection == null or collection.handle == 'all' -%}
+		{% assign foundCollection = false %}
+		{% for item in product.collections %}
+		  	{% if foundCollection == false and item.handle != 'all' and item.all_products_count > 1 %}
+		    	{% assign foundCollection = true %}
+		    	{% assign collection = item %}
+		  	{% endif %}
+		{% endfor %}
+	{%- endif -%}
+	{%- if collection and collection.products_count > 1 -%}
+		<section class="proRelated mb30">
+			<div id="relatedProducts" class="velaProducts">
+				{%- if section.settings.product_related_title != blank -%}
+					<div class="headingGroup pb20">
+						<h3 class="velaTitle velaHomeTitle">
+							{{ section.settings.product_related_title }}
+						</h3>
+					</div>
+				{%- endif -%}
+				<div class="velaContent">
+					<div class="proOwlCarousel owlCarouselPlay">
+	                    <div class="owl-carousel" 
+	                        data-nav="true" 
+	                        data-margin="30" 
+	                        data-columnone="5" 
+	                        data-columntwo="4" 
+	                        data-columnthree="3" 
+	                        data-columnfour="2" 
+	                        data-columnfive="1">
+	                        {% for product in collection.products limit:proLimit %}
+								{% unless product.handle == currentProduct.handle %}
+									<div class="item">
+										{% include 'product-grid-item' %}
+									</div>
+								{% endunless %}
+							{% endfor %}
+	                    </div>
+	                </div>
+				</div>
+			</div>
+		</section>
+	{%- endif -%}
+{%- endif -%}

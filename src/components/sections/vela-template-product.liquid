@@ -1,0 +1,1207 @@
+{% if product.type == "Core Underwear" or product.type == "Cotton Underwear" %}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "pantyType-" %}
+            {%- assign prodNameTitle = prodTag | replace: "pantyType-", "" -%}
+        {% endif %}
+        {% if prodTag contains "pantyColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "pantyColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type == "Core Bralette" or product.type == "Cotton Bralette"  %}
+	{%- assign prodNameTitle = "bralette" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "braletteColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "braletteColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type == "Mask" %}
+	{%- assign prodNameTitle = "mask" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "maskColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "maskColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% elsif product.type contains "Pack" %}
+	{%- assign prodNameTitle = "3 pack" -%}
+
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "packColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "packColor-", "" -%}
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+
+
+{%- assign proImageSize = section.settings.image_size -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- if product.description contains '[SHORTDESCRIPTION]' -%}
+  {%- assign shortDescription = product.description | split:'[SHORTDESCRIPTION]' | first -%}
+  {%- assign fullDescription = product.description | split:'[SHORTDESCRIPTION]' | last -%}
+{%- else -%}
+  {%- assign shortDescription = '' -%}
+  {%- assign fullDescription = product.description -%}
+{%- endif -%}
+<div class="container-full">
+  <div class="pageCollectionInner">
+    <div class="productBox pdp" itemscope itemtype="http://schema.org/Product">
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+      <div class="breadcrumbs ebyBreadcrumbs">
+        {% if product.type == 'Core Underwear' or product.type == 'Cotton Underwear' %}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections">Shop</a></li>
+          <li><a href="/collections#panties-anchor">Panties</a></li>
+        </ul>
+        {% endif %}
+        {% if product.type == 'Core Bralette' or product.type == 'Cotton Bralette' %}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections">Shop</a></li>
+          <li><a href="/collections#bralettes-anchor">Bralettes</a></li>
+        </ul>
+        {% endif %}
+        {% if product.type == 'Panty Pack' %}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections">Shop</a></li>
+          <li><a href="/collections#packs-anchor">Packs</a></li>
+        </ul>
+        {% endif %}
+        {% if product.type == 'EBY Mask' or product.type == 'Mask'  %}
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/collections">Shop</a></li>
+          <li><a href="/collections#masks-anchor">Masks</a></li>
+        </ul>
+        {% endif %}
+
+
+      </div>
+      {%- if section.settings.prodetail_style == "detail_style1" -%}
+        <div class="proBoxPrimary mb30 {{ section.settings.prodetail_style }}">
+          <div class="row">
+              <div class="mobile-intro">
+                
+                {% if product.type contains "Cotton" %}
+                <div class="subtitle"><h1 itemprop="name">EBY invisible cotton {{ prodNameTitle | replace: "_", " " }} in {{ prodColorTitle | replace: "_", " " }}</h1></div>
+                {% else %}
+                <div class="subtitle"><h1 itemprop="name">EBY seamless {{ prodNameTitle | replace: "_", " " }} in {{ prodColorTitle | replace: "_", " " }}</h1></div>
+                {% endif %}
+                <h2 class="product-name">
+                    {% if product.type contains "Cotton" %}Cotton {% endif %}{{ prodNameTitle | capitalize }}
+                    <!-- <img src="{{ 'arrow-point-to-down.svg' | asset_url }}" alt="Arrow" class="changer-arrow-mobile"/> -->
+                </h2>
+                  <!-- <div class="style-changer style-changer-mobile">
+                      <div class="single-type">Bikini</div>
+                      <div class="single-type">Cheeky</div>
+                      <div class="single-type">Highwaisted</div>
+                      <div class="single-type">Thong</div>
+                      <div class="single-type">Highwaisted Thong</div>
+                  </div> -->
+                  <div class="proPrice flexRow flexAlignCenter">
+                    {% if customer.tags contains 'Active Subscriber' %}
+                    {% else %}
+                        {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                            <div class="priceProduct holidaySale {% if on_sale %}priceSale{% endif %}">{{ product.price | money | remove: ".00" }}</div>
+                        {% else %}
+                            <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money | remove: ".00" }}</div>
+                        {% endif %}
+                    {% endif %}
+                        {% if customer.tags contains 'Active Subscriber' %}
+                            {% if product.type == "Mask"%}
+                                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                                {% else %}
+                                    <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                {% endif %}
+
+                                <div class="ebyProdTile-vipPriceWrapper">
+                                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                                        <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                                  {% else %}
+                                        <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                                  {% endif %}
+                                </div>
+                            {% elsif product.type == "Core Bralette"%}
+                                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                    <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                                {% else %}
+                                    <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                {% endif %}
+
+                                <div class="ebyProdTile-vipPriceWrapper">
+                                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                                        <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                                  {% else %}
+                                        <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                                  {% endif %}
+                                </div>
+                            {% elsif product.type == "Core Underwear" and product.tags contains "Featured Style" %}
+                                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                                {% else %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                {% endif %}
+
+                                <div class="ebyProdTile-vipPriceWrapper">
+                                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                                        <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                                  {% else %}
+                                        <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                                  {% endif %}
+                                </div>
+                            {% elsif product.type == "Core Underwear" %}
+                                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                    <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"><p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p></div>
+                                {% else %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                {% endif %}
+
+                                <div class="ebyProdTile-vipPriceWrapper">
+                                  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                        {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                        {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                                        <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                                  {% else %}
+                                        <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                                  {% endif %}
+                                </div>
+                            {% else %}
+                                {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %} holidaySale"></div>
+                                {% else %}
+                                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                {% endif %}
+
+                                <div class="ebyProdTile-vipPriceWrapper">
+                                    {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                          {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                                    <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                                    {% else %}
+                                    <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                        {% else %}
+                            <div class="ebyProdTile-vipPriceWrapper">
+                              {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                                    {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                                    {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                              <p><span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                              {% else %}
+                              <p class="ebyMemberPriceWrapper">( <span>{{ product.metafields.ebyacf.vip_member_price }}</span> <span class="fontMinor">Members</span> )</p>
+                              {% endif %}
+                            </div>
+                        {% else %}
+                        <p id="ProductPrice" class="priceProduct {% if product.compare_at_price > product.price %}priceSale{% endif %}" itemprop="price">
+                          {{ current_variant.price | money }}
+                        </p>
+                        {% endif %}
+
+                    {%- if product.compare_at_price > product.price -%}
+                    <span id="ComparePrice" class="priceProduct priceCompare">
+                      {{ current_variant.compare_at_price | money }}
+                    </span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if settings.product_reviews_enable -%}
+                  <div class="proReviews">
+                      <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}" style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+                      {% comment %}<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>{% endcomment %}
+                  </div>
+                  {%- endif -%}
+              </div>
+            <div class="ab proBoxImage col-xs-12 col-md-12 col-lg-12 mb30">
+              {% include 'vela-prodetail-image' %}
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-6 mb30 proBoxInfo_outr">
+              <div class="proBoxInfo">
+                {% include 'vela-prodetail-info' %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+            <div class="flex-wrap">                
+                <div class="ebyPdpRelatedProductsWrapper">
+                    <h2>You might also like</h2>
+                    <div data-rebuy-id="5675" id="rebuy-id-5675" data-rebuy-shopify-product-ids="{{ product.id }}">
+                        <div class="rebuy-product-block" v-bind:data-prdId="product.id" v-for="product in products" v-bind:class="[product.handle, 'product-id-' + product.id, cartHasProduct(product) ? 'cart-has-item' : '']">
+                            <div class="rebuy-product-media">
+                                <a class="rebuy-product-image" v-bind:style="imageStyles" v-bind:class="[hasLearnMore() ? 'clickable' : '']">
+                                    <img v-bind:src="itemImage(product, product.selected_variant, '400x400')" v-bind:alt="product.title">
+                                </a>
+                                <div class="rebuy-product-options" v-if="showVariantSelect(product)">
+                                    <div class="rebuy-select-block">
+                                        <div class="rebuy-title-container">
+                                            <a class="rebuy-variant-title rebuy-select-size" v-html="product.selected_variant.title"></a>
+                                            <img src="{{ 'arrow-point-to-down.svg' | asset_url }}" alt="Arrow" class="rebuy-arrow"/>
+                                        </div>
+                                        <div class="rebuy-select-options">
+                                            <div class="current-size" v-html="product.selected_variant.title"></div>
+                                            <div class="siz-guid-container" v-if="product.product_type == 'Core Bralette' || product.product_type == 'Core Underwear' || product.product_type == 'Surprise Panty Pack'">
+                                                <a class="siz_guid rebuy" v-bind:data-product-type="product.product_type" href="#">View Guide</a>
+                                            </div>
+                                            <div class="options">
+                                                <div class="single-select" v-for="variant in product.variants" 
+                                                v-bind:data-value="variant.id">{% raw %}{{ variant.title }}{% endraw %}</div>
+                                                <select
+                                                class="rebuy-select"
+                                                v-model="product.selected_variant_id"
+                                                v-on:change="selectVariant(product);">
+                                                <option v-for="variant in product.variants" v-bind:value="variant.id">{% raw %}{{ variant.title }}{% endraw %}</option>
+                                                </select>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <button class="add-product">Add</button> -->
+                                </div>
+                                <div class="rebuy-product-actions">
+                                    <button
+                                        class="rebuy-button"
+                                        v-bind:class="{ working: (product.status != 'ready' && product.status != 'selecting') }"
+                                        v-bind:disabled="!(variantAvailable(product.selected_variant)) || (product.status != 'ready' && product.status != 'selecting')"
+                                        v-on:click="addUpsellToCart(product)"
+                                        type="button">
+                                            <span v-html="!(variantAvailable(product.selected_variant)) || (product.status != 'ready' && product.status != 'selecting') ? '...' : 'Add'"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="rebuy-product-moreInfo">
+                            <p>When you choose this Surprise-Me Pack, we'll surprise you with a unique assortment of our most coveted styles and colors</p>
+                            </div> -->
+                            <div class="rebuy-product-info">
+                                <!-- <div class="description" v-if="config.language.description != ''" v-html="config.language.description"></div> -->
+                                <a class="rebuy-product-title" v-html="product.title" v-bind:class="[hasLearnMore() ? 'clickable' : '']"></a>
+                                <div class="rebuy-product-review" v-if="hasProductReviews(product)">
+                                    <span class="rebuy-star-rating">
+                                        <span class="rebuy-star-rating-background"></span>
+                                        <span class="rebuy-star-rating-foreground" v-bind:style="{ width: productReviewRatingPercentage(product) }"></span>
+                                    </span>
+                                    <span class="rebuy-review-count" v-html="productReviewCount(product)"></span>
+                                </div>
+                                <div class="rebuy-product-price">
+                                    <div v-if="variantOnSale(product, product.selected_variant)">
+                                        <span class="rebuy-money sale" v-html="formatMoney(variantPrice(product, product.selected_variant)).replace('.00', '')"></span>
+                                        <span class="rebuy-money compare-at" v-html="formatMoney(variantCompareAtPrice(product, product.selected_variant)).replace('.00', '')"></span>
+                                    </div>
+                                    <div v-if="!(variantOnSale(product, product.selected_variant))">
+                                        <span class="rebuy-money" v-html="formatMoney(variantPrice(product, product.selected_variant)).replace('.00', '')"></span>
+                                        <div class="rebuy-select-color">
+<!--                                             <div class="rebuy-selected-color" v-html="product.title.replace('Brief', '').replace('Bralette', '').replace('Thong', '')"></div> -->
+                                            <a class="rebuy-select-colors" v-bind:href="learnMoreURL(product)" v-on:click="learnMore(product);">More colors</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                       
+                        </div>
+                    </div>
+                </div>
+                <div class="product-details-tab">
+                    <div class="product-details">product details +</div>
+                    <div class="details-content-background">
+                        <div class="details-content">
+                            <h3>Details</h3>
+                            {{ product.metafields.ebyacf.new_desc_details.en }}
+<!--                             <p>Our bikini is truly seamless, designed to be invisible under your clothes, and cut from our
+                                oh-so-soft signature fabric. This seamless piece features a mid-rise front, standard leg
+                                with a narrow side, and full coverage back. </p> -->
+                            <div class="multiple-details">
+                              	{{ product.metafields.ebyacf.new_spec_details.en }}
+<!--                                 <div class="singe-detail-block">
+                                    <h4>Color</h4>
+                                    <p>The panty is a gorgeous flat grey with a slightly blue tint.</p>
+                                </div>
+                                <div class="singe-detail-block">
+                                    <h4>No-Slip Grip</h4>
+                                    <p>This panty features our no-slip lining – no riding up, no slipping down</p>
+                                </div>
+                                <div class="singe-detail-block">
+                                    <h4>Fit</h4>
+                                    <ul>
+                                        <li>Front: Mid-rise</li>
+                                        <li>Back: Full coverage</li>
+                                        <li>Leg: Standard</li>
+                                        <li>Side: Narrow</li>
+                                    </ul>
+                                </div>
+                                <div class="singe-detail-block">
+                                    <h4>Material</h4>
+                                    <p>85% nylon, 15% spandex, 100% cotton lining</p>
+                                </div> -->
+                            </div>
+                            <h3>Mission</h3>
+                          	<div class="ebyProductPromiseWrapper">
+                         		{{ product.metafields.ebyacf.new_women_empower_details.en }}	
+                          	</div>
+                          	<div class="ebyProductPromiseWrapper">
+                          		{{ product.metafields.ebyacf.new_manufacture_rule_details.en }}
+                          	</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guarantee-block">
+                    <h2>100% Fit Guarantee</h2>
+                    <p>Love how your EBY products fit or your money back… that’s it.</p>
+                </div>
+            </div>
+        </div>
+
+
+        {% if section.settings.image_picker_1 != blank %}
+          <div class="cus-image-section cus-image-section-1">
+          <a href="{% if section.settings.image_picker_1_url != blank %}{{ section.settings.image_picker_1_url }}{% else %}javascript:void(0);{% endif %}" ><img class="lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ section.settings.image_picker_1 | img_url:'master' }}" style="width:100%" alt="Image 1" /></a>
+        </div>
+        {% endif %}
+        {% if section.settings.image_picker_2 != blank %}
+          <div class="cus-image-section cus-image-section-2">
+          <a href="{% if section.settings.image_picker_2_url != blank %}{{ section.settings.image_picker_2_url }}{% else %}javascript:void(0);{% endif %}" ><img class="lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ section.settings.image_picker_2 | img_url:'master' }}" style="width:100%" alt="Image 2" /></a>
+        </div>
+        {% endif %}
+        {% if section.settings.image_picker_3 != blank %}
+          <div class="cus-image-section cus-image-section-3">
+            <a href="{% if section.settings.image_picker_3_url != blank %}{{ section.settings.image_picker_3_url }}{% else %}javascript:void(0);{% endif %}" ><img class="lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ section.settings.image_picker_3 | img_url:'master' }}" style="width:100%" alt="Image 3" /></a>
+      	  </div>
+        {% endif %}
+      {%- elsif section.settings.prodetail_style == "detail_style2" -%}
+        <div class="row">
+          <div class="proBoxImage col-xs-12 col-md-6 col-lg-6 col-xl-5 mb30">
+            {% include 'vela-prodetail-image' %}
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-6 col-xl-7 mb30">
+            <div class="proBoxInfo">
+              {% include 'vela-prodetail-info' %}
+              <div class="mt30">
+                {% include 'vela-prodetail-tabdesc'%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- elsif section.settings.prodetail_style == "detail_style3" -%}
+        <div class="row">
+          <div class="proBoxImage col-xs-12 col-md-6 col-lg-6 col-xl-5 mb30">
+            {% include 'vela-prodetail-image' %}
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-6 col-xl-7 mb30">
+            <div class="proBoxInfo">
+              {% include 'vela-prodetail-info' %}
+            </div>
+          </div>
+        </div>
+        <div class="mb30 pt-md-30">
+          {% include 'vela-prodetail-tabdesc'%}
+        </div>
+      {%- else -%}
+        <div class="row">
+          <div class="proBoxImage col-xs-12 col-md-6 col-lg-5 mb30">
+            {% include 'vela-prodetail-image' %}
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-7 mb30">
+            <div class="proBoxInfo">
+              {% include 'vela-prodetail-info' %}
+              <div class="mt30">
+                {% include 'vela-prodetail-tabdesc'%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+    {% include 'vela-product-related' %}
+  </div>
+</div>
+
+<div class="pdp-reviews-block">
+    {%- if section.settings.product_review_section_enable -%}
+    <div class="testm_slider">
+        <h2>{{ section.settings.product_review_section_title }}</h2>
+        <div class="rev_sect">
+            <h2>Reviews</h2>
+
+            <div id="stamped-main-widget"
+                 data-widget-style="standard"
+                 data-product-id="{{ product.id }}"
+                 data-name="{{ product.title | escape }}"
+                 data-url="{{ shop.url }}{{ product.url }}"
+                 data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+            data-description="{{ product.description | escape }}"
+            data-product-sku="{{product.handle}}"
+            data-product-type="{{product.type}}">
+            {{ product.metafields.stamped.reviews }}
+        </div>
+    </div>
+</div>
+{%- endif -%}
+</div>
+
+<div class="pop_size size_guid_pdp">
+  <div class="pop_inner">
+    <div class="pop_wrap">
+      <span class="colz_pop size_guid_pdp">&times;</span>
+      <div class="ebyGuideChartWrapper">
+        {{ shop.metafields.ebyacf.eby_size_chart-panty.en }}
+      </div>
+    </div>
+    <div class="pop_wrapper_backing size_guid_pdp">&nbsp;</div>
+  </div>
+</div>
+
+<div class="pop_size rebuy" style="display: none;" >
+    <div class="pop_inner">
+        <div class="pop_wrap">
+        <span class="colz_pop rebuy">×</span>
+        <div class="ebyGuideChartWrapper">
+            <div class="ebyDesktop-guideWrapper">
+            <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+            <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+            </div>
+            <div class="ebyTablet-guideWrapper">
+            <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+            <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+            </div>
+            <div class="ebyMobile-guideWrapper">
+            <p class="ebyPantyGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Panty.jpg?v=1608664423" class="fr-fic fr-dib lazyload"></p>
+            <p class="ebyBraletteGuide"><img src="https://cdn.shopify.com/s/files/1/0313/4062/5964/files/EBY---SizeGuide---Bralette.jpg?v=1608664424" class="fr-fic fr-dib ls-is-cached lazyloaded"></p>
+            </div>
+        </div>
+        </div>
+        <div class="pop_wrapper_backing rebuy">&nbsp;</div>
+    </div>
+</div>
+
+<style>
+  .container-full {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+</style>
+{%- if section.settings.product_instagram_enable -%}
+    {% include 'vela-instagram' %}
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Vela Product Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "select",
+                "id": "prodetail_style",
+                "label": "Product Layout",
+                "default": "detail_default",
+                "options": [
+                    {
+                        "value": "detail_default",
+                        "label": "Layout Default"
+                    },
+                    {
+                        "value": "detail_style1",
+                        "label": "Layout Style1"
+                    },
+                    {
+                        "value": "detail_style2",
+                        "label": "Layout Style2"
+                    },
+                    {
+                        "value": "detail_style3",
+                        "label": "Layout Style3"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "product_available_enable",
+                "label": "Show product available",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_type_enable",
+                "label": "Show product type",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_vendor_enable",
+                "label": "Show product vendor",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_sku_enable",
+                "label": "Show product SKU",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_countdown_enable",
+                "label": "Show Countdown",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "480x480",
+                "info": "Image size is required."
+            },
+            {
+                "type": "header",
+                "content": "Product Zoom"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_zoom_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_scroll_zoom",
+                "label": "Scroll zoom",
+                "info": "Allow zoom on mousewheel, true to activate",
+                "default": true
+            },
+            {
+                "type": "select",
+                "id": "product_zoom_type",
+                "label": "Zoom type",
+                "default": "window",
+                "options": [
+                    {
+                        "value": "window",
+                        "label": "Window"
+                    },
+                    {
+                        "value": "inner",
+                        "label": "Inner"
+                    },
+                    {
+                        "value": "lens",
+                        "label": "Lens"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_width",
+                "label": "Zoom window width",
+                "info": "Use with zoom type Window",
+                "default": "500"
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_height",
+                "label": "Zoom window height",
+                "info": "Use with zoom type Window",
+                "default": "600"
+            },
+            {
+                "type": "text",
+                "id": "product_lens_size",
+                "label": "Lens size",
+                "info": "Use with zoom type Lens",
+                "default": "200"
+            },
+            {
+                "type": "select",
+                "id": "product_lens_type",
+                "label": "Lens type",
+                "info": "Use with zoom type Lens",
+                "default": "square",
+                "options": [
+                    {
+                        "value": "square",
+                        "label": "Square"
+                    },
+                    {
+                        "value": "round",
+                        "label": "Round"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "Product Collections"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_collection_enable",
+                "label": "Show product collections",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_collection_title",
+                "label": "Box categoies title"
+            },
+            {
+                "type": "range",
+                "id": "product_coll_limit",
+                "min": 2,
+                "max": 10,
+                "step": 1,
+                "unit": "pcs",
+                "label": "Limit",
+                "default": 6
+            },
+            {
+                "type": "header",
+                "content": "Product Short Description"
+            },
+            {
+                "type": "radio",
+                "id": "product_short_description",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "no",
+                        "label": "Don't show"
+                    },
+                    {
+                        "value": "yes",
+                        "label": "Show short description"
+                    },
+                    {
+                        "value": "full",
+                        "label": "Show full description"
+                    }
+                ],
+                "default": "yes",
+                "info": "Use tag [SHORTDESCRIPTION] on product description."
+            },
+            {
+                "type": "header",
+                "content": "Product More Info"
+            },
+            {
+                "type": "radio",
+                "id": "product_tab_type",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "disable",
+                        "label": "Don't Show"
+                    },
+                    {
+                        "value": "protab",
+                        "label": "Tab More Info"
+                    },
+                    {
+                        "value": "propanel",
+                        "label": "Panel More Info"
+                    }
+                ],
+                "default": "protab"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab1_enable",
+                "label": "1st Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab1_title",
+                "label": "1st Heading tab",
+                "default": "Details"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab2_enable",
+                "label": "2nd Enable tab"
+            },
+            {
+                "type": "text",
+                "id": "product_tab2_title",
+                "label": "2nd Heading tab"
+            },
+            {
+                "type": "textarea",
+                "id": "product_tab2_content",
+                "label": "2nd Tab content"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab3_enable",
+                "label": "3rd Enable FAQs"
+            },
+            {
+                "type": "text",
+                "id": "product_tab3_title",
+                "label": "3rd Heading tab"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab4_enable",
+                "label": "4th Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab4_title",
+                "label": "4th Title tab",
+                "default": "Reviews"
+            },
+			{
+                "type": "header",
+                "content": "Dynamic checkout buttons"
+            },
+            {
+                "type": "checkbox",
+                "id": "dynamic_check_enable",
+                "label": "Enable Dynamic Checkout Button",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "buyit_check_enable",
+                "label": "Enable Buy It Now Button",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Product Social Sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_social_title",
+                "label": "Heading"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_facebook_enable",
+                "label": "Show facebook sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_twitter_enable",
+                "label": "Show twitter sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_google_enable",
+                "label": "Show google plus sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_linkedin_enable",
+                "label": "Show linkedin sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_pinterest_enable",
+                "label": "Show pinterest sharing"
+            },
+            {
+                "type": "header",
+                "content": "Product Related"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_related_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "product_related_title",
+                "placeholder": "Title for Block",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "product_related_limit",
+                "placeholder": "Number. Ex: 8",
+                "label": "Limit"
+            },
+            {
+                "type": "header",
+                "content": "Vela Instagram"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_instagram_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "checkbox",
+                "id": "instagram_full",
+                "label": "Full Width?"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle",
+                "placeholder": "SubTitle"
+            },
+			{
+                "type": "text",
+                "id": "userid",
+                "label": "User Id (*)",
+                "placeholder": "User Id",
+                "default": "2292239002",
+                "info": "[Where do I find User ID?](https:\/\/codeofaninja.com\/tools\/find-instagram-user-id)"
+            },
+            {
+                "type": "text",
+                "id": "accessToken",
+                "label": "Access token (*)",
+                "placeholder": "Access Token",
+                "default": "2292239002.1677ed0.fac0c0ffe73643cd8f4838b89b4c11a3",
+                "info": "[Where do I find Access Token?](http:\/\/instagram.pixelunion.net\/)"
+            },
+            {
+                "type": "text",
+                "id": "limited",
+                "placeholder": "Ex:8",
+                "label": "Limit The Number of Images",
+                "default": "8"
+            },
+			{
+                "type": "select",
+                "id": "resolution",
+                "label": "Resolution of images",
+                "options": [
+                    {
+                      	"value": "thumbnail",
+                      	"label": "Thumbnail (150x150)"
+                    },
+                    {
+                      	"value": "low_resolution",
+                      	"label": "Low Resolution (320x320)"
+                    },
+                    {
+                      	"value": "standard_resolution",
+                      	"label": "Standard Resolution (640x640)"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "show_loadmore",
+                "label": "Show Loadmore?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "loadmore",
+                "label": "Load more",
+                "placeholder": "Button load more text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_1",
+                "label": "Image 1"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_1_url",
+                "label": "Image 1 URL"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_2",
+                "label": "Image 2"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_2_url",
+                "label": "Image 2 URL"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_3",
+                "label": "Image 3"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_3_url",
+                "label": "Image 3 URL"
+            },
+			{
+              "type": "header",
+              "content": "Product Review Section"
+            },
+            {
+              "type": "checkbox",
+              "id": "product_review_section_enable",
+              "label": "Show product review section",
+              "default": true
+            },
+            {
+              "type": "text",
+              "id": "product_review_section_title",
+              "label": "Heading",
+              "default": "What our customers are saying"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "FAQ Item",
+                "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "label": "Question"
+                },
+                {
+                    "type": "textarea",
+                    "id": "answer",
+                    "label": "Answer"
+                }
+                ]
+            },
+            {
+                "type": "item_size",
+                "name": "Size Guide",
+                "settings": [
+                    {
+                        "type": "collection",
+                        "id": "size_collection",
+                        "label": "Collection"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "size_image",
+                        "label": " Size Guide"
+                    },
+                    {
+                        "type": "html",
+                        "id": "size_desc",
+                        "label": "Description",
+                        "info": "Use HTML to format your text so it can be easily read"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
+
+
+<script type="text/javascript" async>
+  jQuery(document).on('click', '.siz_guid.size_guid_pdp', function(){
+  if(jQuery('.pop_size.size_guid_pdp').is(':visible'))
+  {
+     jQuery('.pop_size.size_guid_pdp').fadeOut()
+  }
+  else{
+  jQuery('.pop_size.size_guid_pdp').fadeIn()
+  }
+  return false;
+  });
+    jQuery('.pop_wrapper_backing').click(function(){
+      jQuery('.pop_size.size_guid_pdp').fadeOut();
+    });
+  jQuery('span.colz_pop').click(function(){
+    jQuery('.pop_size.size_guid_pdp').fadeOut();
+  });
+  
+  /**/
+  
+      window.addEventListener("load", function () {
+        var sizeGuide = document.querySelectorAll(".size_guid_pdp.siz_guid");
+        var label = document.getElementById("swatch-option1");
+        if (!!window.getComputedStyle && !!label) {
+        	var style = window.getComputedStyle(label, null);
+            var marginTop = parseInt(style["margin-top"]);
+        }
+        
+        if (marginTop > 10) {
+          sizeGuide[0].classList.add("extraMargin");
+        }
+
+    });
+  
+  /**/
+  
+  $(document).ready(function(){
+        const displayProductDetails = (desktopWidth, isDesktop) => {
+            if(desktopWidth > 991 && isDesktop !== true){
+                $('.product-details').css("display", "none");
+                $('.details-content').css("display", "block");
+                $('.product-details').prop("onclick", null).off("click");
+                $('.details-content').prop("onclick", null).off("click");
+
+                return true
+            } else if (desktopWidth <= 991 && isDesktop !== false){
+                $('.product-details').css("display", "block");
+                $('.details-content').css("display", "none");
+
+                $('.product-details').click(function () {
+                    $('.details-content').css("display", "block");
+                    $('.product-details').css("display", "none");
+                });
+
+                return false
+            }
+            return isDesktop
+        };
+
+        let desktopWidth = $(window).width();
+        let isDesktop = null;
+        isDesktop = displayProductDetails(desktopWidth, isDesktop);
+
+        $(window).resize(function () {
+            desktopWidth = $(window).width();
+            isDesktop = displayProductDetails(desktopWidth, isDesktop)
+        })
+    });
+  
+  
+  	jQuery(document).ready(function(){
+        jQuery('.product-name').click(function () {
+            if ($('.style-changer-mobile').css("display") === "block"){
+                $('.style-changer-mobile').css("display", "none");
+                $('.changer-arrow-mobile').css("transform", "rotate(0deg)")
+            } else {
+                $('.style-changer-mobile').css("display", "block");
+                $('.changer-arrow-mobile').css("transform", "rotate(180deg)")
+            }
+        })
+
+        document.addEventListener('rebuy.ready', function(event) {
+            jQuery('.single-select').on("click", function (ev) {
+                const variantID = jQuery(this).data("value");
+                const currentSelect = jQuery(this).siblings('select.rebuy-select');
+                const productID = jQuery(currentSelect[0]).data("id");
+              
+              	let productTileId = jQuery(this).closest('.rebuy-product-block').attr('data-prdId');
+              
+                jQuery('select.rebuy-select option[value=' + variantID + ']').attr('selected','selected');
+                
+                const rebuyWidgets = Rebuy.widgets;
+              
+              	if (rebuyWidgets && rebuyWidgets.length > 0) {
+                      const rebuyWidget = Rebuy.widgets[0];
+                  
+                  	let widgetProducts = rebuyWidget.data.products;
+                  
+                    for( var index = 0; index < widgetProducts.length; index++ ){
+                      if (widgetProducts[index].id === +productTileId) {
+                        
+                          // reduce down to find the variant in question by 
+                          let selectedVariantProd = widgetProducts[index].variants.reduce(function (acc, variantPrd) {
+                            if (variantPrd.id === variantID) {
+                              acc.push(variantPrd);
+                            }
+                            return acc;
+                          }, []);
+
+                          // set new values for prod upsell
+                          rebuyWidget.data.products[index].selected_variant_id = variantID;
+                          rebuyWidget.data.products[index].selected_variant = selectedVariantProd[0];
+                      }
+
+                    }
+                  
+                } else {
+                  console.log(':: Error - Rebuy widget not found ::');
+                }
+              
+              	
+                currentSelect.val(variantID).change();
+            });
+
+            jQuery('div.rebuy-title-container').on("click", function (e) {
+                e.preventDefault();
+
+                console.log($('.rebuy-select-options'));
+
+                $('.rebuy-select-options').hide();
+                $(this).siblings('.rebuy-select-options').show();
+            });
+
+            $(document).bind( "mouseup", function(e){
+                    var element = $(".rebuy-select-options");
+	                if (!element.is(e.target) && element.has(e.target).length === 0){
+		            element.hide();
+	            }
+            });
+          
+			jQuery('div.rebuy-select-options').on("click", function (e) {
+                e.preventDefault();
+                $('.rebuy-select-options').hide();
+            });
+        });
+    });
+  
+  	jQuery(document).on('click', '.siz_guid.rebuy', function(e) {
+      e.preventDefault();
+
+      if (jQuery(this).data('product-type') == 'Core Bralette') {
+        jQuery(".ebyPantyGuide").hide();
+        jQuery(".ebyBraletteGuide").show();
+      } else {
+        jQuery(".ebyBraletteGuide").hide();
+        jQuery(".ebyPantyGuide").show();
+      }
+
+      console.log(jQuery('.pop_size.rebuy').is(':visible'));
+      
+      if(jQuery('.pop_size.rebuy').is(':visible')) {
+        console.log("HIDE");
+
+        jQuery('.pop_size.rebuy').fadeOut()
+      } else {
+        jQuery('.pop_size.rebuy').fadeIn()
+      }
+    });
+  
+    jQuery('.pop_wrapper_backing.rebuy').click(function() {
+      jQuery('.pop_size.rebuy').fadeOut();
+    });
+    
+    jQuery('span.colz_pop.rebuy').click(function() {
+      jQuery('.pop_size.rebuy').fadeOut();
+    });
+  
+  	var carousel = document.getElementsByClassName("velaProductGallerySlider");
+    var prevArrow = document.getElementsByClassName("owl-prev")
+    var nextArrow = document.getElementsByClassName("owl-next")
+    
+    carousel[0].addEventListener("mouseover", function () {
+        prevArrow[0].classList.add("visible")
+        nextArrow[0].classList.add("visible")
+    })
+    carousel[0].addEventListener("mouseleave", function () {
+        prevArrow[0].classList.remove("visible")
+        nextArrow[0].classList.remove("visible")
+    })
+  	
+</script>

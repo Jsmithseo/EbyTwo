@@ -1,0 +1,40 @@
+{%- if customer -%}
+<a class="sign_in_btn ebyHeaderLink" href="/account" title="{{ 'layout.header.account' | t }}">
+  <span>My Account</span>
+</a>
+{%- else -%}
+<a href="/account/login" title="Sign In" class="sign_in_btn ebyHeaderLink"><span>Sign In</span></a>
+<a class="ebyMicroBtn joinNow{% if cart.item_count <= 0 %} join{%  else %} buy{% endif %}" href="/pages/build-your-box" title="Join the Movement"><span>Subscribe</span></a>
+{%- endif -%}
+<div class="velaCartTop {% if cart.item_count <= 0 %} empty{%  else %} avail{% endif %}">
+	{%- if settings.ajax_cart_method == "modal" -%}
+		<a href="javascript:void(0)" class="velaCartModal d-flex">
+			<i class="icons ebyicon-minicart-empty"></i>
+			<span class="text"><span id="CartCount">{{ cart.item_count }}</span></span>
+			{% comment  %}
+				<span class="text hidden">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+				<span id="CartCost" class="hidden">{{ cart.total_price | money }}</span>
+				<span class="cart-title">{{ 'layout.cart.title' | t }}</span>
+			{% endcomment  %}
+		</a>
+		<div class="velaAjaxCartModal">
+    		<div id="cartContainer"></div>
+		</div>
+	{%- else -%}
+  
+  		<div class="ebyHeaderCtaWrapper{% if cart.item_count <= 0 %} join{%  else %} buy{% endif %}">
+          <a href="/cart" class="jsDrawerOpenRight d-flex ebyMinicart">
+              <i class="icons ebyicon-minicart-empty"></i>
+              <span class="cartIndicator {% if cart.item_count <= 0 %} ebyMinicartEmptyCount{%  else %} ebyMinicartHasCount{% endif %}"></span>
+           	  <span class="text minicartCount">
+                <span id="CartCount">{{ cart.item_count }}</span>
+              </span>
+              {% comment  %}
+              <span class="text hidden">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+              <span id="CartCost" class="hidden">{{ cart.total_price | money }}</span>
+              <span class="cart-title">{{ 'layout.cart.title' | t }}</span> {% endcomment  %}
+          </a>
+  		</div>
+  		
+	{%- endif -%}
+</div>

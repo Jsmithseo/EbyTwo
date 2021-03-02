@@ -1,0 +1,224 @@
+{%- assign owlColumn1 = section.settings.column1 | plus:0 -%}
+{%- assign owlColumn2 = section.settings.column2 | plus:0 -%}
+{%- assign owlColumn3 = section.settings.column3 | plus:0 -%}
+{%- assign owlColumn4 = section.settings.column4 | plus:0 -%}
+{%- assign owlColumn5 = section.settings.column5 | plus:0 -%}
+{%- assign blogLimit = section.settings.limit | plus:0 -%}
+{%- assign blogImageSize = section.settings.image_size -%}
+{%- assign blogName = section.settings.blog_handle -%}
+
+<div class="velaHomeBlogs mb60" style="background-color: {{ section.settings.color_bg }};{% if section.settings.padding_block !=blank %} padding:{{section.settings.padding_block}};{% endif %}">
+    <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">  
+        <div class="velaHomeBlogsInner">
+            <div class="headingGroup pb20">
+                {%- if section.settings.title != blank -%}
+                    <h3 class="velaHomeTitle text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                {%- endif -%}
+                {%- if section.settings.subtitle != blank -%}
+                    <span class="subTitle">{{ section.settings.subtitle }}</span>
+                {%- endif -%}
+            </div>
+            <div class="velaContent">
+                <div class="velaOwlRow owlCarouselPlay">
+                    <div class="owl-carousel" 
+                        data-nav="{{ section.settings.navigation }}" 
+                        data-loop="false" 
+                        data-dots="false"
+                        data-autoplay="{{ section.settings.autoplay }}" 
+                        data-autoplaytimeout="{{ section.settings.autoplay_timeout }}" 
+                        data-margin="30" 
+                        data-columnone="{{ owlColumn1 }}" 
+                        data-columntwo="{{ owlColumn2 }}" 
+                        data-columnthree="{{ owlColumn3 }}" 
+                        data-columnfour="{{ owlColumn4 }}" 
+                        data-columnfive="{{ owlColumn5 }}">
+                        {% for article in blogs[blogName].articles limit:blogLimit %}
+                            <div class="velaBlogItem {{ section.settings.layoutstyle }}">
+                                {% if section.settings.image_featured %}
+                                    {% if article.image %}
+                                        <div class="blogPostImage">
+                                            <a href="{{ article.url }}" title="{{ article.title }}">
+                                                <img class="img-responsive" src="{{ article.image | img_url: blogImageSize }}" alt="{{ article.title }}" />
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                                <div class="blogPostContent">
+                                    <h4 class="blogPostTitle"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
+                                    {% comment }
+                                        <div class="blogPostShortdesc rte mb20">
+                                            {% if article.excerpt.size > 0 %}
+                                                {{ article.excerpt }}
+                                            {% else %}
+                                                <p>{{ article.content | strip_html | truncatewords: 20 }}</p>
+                                            {% endif %}
+                                        </div>
+                                    {% endcomment %}
+                                </div>
+                                <div class="articleMeta">
+                                    <span class="articlePublish text-primary">{{ article.published_at | date:'%b %d, %Y' }}</span>
+                                    <a class="btnBlogReadMore" href="{{ article.url }}" title="{{ 'blogs.article.read_more' | t }}">
+                                        {{ 'blogs.article.read_more' | t }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela blogs",
+        "class": "velaFramework",
+        "settings":[
+            {
+              "type": "header",
+              "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },      
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle"
+            },
+            {
+                "type": "blog",
+                "id": "blog_handle",
+                "label": "Blog"
+            },
+            {
+                "type": "checkbox",
+                "id": "image_featured",
+                "label": "Show featured image",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Featured image size",
+                "default": "480x",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "header",
+                "content": "Carousel Settings"
+            },
+            {
+                "type": "text",
+                "id": "limit",
+                "label": "Limit",
+                "default": "8"
+            },
+            {
+                "type": "checkbox",
+                "id": "navigation",
+                "label": "Show navigation",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "autoplay",
+                "label": "Auto play",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "autoplay_timeout",
+                "label": "Autoplay timeout",
+                "placeholder": "Default: 10000(ms)",
+                "info": "Autoplay interval timeout.",
+                "default": "10000"
+            },
+            {
+                "type": "range",
+                "id": "column1",
+                "min": 1,
+                "max": 7,
+                "step": 1,
+                "label": "#Column 1",
+                "default": 6,
+                "info": "Large desktops"
+            },
+            {
+                "type": "range",
+                "id": "column2",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 2",
+                "default": 3,
+                "info": "Desktops & Tablets landscape"
+            },
+            {
+                "type": "range",
+                "id": "column3",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 3",
+                "default": 2,
+                "info": "Tablets"
+            },
+            {
+                "type": "range",
+                "id": "column4",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 4",
+                "default": 2,
+                "info": "Mobile phone landscape"
+            },
+            {
+                "type": "range",
+                "id": "column5",
+                "min": 1,
+                "max": 5,
+                "step": 1,
+                "label": "#Column 5",
+                "default": 1,
+                "info": "Mobile phone"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Blog posts",
+                "category": "3. Vela Blog",
+                "settings": {
+                    "title": "Blogs on Homepage",
+					"blog_handle": "news"
+                }
+            }
+        ]
+    }
+{% endschema %}

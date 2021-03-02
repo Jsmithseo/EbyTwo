@@ -1,0 +1,127 @@
+<div class="loginMain">
+  <div id="pageContent">
+    <div class="loginBlock">
+      <div id="frmAccountTabLogin" class="tab-pane{% if isLogin %} active{% endif %}">
+            <div id="ResetPassword" class="resetPassword alert alert-success hidden">
+                {{ 'customer.recover_password.success' | t }}
+            </div>
+            <div id="CustomerLoginForm" class="formAccount formAccountLogin">
+              <div class="loginHeading">
+                <h2>Sign In</h2>
+              </div>
+                {% form 'customer_login' %}
+                    <div class="formContent">
+                      	<div>
+                      		{%- if form.errors -%}
+                            <div class="alert alert-danger">
+                                {{ form.errors | default_errors }}
+                            </div>
+                            {%- endif -%}
+                            <div class="form-group{% if form.errors contains 'email' %} has-error{% endif %}">
+                                <label for="CustomerEmail" class="hidden">{{ 'customer.login.email' | t }}</label>
+                                <input autocomplete="off" type="email" name="customer[email]" id="CustomerEmail" class="form-control" placeholder="{{ 'customer.login.email' | t }}" required {% if isLogin %}autofocus{% endif %}>
+                            </div>
+                            {%- if form.password_needed -%}
+                                <div class="form-group form-group--pasword{% if form.errors contains 'password' %} has-error{% endif %}">
+                                    <label for="CustomerPassword" class="hidden">{{ 'customer.login.password' | t }}</label>
+                                    <input autocomplete="off" type="password" value="" name="customer[password]" id="CustomerPassword" class="form-control" placeholder="{{ 'customer.login.password' | t }}" required>
+                                    {% comment %}
+                                    <a href="javascript:void(0)" class="velaShowPassword">{{ 'customer.account.show_password' | t }}</a>
+                                    {% endcomment %}
+                                </div>
+                            {%- endif -%}
+                            <div class="form-button">
+                                <input type="submit" class="btn btnVelaOne" value="{{ 'customer.login.sign_in' | t }}">
+                            </div>
+                            {%- if form.password_needed -%}
+                                <div class="forgetPassword">
+                                  {% comment %}
+                                  <a href="#" class="velaRecoverPassword">Reactivate Account</a>
+                                  {% endcomment %}
+                                  <a href="#recover" class="velaRecoverPassword">Forgot Password?</a>
+                                  <span class="ebyVertBreak">&nbsp;</span>
+                                  <a href="/account/register" class="">Having Trouble Signing In?</a>
+                                </div>
+                            {%- endif -%}
+                      	</div>
+                    </div>
+                {% endform %}
+            </div>
+            <div id="RecoverPasswordForm" class="formAccount formAccountRecover hidden">
+              <div class="loginHeading">
+                <h2>{{ 'customer.recover_password.title' | t }}</h2>
+                <h2 class="reactivateHeader">Reactivate account</h2>
+              </div>
+                {% form 'recover_customer_password' %}
+                    <div class="formContent">
+                        <div class="formAccountText">
+                            <p>{{ 'customer.recover_password.subtext' | t }}</p>    
+                        </div>
+                        {%- if form.errors -%}
+                            <div class="alert alert-danger">
+                                {{ form.errors | default_errors }}
+                            </div>
+                        {%- endif -%}
+                        {%- if form.posted_successfully? -%}
+                            {%- assign resetPassword = true -%}
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $('#ResetPassword').removeClass('hidden');
+                                });
+                            </script>
+                        {%- endif -%}
+                        <div class="form-group">
+                            <label for="RecoverEmail" class="hidden">{{ 'customer.recover_password.email' | t }}</label>
+                            <input autocomplete="off" type="email" value="" name="email" id="RecoverEmail" class="form-control" placeholder="{{ 'customer.recover_password.email' | t }}" required>
+                        </div>
+                        <div class="form-button">
+                            <input type="submit" class="btn btnVelaOne" value="{{ 'customer.recover_password.submit' | t }}">
+                            <div class="forgetPassword">
+                                <a href="javascript:void(0)" class="velaHideRecoverPasswordLink">{{ 'customer.recover_password.cancel' | t }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endform %}
+            </div>
+            {%- if shop.checkout.guest_login -%}
+                <h2 class="velaAccountTitle">
+                    <span>{{ 'customer.login.guest_title' | t }}</span>
+                </h2>
+                <div class="formAccount">
+                    {% form 'guest_login' %}
+                        <div class="form-button">
+                            <input type="submit" class="btn btnVelaOne" value="{{ 'customer.login.guest_continue' | t }}">
+                        </div>
+                    {% endform %}
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+    {%- comment %}
+
+    {%- assign isLogin = true -%}
+    {% include 'vela-login-register' %}
+    
+    {% endcomment -%}
+  </div>
+</div>
+
+<div class="becomeMamber">
+  <div id="pageContent">
+    <div class="becmHeading">
+      <h2>Become A Member</h2>
+      <a href="/pages/build-your-box">Join Now – Start Building Your Box</a>
+    </div>
+    <div class="become_sec">
+    	<div class="ebyGlobalImageWrapper">
+      		{{ shop.metafields.ebyacf.account_login_sub_banner }}
+      	</div>
+    </div>
+  </div>
+</div>
+
+<!-- Begin ReCharge code -->
+{% comment %}
+{% include 'subscription-account-login' %}
+{% endcomment %}
+<!-- End ReCharge code -->

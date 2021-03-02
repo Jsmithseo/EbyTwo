@@ -1,0 +1,124 @@
+{% if product.type == "Core Underwear" %}
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "pantyType-" %}
+            {%- assign prodNameTitle = prodTag | replace: "pantyType-", "" -%}
+        {% endif %}
+        {% if prodTag contains "pantyColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "pantyColor-", "" | replace: "_", " " -%}
+        {% endif %}
+		{% if prodTag contains "lightningDeal-" %}
+            {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" | replace: "_", " " -%}
+        {% endif %}
+    {% endfor %}
+{% elsif product.type == "Core Bralette" %}
+    {%- assign prodNameTitle = "Bralette" -%}
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "braletteColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "braletteColor-", "" | replace: "_", " " -%}
+        {% endif %}
+		{% if prodTag contains "lightningDeal-" %}
+            {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" | replace: "_", " " -%}
+        {% endif %}
+    {% endfor %}
+{% elsif product.type == "Mask" %}
+    {%- assign prodNameTitle = "Mask" -%}
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "maskColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "maskColor-", "" | replace: "_", " " -%}
+        {% endif %}
+		{% if prodTag contains "lightningDeal-" %}
+            {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" | replace: "_", " " -%}
+        {% endif %}
+    {% endfor %}
+{% elsif product.type == "Pack" %}
+    {%- assign prodNameTitle = "3 Pack" -%}
+    {% for prodTag in product.tags %}
+        {% if prodTag contains "packColor-" %}
+            {%- assign prodColorTitle = prodTag | replace: "packColor-", "" | replace: "_", " " -%}
+        {% endif %}
+		{% if prodTag contains "lightningDeal-" %}
+            {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" | replace: "_", " " -%}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{%- unless proImageSize -%}
+	{%- assign proImageSize = '350x' -%}
+{%- endunless -%}
+{%- assign on_sale = true -%}
+{%- if product.compare_at_price > product.price -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+
+<div class="velaProBlock grid {{ product-grid-item }}{% if  lastItemPro == 0 or forloop.last %} lastItem{% endif %} saleProdTileWrapper" data-price="{{ product.price | money_without_currency }}" sa-swatch-root="true">
+  	<div class="velaProBlockInner">
+        <div class="proHImage d-flex flexJustifyCenter saleProdHeader">
+            <div class="proFeaturedImage" href="{{ product.url }}">
+                <img class="t1 img-responsive lazyloaded" alt="{{ product.featured_image.alt | escape }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ product | img_url: proImageSize, crop: 'top' }}" />
+                {%- if product.images.size > 1 and settings.product_second_image -%}
+                    <span class="hidden-sm hidden-xs">
+                        {% for image in product.images %}
+                            {%- if forloop.first != true -%}
+                            	<img class="img-responsive lazyloaded" alt="{{ image.alt }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | product_img_url:proImageSize }}">
+                            	{% break %}
+                            {%- endif -%}
+                        {% endfor %}
+                    </span>
+              	{%- endif -%}
+            </div>
+            {%- if on_sale and settings.productgrid_sale -%}
+                <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+            {%- endif -%} 
+          	<div class="saleProdColorWrapper">
+          		<p class="saleProdColor">
+                    {{ prodColorTitle | capitalize}}
+                </p>
+          	</div>
+        </div>
+      	<div class="proContent saleProdFooter">
+          	<div class="saleProdFooterCol">
+          		<h5 class="proName saleProdName">
+                    {{ prodNameTitle | capitalize }}
+                </h5>
+                <div class="proReviews">
+                  <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+                <div class="proPrice">
+                    <div class="lightningDealPriceWrapper">
+                        <div class="lightningDealPrice">
+                          <p class="origPrice">{{ product.price | money_without_trailing_zeros  }}</p>
+                          <p class="salePrice">{{ prodDealPrice | money_without_trailing_zeros  }}</p>
+                        </div>
+                    </div>
+                </div>
+          	</div>
+          	<div class="saleProdFooterCol buttonWrapperCol">
+          		<form action="/cart/add" method="post" enctype="multipart/form-data" class="formAddToCart">
+                    <input class="saleItemOptVal" type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                    {%- if sold_out -%}
+                        <button class="btn saleProdAdd btnAddToCart disabled" type="submit" value="Submit" disabled>
+                            <span class="text">{{ 'products.product.sold_out' | t }}</span>
+                        </button>
+                    {%- else -%}
+                        {%- if variantCount > 1 -%}
+                            <a class="btn btnProduct btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                <span class="select_options text">{{ 'products.product.select_options' | t }}</span>
+                            </a>
+                        {%- else -%}
+                            <button class="btn saleProdAdd btnAddToCart" type="submit" value="Submit">
+                                <span class="text">Add</span>
+                            </button>
+                  			<button class="btn saleProdAdd btnAddToCart disabled hidden" type="submit" value="Submit" disabled>
+                                <span class="text">Sold Out</span>
+                            </button>
+                        {%- endif -%}
+                    {%- endif -%}
+                </form>
+          	</div>
+        </div>
+    </div>
+</div>

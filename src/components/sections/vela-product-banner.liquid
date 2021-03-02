@@ -1,0 +1,135 @@
+
+<div class="velaProductsBanner mb70" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaContent">
+            {%- if section.blocks.size > 0 -%}
+                {%- for block in section.blocks -%}
+                    <div class="rowFlex noGutter flexAlignCenter banner_{{ block.settings.banner_position}}">
+                        <div class="col-xs-12 col-sm-12 col-md-6 hidden-xs hidden-sm">
+                            <div class="productBanner">
+                                <a href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}" productitem="{{ block.settings.image.alt | default: shop.name }}">
+                                    {% if block.settings.image != blank %}
+                                        <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url: 'master' }}" />
+                                    {% else %}
+                                        <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/960x925" />
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            {% if block.settings.productitem != blank %}
+                                {%- assign productitem = block.settings.productitem -%}
+                                {%- assign product = all_products[productitem] -%}
+                                <div class="productBannerWrap">
+                                    <div class="proFeaturedImage rowFlex flexAlignCenter flexJustifyCenter">
+                                            {%- if product.featured_image -%}
+                                                <img class="img-responsive" alt="{{ product.featured_image.alt | escape }}" src="{{ product.featured_image | product_img_url:'510x' }}" />
+                                            {%- else -%}
+                                                <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/510x642.jpg" />
+                                            {%- endif -%}
+                                        <div class="productInfor">
+                                            <h3 class="productName"><a href="{{ product.url }}" title="{{ product.title}}">{{ product.title }}</a></h3>
+                                            <div class="proPrice">
+                                                <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                                                {% if on_sale %}
+                                                    <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <a class="btn btn-link" {{ product.url }}>{{ 'general.shopnow' | t }}<i class="fa fa-long-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                    {%- if product.images.size > 1 -%}
+                                        <div class="text-center h4"> {{ 'general.othercolours' | t }}</div>
+                                        <div class="proThumbnails gutter-20 w-100">
+                                            <div class="rowFlex  flexJustifyCenter">
+                                                {%- for image in product.images -%}
+                                                    <div class="thumbItem col-item">
+                                                        <img class="img-responsive" src="{{ image.src | img_url: '200x' }}" alt="{{ image.alt | escape }}">
+                                                    </div>
+                                                {%- endfor -%}
+                                            </div>
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                                
+                            {% endif %}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Vela Product Banner",
+    "class": "velaFramework",
+    "settings":[
+        {
+            "type": "header",
+            "content": "Design Section"
+        },
+        {
+            "type": "checkbox",
+            "id": "full_with",
+            "label": "Enabel Full Width?"
+        },
+        {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Background Color",
+            "default": "rgba(0,0,0,0)"
+        },
+        {
+            "type": "text",
+            "id": "padding_block",
+            "label": "Padding",
+            "placeholder": "0px 0px"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "item",
+            "name": "Item Product",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Banner"
+                },
+                {
+                    "type": "select",
+                    "id": "banner_position",
+                    "label": "Banner position",
+                    "default": "left",
+                    "options":[
+                        {
+                            "value": "left",
+                            "label": "Left"
+                        },
+                        {
+                            "value": "right",
+                            "label": "Right"
+                        }
+                    ]
+                },
+
+                {
+                    "type": "product",
+                    "id": "productitem",
+                    "label": "Select product"
+                }
+            ]
+
+        }
+    ],
+    "presets": [
+        {
+            "name": "Vela Product Banner",
+            "category": "2. Vela Product"
+        }
+    ]
+}
+{% endschema %}

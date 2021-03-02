@@ -1,0 +1,73 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_8 -%}
+{%- if product.metafields.ebyacf.enable_blkEight -%}
+<div class="our-product-block" style="background: {{ product.metafields.accessbackground.access_to_power_background }};">
+  <div class="product-blocks">
+    <div class="product-box">
+    <div class="product-box-img">
+      <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blkeight_image_content }}</div>
+    </div>
+    <div class="product-box_details">
+      {%- if product.metafields.accesstitle.access_to_power_title != blank -%}
+      <h3 style="color:{{ product.metafields.ebyacf.blkeight_content_color }};">{{ product.metafields.accesstitle.access_to_power_title }}</h3>
+      {%- endif -%}
+      {%- if product.metafields.accesscontent.access_to_power_content != blank -%}
+      <div class="rich-text">
+      	<div style="color:{{ product.metafields.ebyacf.blkeight_content_color }};" >{{ product.metafields.accesscontent.access_to_power_content }}</div>
+      </div>
+      {%- endif -%}
+      {%- if product.metafields.ebyacf.enable_blkEight_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.accesslink.access_to_power_link }}" href="{{ product.metafields.accesslink.access_to_power_link }}" >{{ product.metafields.accessfield.access_to_power_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 8",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 8"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_8",
+          "label": "Show global section 8",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_8",
+          "label": "Heading",
+          "default": "No Slip Grip"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_8",
+          "label": "Text",
+          "default": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_8_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_8_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

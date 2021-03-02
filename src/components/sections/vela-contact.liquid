@@ -1,0 +1,107 @@
+<div class="velaContactForm" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">    
+         <h3 class="velaHomeTitle text-center bg-image-white">{{ section.settings.title }}</h3>
+        <div class="velacontent">
+            <div class="formContactUs">
+                {% form 'contact' %}
+                    <div class="formContent">
+                        {% if form.posted_successfully? %}
+                            <div class="alert alert-success">
+                                {{ 'contact.form.post_success' | t }}
+                            </div>
+                        {% endif %}
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.errors | default_errors }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    {% assign name_attr = 'contact.form.first_name' | t | handle %}
+                                    <label for="ContactFormFirstName" class="hidden">{{ 'contact.form.first_name' | t }} <sup>*</sup></label>
+                                    <input type="text" id="ContactFormFirstName" class="form-control" placeholder="{{ 'contact.form.first_name' | t }}" name="contact[{{ name_attr }}]" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.first_name }}{% endif %}">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                {% assign name_attr = 'contact.form.last_name' | t | handle %}
+                                <label for="ContactFormFirstName" class="hidden">{{ 'contact.form.last_name' | t }} <sup>*</sup></label>
+                                <input type="text" id="ContactFormFirstName" class="form-control" placeholder="{{ 'contact.form.last_name' | t }}" name="contact[{{ name_attr }}]" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.last_name }}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="ContactFormEmail" class="hidden">{{ 'contact.form.email' | t }} <sup>*</sup></label>
+                                    <input type="email" id="ContactFormEmail" class="form-control" placeholder="{{ 'contact.form.email' | t }}" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="ContactFormPhone" class="hidden">{{ 'contact.form.phone' | t }} <sup>*</sup></label>
+                                    <input type="text" id="ContactFormPhone" class="form-control" placeholder="{{ 'contact.form.phone' | t }}" name="contact[phone]" autocorrect="off" autocapitalize="off" value="{% if form.phone %}{{ form.email }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="ContactFormMessage" class="hidden">{{ 'contact.form.message' | t }}<sup>*</sup></label>
+                                    <textarea rows="8" id="ContactFormMessage" class="form-control" placeholder="{{ 'contact.form.message' | t }}" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-button text-center">
+                            <input type="submit" class="btn" value="{{ 'contact.form.send' | t }}">
+                        </div>
+                    </div>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "VelaContact",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela Contact",
+                "category": "6. Vela Contact"
+            }
+        ]
+    }
+{% endschema %}

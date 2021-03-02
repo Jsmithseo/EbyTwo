@@ -1,0 +1,125 @@
+{%- assign intProColumns = section.settings.portfolio_columns | plus:0 -%}
+{%- assign postLimit = section.settings.portfolio_limit | plus:0 -%}
+{%- if section.settings.image_size != blank -%}
+    {%- assign postImageSize = section.settings.image_size -%}
+{%- else -%}
+    {%- assign postImageSize = 'master' -%}
+{%- endif -%}
+{%- assign strColumn = 12 | divided_by:intProColumns -%}
+{%- if intProColumns == 5 -%}
+    {% capture strGridItem %}col-sp-12 col-xs-6 col-md-4 col-lg-2-4{% endcapture %}
+{%- else -%}
+    {% capture strGridItem %}col-sp-12 col-xs-6 col-md-4 col-lg-{{ strColumn }}{% endcapture %}
+{%- endif -%}
+<div class="container{% if section.settings.full_with %}-full{% endif %}">
+    <div class="PortfolioContainer{% if section.settings.noGutter %} noGutter{% endif %}">
+        {% paginate blog.articles by postLimit %}
+            <div class="velaPortfolio gridMasonry">
+                <div class="velaPortfolioInner">
+                    <div class="rowFlex rowFlexMargin{% if section.settings.noGutter %} noGutter{% endif %}">
+                        <div class="grid-sizer"></div>
+                        {% for article in blog.articles %}
+                            <div class="grid-item velaPortfoItem {{ strGridItem }}">
+                                <div class="grid-item-content">
+                                    {% if article.image %}
+                                        <div class="portfoImage">
+                                            <a href="{{ article.url }}" title="{{ article.title }}">
+                                                <img class="img-responsive" src="{{ article.image | img_url: postImageSize }}" alt="{{ article.title }}" />
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    <div class="portfoContent">
+                                        <div class="portfoContentWrap">
+                                            <h4 class="portfoTitle"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h3>
+                                            <div class="articleMeta">
+                                                <span class="articlePublish"><i class="fa fa-calendar"></i> {{ article.published_at | date:'%d %B, %Y' }}</span> 
+                                                <span class="articleAuthor"><i class="fa fa-user"></i> {{ 'blogs.article.author_html' | t:author:article.author }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {%- if paginate.pages > 1 -%}
+                <div class="velaPaginationWrap clearfix">
+                    <div class="col-xs-12">
+                        {% include 'vela-pagination' %}
+                        {% assign minPage = 1 %}
+                        {% assign maxPage = paginate.page_size | times:paginate.current_page %}
+                        {% if paginate.current_page > 1 %}
+                            {% assign currentPage = paginate.current_page | minus:1 %}
+                            {% assign minPage = currentPage | times: paginate.page_size %}
+                        {% endif %}
+                        {% if maxPage > paginate.items %}{% assign maxPage = paginate.items %}{% endif %}
+                        <div class="itemPaginate pull-right">{{ 'collections.paginate.showing_html' | t: minPage:minPage, maxPage:maxPage, itemsPage:paginate.items }}</div>
+                    </div>
+                </div>
+            {%- endif -%}
+        {% endpaginate %}
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Portfolio",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Portfolio Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "checkbox",
+                "id": "noGutter",
+                "label": "No Padding",
+                "default": false
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Blog image size",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "select",
+                "id": "portfolio_columns",
+                "label": "Column of portfolio",
+                "default": "2",
+                "options": [
+                    {
+                        "label": "1",
+                        "value": "1"
+                    },
+                    {
+                        "label": "2",
+                        "value": "2"
+                    },
+                    {
+                        "label": "3",
+                        "value": "3"
+                    },
+                    {
+                        "label": "4",
+                        "value": "4"
+                    },
+                    {
+                        "label": "5",
+                        "value": "5"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "id": "portfolio_limit",
+                "label": "Number of posts in a page",
+                "default": "12"
+            }
+        ]
+    }
+{% endschema %}

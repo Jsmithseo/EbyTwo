@@ -1,0 +1,174 @@
+{% comment %}
+<!-- Default Template -->
+<section id="pageContent">
+    <div class="container-full">
+        <div class="pageContainer">
+            <h1 class="velaPageTitle">{{ page.title }}</h1>
+            <div class="pageContent">
+                <div class="rte">
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% section 'our-product-block' %}
+{% endcomment %}
+
+{% comment %}
+	{% section 'membership-top' %}
+	{% section 'membership-block-new' %}
+
+
+
+{% endcomment %}
+
+
+
+<div class="new_member_banner">
+    {%- if page.metafields.build_your_box.build_your_box != blank -%}
+    <div class="banner_bg">
+      <div class="member_details">
+        {{ page.metafields.build_your_box.build_your_box }}
+      </div>
+    </div>
+    {%- endif -%}
+    <div class="pro_block">
+    	<div class="Pro_boxs">
+        	<div class="pro_inner_new">
+              
+              {%- if page.metafields.build_products.build_your_box_products != blank -%}
+                <div class="pro_img">
+                  <img src="{{ page.metafields.build_products.build_your_box_products }}" alt="">
+                </div>
+              {%- endif -%}
+            
+              {%- if page.metafields.build_products_detai.build_products_details != blank -%}
+                <div class="pro_detail">
+                  {{ page.metafields.build_products_detai.build_products_details }}
+                </div> 
+              {%- endif -%}
+                
+            </div>
+        </div>
+        <div class="Pro_boxs">
+        	<div class="pro_inner_new">
+                {%- if page.metafields.build_products_2.build_your_box_products_2 != blank -%}
+                <div class="pro_img">
+                  <img src="{{ page.metafields.build_products_2.build_your_box_products_2 }}" alt="">
+                </div>
+                {%- endif -%}
+                {%- if page.metafields.products_details02.build_products_details02 != blank -%}
+                <div class="pro_detail">
+                  {{ page.metafields.products_details02.build_products_details02 }}
+                </div> 
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="Pro_boxs">
+        	<div class="pro_inner_new">
+              {%- if page.metafields.build_products03.build_your_box_products_3 != blank -%}
+                <div class="pro_img">
+                  <img src="{{ page.metafields.build_products03.build_your_box_products_3 }}" alt="">
+                </div>
+                {%- endif -%}
+                {%- if page.metafields.products_details03.build_products_details03 != blank -%}
+                <div class="pro_detail">
+                  {{ page.metafields.products_details03.build_products_details03 }}
+                </div> 
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="make_eby_section">
+	<div class="make_eby_inner">
+      {%- if page.metafields.what_makes_title.what_makes_title != blank -%}
+      	<h2>{{ page.metafields.what_makes_title.what_makes_title }}</h2>
+      {%- endif -%}
+    	<div class="make_eby_bg">
+        	<div class="make_box">
+            	<div class="make_box_in">
+                  {%- if page.metafields.what_makes_title01.what_makes_title01 != blank -%}
+                  	<h3>{{ page.metafields.what_makes_title01.what_makes_title01 }}</h3>
+                  {%- endif -%}
+                  {%- if page.metafields.what_makes_content01.what_makes_content01 != blank -%}
+                  	{{ page.metafields.what_makes_content01.what_makes_content01 }}
+                  {%- endif -%}
+				</div>
+            </div>
+            <div class="make_box">
+            	<div class="make_box_in">
+                  {%- if page.metafields.what_makes_title02.what_makes_title02 != blank -%}
+                  	<h3>{{ page.metafields.what_makes_title02.what_makes_title02 }}</h3>
+                  {%- endif -%}
+                  {%- if page.metafields.what_makes_content02.what_makes_content02 != blank -%}
+                  	{{ page.metafields.what_makes_content02.what_makes_content02 }}
+                  {%- endif -%}
+				</div>
+            </div>
+          <div class="make_box">
+            	<div class="make_box_in">
+                  {%- if page.metafields.what_makes_title03.what_makes_title03 != blank -%}
+                  	<h3>{{ page.metafields.what_makes_title03.what_makes_title03 }}</h3>
+                  {%- endif -%}
+                  {%- if page.metafields.what_makes_content03.what_makes_content03 != blank -%}
+                  	{{ page.metafields.what_makes_content03.what_makes_content03 }}
+                  {%- endif -%}
+				</div>
+            </div>
+        </div>
+        {%- if page.metafields.what_makes_button.what_makes_button != blank -%}
+        	{{ page.metafields.what_makes_button.what_makes_button }}
+        {%- endif -%}
+    </div>	
+</div>
+
+<div class="mem_perk_section membership-block">
+	<div class="mem_perk_inner">
+    	{%- if page.metafields.membership_perks_tit.membership_perks_title != blank -%}
+      		<h2>{{ page.metafields.membership_perks_tit.membership_perks_title }}</h2>
+        {%- endif -%}
+      
+      	{%- if page.metafields.membership_perks_sec.membership_perks_section != blank -%}
+      		{{ page.metafields.membership_perks_sec.membership_perks_section }}
+        {%- endif -%}
+    </div>	
+</div>
+
+<script>
+  $(document).ready(function(){
+    if($(window).width() < 750){
+      var t = $('.member_details .member_box').text();
+      var res = t.substring(0, 67);
+      console.log(res);
+      $('.member_box').addClass('hide');
+      $('.member_box').find('p').last().append("<a class='less'>less</a></p>");
+      $( "<div class='sort-description'><p>"+res+" ... <a class='more'>more</a></p>" ).insertBefore( ".member_box" );
+    }
+    
+    $(document).on('click', '.more', function(){
+      $(document).find('.sort-description').addClass('hide');
+      $('.member_box').removeClass('hide');
+    });
+    $(document).on('click', '.less', function(){
+      $(document).find('.sort-description').removeClass('hide');
+      $('.member_box').addClass('hide');
+    });
+    
+    $(document).on('click', ".new_member_banner a.shop_btn", function() {
+      var style = decodeURIComponent($(this).data('style'));
+      var styleOBJ = {
+        name: "style",
+        value: style
+      }
+      window.localStorage.setItem('quizStyle', JSON.stringify(styleOBJ));
+      setTimeout(function(){
+        location.href='/pages/build-your-box';
+      }, 2000);
+      return false;
+    });
+
+  });
+</script>

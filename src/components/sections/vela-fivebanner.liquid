@@ -1,0 +1,197 @@
+<div class="velaFiveBanner style2 mb30" style="background-color: {{section.settings.color_bg }};{% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaBannerInner ">
+            {%- if section.settings.heading != blank -%}
+                <h3 class="velaTitle velaHomeTitle text-center">{{ section.settings.heading}}</h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="rowFlex rowFlexMargin">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="velaBannerItem {{ section.settings.effect }} mb30">
+                            <a href="{% if section.settings.links1 != blank %}{{ section.settings.links1 }}{% else %}#{% endif %}" title="{{ block.settings.single_image.alt | default: shop.name }}">
+                                {% if section.settings.single_images1 != blank %}
+                                    <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images1 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/580x410.jpg" />
+                                {% endif %}
+                            </a>              
+                        </div>
+                        <div class="velaBannerItem {{ section.settings.effect }} mb30">
+                            <a href="{% if section.settings.links2 != blank %}{{ section.settings.links2 }}{% else %}#{% endif %}" title="{{ block.settings.single_images.alt | default: shop.name }}">
+                                {% if section.settings.single_images2 != blank %}
+                                    <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images2 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/580x770.jpg" />
+                                {% endif %}
+                            </a>              
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="rowFlex rowFlexMargin">
+                            <div class="col-sp-12 col-xs-6 col-sm-6">
+                                <div class="velaBannerItem {{ section.settings.effect }} mb30 bannerLager">
+                                    <a href="{% if section.settings.links3 != blank %}{{ section.settings.links3 }}{% else %}#{% endif %}" title="{{ block.settings.single_images.alt | default: shop.name }}">
+                                        {% if section.settings.single_images3 != blank %}
+                                            <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images3 | img_url: 'master' }}" />
+                                        {% else %}
+                                            <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/580x770.jpg" />
+                                        {% endif %}
+                                    </a>              
+                                </div>   
+                            </div>
+                            <div class="col-sp-12 col-xs-6 col-sm-6">
+                                <div class="velaBannerItem {{ section.settings.effect }} mb30">
+                                    <a href="{% if section.settings.links4 != blank %}{{ section.settings.links4 }}{% else %}#{% endif %}" title="{{ block.settings.single_image.alt | default: shop.name }}">
+                                        {% if section.settings.single_images4 != blank %}
+                                            <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images4 | img_url: 'master' }}" />
+                                        {% else %}
+                                            <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/580x770.jpg" />
+                                        {% endif %}
+
+                                    </a>          
+                                </div> 
+                            </div>
+                            <div class="col-xs-12 col-sm-12">
+                                <div class="velaBannerItem {{ section.settings.effect }} mb30">
+                                    <a href="{% if section.settings.links5 != blank %}{{ section.settings.links5 }}{% else %}#{% endif %}" title="{{ block.settings.single_image.alt | default: shop.name }}">
+                                        {% if section.settings.single_images5 != blank %}
+                                            <img class="img-responsive border-radius1" alt="" src="{{ section.settings.single_images5 | img_url: 'master' }}" />
+                                        {% else %}
+                                            <img class="img-responsive border-radius1" alt="{{ shop.name }}" src="//placehold.it/1190x410.jpg" />
+                                        {% endif %}
+                                    </a>            
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Five Banner",
+        "class": "velaFramework",
+        "settings": [
+            {
+              "type": "header",
+              "content": "Design Block"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+               "type": "header",
+               "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading"
+            },
+            {
+                "type": "select",
+                "id": "effect",
+                "label": "Effect",
+                "default": "effectOne",
+                "options": [
+                    {
+                        "value": "effectNone",
+                        "label": "None"
+                    },
+                    {
+                        "value": "effectOne",
+                        "label": "Effect one"
+                    },
+                    {
+                        "value": "effectTwo",
+                        "label": "Effect two"
+                    },
+                    {
+                        "value": "effectThree",
+                        "label": "Effect Three"
+                    },
+                    {
+                        "value": "effectFour",
+                        "label": "Effect Four"
+                    },
+                    {
+                        "value": "effectFive",
+                        "label": "Effect Five"
+                    }
+                ]
+            },
+            {
+                "type": "image_picker",
+                "id": "single_images1",
+                "label": "1st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links1",
+                "label": "1st Image Link"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images2",
+                "label": "2st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links2",
+                "label": "2st Image Link"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images3",
+                "label": "3st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links3",
+                "label": "3st Image Link"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images4",
+                "label": "4st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links4",
+                "label": "4st Image Link"
+            },          
+            {
+                "type": "image_picker",
+                "id": "single_images5",
+                "label": "5st Banner Image"
+            },
+            {
+                "type": "url",
+                "id": "links5",
+                "label": "5st Image Link"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela Five Banner",
+                "category": "4. Vela Image"
+            }
+        ]
+    }
+{% endschema %}

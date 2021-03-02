@@ -1,0 +1,73 @@
+{%- assign respond_js_secret_key = shop.domain | md5 -%}
+{%- assign proImageSize = '600x' -%}
+{% unless search.terms == respond_js_secret_key %}
+    <section id="pageContent" class="pageSearchContent">
+        <div class="container-full">
+            <div class="velaSearchContainer mb20 pb-md-30">
+                {% paginate search.results by 8 %}
+                    {%- if search.performed -%}
+                        {%- if search.results_count == 0 -%}
+                            <h1 class="velaSearchTitle">{{ 'general.search.no_results_html' | t: terms: search.terms }}</h1>
+                        {%- else -%}
+                            <h1 class="velaSearchTitle">{{ 'general.search.results_for_html' | t: terms: search.terms }}</h1>
+                        {%- endif -%}
+                    {%- else -%}
+                        <h1 class="velaSearchTitle">{{ 'general.search.blog_title' | t }}</h1>
+                    {%- endif -%}
+                    <form class="formSearchPage" action="/search" method="get">
+                        <div class="input-group">
+                            <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder_blog' | t }}" class="formSearchPageInput form-control" />
+                            <div class="input-group-addon">
+                                <button type="submit" class="btn formSearchPageButton">
+                                    <span class="searchPageButtonText">{{ 'general.search.submit' | t }}</span>
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="view" value="blog" />
+                        <input type="hidden" name="type" value="article" />
+                    </form>
+                    {%- if search.performed -%}
+                        <div class="searchArticleResults">
+                            {% for article in search.results %}
+                                <div class="articleItemSearch">
+                                    {%- if article.image -%}
+                                        <div class="articleItemSearchImage">
+                                            <a href="{{ article.url }}">
+                                                <img class="img-responsive" src="{{ article.image | img_url: '480x' }}" alt="{{ article.title }}" />
+                                            </a>
+                                        </div>
+                                    {%- endif -%}
+                                    <div class="articleItemSearchContent">
+                                        <h3 class="articleItemSearchTitle">
+                                            <a href="{{ article.url }}">{{ article.title }}</a>
+                                        </h3>
+                                        <div class="articleMeta">
+                                            <span class="articlePublish">{{ article.published_at | date:'%d %B, %Y' }}</span> 
+                                            <span class="articleAuthor">{{ article.author }}</span>
+                                            {%- assign number_of_comments = article.comments_count -%}
+                                            {%- if blogs[blogName].comments_enabled? -%}
+                                                <span class="articleCountComment">{{ number_of_comments }} <i class="fa fa-comments-o"></i></span>
+                                            {%- endif -%}
+                                        </div>
+                                        <div class="articleItemSearchDesc">
+                                            {{ article.content | strip_html | truncatewords: 30 }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {%- endif -%}
+                    {%- if paginate.pages > 1 -%}
+                        <div class="searchPagination">
+                            {% include 'vela-pagination' %}
+                        </div>
+                    {%- endif -%}
+                {% endpaginate %}
+            </div>
+        </div>
+    </section>
+{% else %}
+    {% include 'respond' %}
+    {% layout none %}
+{% endunless %}

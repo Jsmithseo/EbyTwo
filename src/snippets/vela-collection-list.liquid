@@ -1,0 +1,14 @@
+
+<div id="velaProList" class="proList list">
+	<div class="rowFlex rowFlexMargin">
+	    {% for product in collection.products %}
+	        {% include 'product-list-item' with 'col-xs-12' %}
+	    {% else %}
+	        <div class="collNoProduct col-xs-12">
+	            <div class="alert alert-warning">
+	                {{ 'collections.general.no_matches' | t }}
+	            </div>
+	        </div>
+	    {% endfor %}
+	</div>
+</div>

@@ -1,0 +1,277 @@
+{%- comment -%}Free Gift{%- endcomment -%}
+{%- assign FreeGiftEnabled = settings.free_gift_enabled -%}
+{%- assign FreeGiftProduct = all_products[settings.free_gift_product] -%}
+{%- assign FreeGiftNumberProductToAdd = settings.free_gift_number_toadd -%}
+{%- assign FreeGiftCartValueNeeded = settings.free_gift_value_needed | times: 100 -%}
+{%- comment -%}{- if FreeGiftEnabled and FreeGiftProduct.first_available_variant.id -}{%- endcomment -%}
+{%- if FreeGiftEnabled -%}
+  <script>console.log('FreeGiftProduct available');</script>
+  {%- assign FreeGiftPVariant = FreeGiftProduct.variants[0].id -%}
+
+  <script>
+    function freeGiftProduct(cart, isCart, isForm){
+      if(isForm === undefined) {
+        isForm = false;
+      }
+      var Cart = cart;
+      var foundFreeGiftP = 0;
+      var foundFreeGiftPHTML = 0;
+      var foundFreeGiftPVariant = false;
+      var foundFreeGiftPVariantCount = 0;
+      var foundFreeGiftPVariantHTMLCount = 0;
+      var totalPrice = 0;
+      var isAllOneTime = true;
+      $.each(cart.items, function(index, cartItem) {
+        if (cartItem.variant_id == {{ FreeGiftPVariant }}) {
+          foundFreeGiftPVariant = true;
+          foundFreeGiftPVariantCount = cartItem.quantity;
+          if (document.getElementById('updates_' + cartItem.key) != undefined) {
+            foundFreeGiftPVariantHTMLCount = parseInt(document.getElementById('updates_' + cartItem.key).value);
+          }
+        }
+        totalPrice += cartItem.line_price;
+        if (cartItem['properties'] != null) {
+          //console.log(cartItem['properties']);
+          if (cartItem['properties']['subscription_id'] != null) {
+            isAllOneTime = false;
+            //console.log(cartItem['properties']['subscription_id']);
+          }
+        }
+      });
+      console.log('cart_total_price',cart['total_price'],'totalPrice',totalPrice);
+      let cartValue = totalPrice;
+      {% if template.name == 'cart' -%}
+      if ((foundFreeGiftPVariantCount != foundFreeGiftPVariantHTMLCount) || (foundFreeGiftP != foundFreeGiftPHTML)) {
+        console.log('foundFreeGiftPVariantCount',foundFreeGiftPVariantCount,'foundFreeGiftPVariantHTMLCount',foundFreeGiftPVariantHTMLCount);
+        console.log('foundFreeGiftP',foundFreeGiftP,'foundFreeGiftPHTML',foundFreeGiftPHTML);
+        console.log('Different amounts between cart in html and cart in ajax, reloading cart page');
+        //window.location.href = "/cart";
+        //return false;
+      }
+      {% endif %}
+      //console.log('foundFreeGiftP=' + foundFreeGiftP,'foundFreeGiftPVariant=' + foundFreeGiftPVariant);
+      if (cartValue >= {{ FreeGiftCartValueNeeded }} && foundFreeGiftPVariant == false && isAllOneTime == true) {
+        var params = {quantity:{{ FreeGiftNumberProductToAdd }},id:{{ FreeGiftPVariant }}};
+        params.properties = {"Free" : "Gift"};
+        $.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          dataType: 'json',
+          async: false,
+          data: params,
+          success: function(){
+            console.log('Added Free Gift to Cart');
+            $.ajax({
+              type: 'POST',
+              url: '/cart/update.js',
+              data: 'attributes[Free Gift]=Yes',
+              dataType: 'json',
+              async: false,
+              success: function(cart) {
+                if (isCart == false) {
+                  //Shopify.onItemAdded();
+                  //theme.mfpOpen("cart-draw");
+                  //ajaxCart.load();
+                } else {
+                  window.location.href = "/cart";
+                }
+              }
+            });
+          }
+        });
+      } else if ((cartValue < {{ FreeGiftCartValueNeeded }} || isAllOneTime == false) && foundFreeGiftPVariant == true) {
+        var params = {quantity:0,id:{{ FreeGiftPVariant }}};
+        $.ajax({
+          type: 'POST',
+          url: '/cart/change.js',
+          dataType: 'json',
+          async: false,
+          data: params,
+          success: function(){
+            console.log('Removed Free Gift to Cart');
+            $.ajax({
+              type: 'POST',
+              url: '/cart/update.js',
+              data: 'attributes[Free Gift]=No',
+              dataType: 'json',
+              async: false,
+              success: function(cart) {
+                if (isCart == false) {
+                  //Shopify.onItemAdded();
+                  //theme.mfpOpen("cart-draw");
+                  //ajaxCart.load();
+                } else {
+                  window.location.href = "/cart";
+                }
+              }
+            });
+          }
+        });
+      }
+      if (foundFreeGiftPVariantCount > {{ FreeGiftNumberProductToAdd }}) {
+        var params = {quantity:{{ FreeGiftNumberProductToAdd }},id:{{ FreeGiftPVariant }}};
+        $.ajax({
+          type: 'POST',
+          url: '/cart/change.js',
+          dataType: 'json',
+          async: false,
+          data: params,
+          success: function(){
+            console.log('Correcting Quantity Free Gift to Cart');
+            if (isCart == false) {
+              //Shopify.onItemAdded();
+              //theme.mfpOpen("cart-draw");
+              //ajaxCart.load();
+            } else {
+              window.location.href = "/cart";
+            }
+          }
+        });
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '/cart.json',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+          Cart = data;
+        }
+      });
+      return {
+        cart: Cart,
+        foundMoreFreeGift: foundFreeGiftPVariantCount > {{ FreeGiftNumberProductToAdd }} ? true : false
+      }
+    }
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      {% if template.name == 'cart' -%}
+        {% assign has_subscriptions = false %}
+        {%- for i in cart.items -%}
+          {%- for p in i.properties -%}
+            {%- if p.first == 'shipping_interval_frequency' -%}
+              {%- assign has_subscriptions = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor %}
+        $('form[action^="/cart"]{% if has_subscriptions %} [type="submit"]{% endif %}').{% if has_subscriptions %}click{% else %}submit{% endif %}(function(e){
+          console.log('submit');
+          var result = true;
+          $.ajax({
+            type: 'GET',
+            url: '/cart.json',
+            async: false,
+            dataType: 'json',
+            success: function (cart) {
+              if(typeof freeGiftProduct == 'function') {
+                result = freeGiftProduct(cart, $('body').hasClass('template-cart') ? true : false, true);
+                console.log(result);
+                if (result.foundMoreFreeGift == true && $('body').hasClass('template-cart') == true) {
+                  $('form[action^="/cart"] [type="submit"]').addClass('disabled').attr("disabled", "disabled");
+                  $('form[action^="/cart"]').addClass('disabled').attr("disabled", "disabled");
+                  e.preventDefault();
+                  return false;
+                  //remove listener
+                  //d.onclick = null;
+                  //console.log(d);
+                }
+              }
+            }
+          });
+        });
+      {%- else -%}
+        $.ajax({
+          type: 'GET',
+          url: '/cart.json',
+          async: false,
+          dataType: 'json',
+          success: function (cart) {
+            if(typeof freeGiftProduct == 'function') {
+              freeGiftProduct(cart, false);
+            }
+          }
+        });
+      {% endif -%}
+    });
+  </script>
+
+  {%- if template.name == 'cart' -%}
+    {%- assign foundFreeGiftPVariant = false -%}
+    {%- assign foundFreeGiftPVariantLine = false -%}
+    {%- assign foundFreeGiftPVariantCount = 0 -%}
+    {%- assign total_price = 0 -%}
+    {%- assign isAllOneTime = true -%}
+    {%- for item in cart.items -%}
+      {%- if item.variant_id == FreeGiftPVariant -%}
+        {%- assign foundFreeGiftPVariant = true -%}
+        {%- assign foundFreeGiftPVariantLine = forloop.index -%}
+        {%- assign foundFreeGiftPVariantCount = item.quantity -%}
+      {%- endif -%}
+
+      {%- assign line_price = item.line_price -%}
+      {%- assign total_price = total_price | plus : line_price -%}
+      {%- for p in item.properties -%}
+        {%- if p.first == 'shipping_interval_frequency' -%}
+          {%- assign isAllOneTime = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+    {%- assign cart_value = total_price -%}
+
+    <script>console.log('cart_total_price',{{cart.total_price}},'total_price',{{total_price}},{{ FreeGiftCartValueNeeded }},{{ isAllOneTime }});</script>
+    {% if cart_value < FreeGiftCartValueNeeded or isAllOneTime == false -%}
+      {% if foundFreeGiftPVariant == true -%}
+        <script>
+          console.log('Removed Gift to Bag');
+          $.ajax({
+            type: 'POST',
+            url: '/cart/update.js',
+            data: 'attributes[Free Gift]=No',
+            dataType: 'json',
+            async: false,
+            success: function(cart) {
+              window.location.href = "/cart/change?line={{ foundFreeGiftPVariantLine }}&quantity=0";
+            }
+          });
+        </script>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if cart_value >= FreeGiftCartValueNeeded and isAllOneTime == true and foundFreeGiftPVariant == false -%}
+      <script>
+        var params = {quantity:{{ FreeGiftNumberProductToAdd }},id:{{ FreeGiftPVariant }}};
+        params.properties = {"Free" : "Gift"};
+        $.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          dataType: 'json',
+          async: false,
+          data: params,
+          success: function(){
+            console.log('Added Free Gift to Cart');
+            $.ajax({
+              type: 'POST',
+              url: '/cart/update.js',
+              data: 'attributes[Free Gift]=Yes',
+              dataType: 'json',
+              async: false,
+              success: function(cart) {
+                window.location.href = "/cart";
+              }
+            });
+          }
+        });
+      </script>
+    {%- endif -%}
+    {%- if foundFreeGiftPVariantCount > FreeGiftNumberProductToAdd -%}
+      <script>
+        console.log('Correcting Quantity Free Gift to Cart');
+        window.location.href = "/cart/change?line={{ foundFreeGiftPVariantLine }}&quantity={{ FreeGiftNumberProductToAdd }}";
+      </script>
+    {%- endif -%}
+  {%- endif -%}
+{%- else -%}
+  <script>console.log('FreeGiftProduct not available');</script>
+{%- endif -%}

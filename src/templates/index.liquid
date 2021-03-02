@@ -1,0 +1,38 @@
+
+{{ content_for_index }}
+
+<section class="ebyHomepageMultiColGrid">
+  <div class="ebyGridWrapper">
+    {% for value in shop.metafields.ebyacf.homepage_mc_header %}
+      <div class="ebyGridCol" style="background: {{ shop.metafields.ebyacf.homepage_mc_bg_color[forloop.index0] }};">
+        <div class="ebyGridBgImg">
+          <div class="bgImgWrapper">{{ shop.metafields.ebyacf.homepage_mc_bg_image[forloop.index0] }}</div>
+        </div>
+        <div class="ebyGridBody">
+			<div class="ebyGridBodyWrapper">
+                <header>
+                  {{ shop.metafields.ebyacf.homepage_mc_header[forloop.index0].en }}
+                </header>
+                <footer>
+                  <div class="ebyButtonWrapper">
+                    <a class="ebyMacroButton {{ shop.metafields.ebyacf.homepage_mc_button_class[forloop.index0] }}" href="{{ shop.metafields.ebyacf.homepage_mc_button_url_text[forloop.index0] }}">{{ shop.metafields.ebyacf.homepage_mc_button_copy[forloop.index0] }}</a>
+                  </div>
+                </footer>
+          	</div>
+        </div>
+      </div>
+    {% endfor %}
+    
+  	
+  </div>
+</section>
+
+<section class="ebyHomepageBody">
+	<div class="ebyHomepageBodyWrapper">
+  		{{ shop.metafields.ebyacf.homepage_body_content.en }}
+  	</div>
+</section>
+
+{% comment %}
+<div data-rebuy-id="786"></div>
+{% endcomment %}

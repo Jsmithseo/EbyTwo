@@ -1,0 +1,297 @@
+<section class="velaBreadcrumbs{% if section.settings.enable %} hasBackgroundImage{% endif %}">
+    <div class="velaBreadcrumbsInner" style="background-color: {{ settings.vela_breadcrumb_bgcolor }}">
+        {%- if section.settings.enable -%}
+            <div class="velaBreadcrumbImage">
+                {%- assign pageYN = false -%}
+                {%- assign pageImage = "" -%}
+                {%- assign collectionYN = false -%}
+                {%- assign collectionImage = "" -%}
+                {%- assign blogYN = false -%}
+                {%- assign blogImage = "" -%}
+                {%- if section.blocks.size > 0 -%}
+                    {%- for block in section.blocks -%}
+                        {% case block.type %}
+                        {% when 'page' %}
+                            {%- if  block.settings.pagename == page.handle -%}
+                                {%- assign pageYN = true -%}
+                                {%- assign pageImage = block.settings.bgimage1 -%}
+                                {%- break -%}
+                            {%- endif -%}
+                        {% when 'image' %}
+                            {%- if block.settings.collection_handle == collection.handle -%}
+                                {%- assign collectionYN = true -%}
+                                {%- assign collectionImage = block.settings.bgimage -%}
+                                {%- break -%}
+                            {%- endif -%}
+                        {% when 'blog' %}
+                            {%- if block.settings.blogname == blog.handle -%}
+                                {%- assign blogYN = true -%}
+                                {%- assign blogImage = block.settings.bgimage2 -%}
+                                {%- break -%}
+                            {%- endif -%}
+                        {% endcase %}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if template contains 'page' and pageYN == true -%}
+                    {%- if pageImage != blank -%}
+                        <img  alt="{{ pageImage.alt | default: shop.name }}" src="{{ pageImage | img_url: 'master' }}" />
+                    {%- else -%}
+                        <img  alt="{{ shop.name }}" src="//placehold.it/1920x350" />
+                    {%- endif -%}
+                {%- elsif template contains 'collection' and collectionYN == true -%}
+                    {%- if collectionImage != blank -%}
+                        <img  alt="{{ collectionImage.alt | default: shop.name }}" src="{{ collectionImage | img_url: 'master' }}" />
+                    {%- else -%}
+                        <img  alt="{{ shop.name }}" src="//placehold.it/1920x350" />
+                    {%- endif -%}
+                {%- elsif template contains 'blog' and blogYN == true -%}
+                    {%- if blogImage != blank -%}
+                        <img  alt="{{ blogImage.alt | default: shop.name }}" src="{{ blogImage | img_url: 'master' }}" />
+                    {%- else -%}
+                        <img  alt="{{ shop.name }}" src="//placehold.it/1920x350" />
+                    {%- endif -%}
+
+                {%- else -%}
+                    {%- if template contains 'product' and section.settings.bgimage_product -%}
+                        <img  alt="{{ section.settings.bgimage_product.alt | default: shop.name }}" src="{{ section.settings.bgimage_product | img_url: 'master' }}" />
+                    {%- elsif template contains 'article' and section.settings.bgimage_article -%}
+                        <img  alt="{{ section.settings.bgimage_article.alt | default: shop.name }}" src="{{ section.settings.bgimage_article | img_url: 'master' }}" />
+                    {%- else -%}
+                        {%- if section.settings.bgimage != blank -%}
+                            <img  alt="{{ section.settings.bgimage.alt | default: shop.name }}" src="{{ section.settings.bgimage | img_url: 'master' }}" />
+                        {%- else -%}
+                            <img  alt="{{ shop.name }}" src="//placehold.it/1920x480" />
+                        {%- endif -%}
+                    {%- endif -%}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+        <nav class="velaBreadcrumbWrap container">       
+            <div class="velaBreadcrumbsInnerWrap">
+                {%- if template == 'list-collections' -%}
+                    <h1 class="breadcrumbHeading">{{ page_title }}</h1>
+                {%- elsif template contains 'collection' -%}
+                    {%- if current_tags -%}
+                        <h1 class="breadcrumbHeading">{{ collection.title }} &mdash; {{ current_tags | join: " + " }}</h1>
+                    {%- else -%}
+                        <h1 class="breadcrumbHeading">{{ collection.title }}</h1>
+                    {%- endif -%}
+                {%- elsif template contains 'page' -%}
+                    <h1 class="breadcrumbHeading">{{ page.title }}</h1>
+                {%- elsif template contains 'product' -%}
+                    <h2 class="breadcrumbHeading breadcrumbHeadingProduct">{{ product.title }}</h2>
+                {%- elsif template contains 'blog' -%}
+                    {% if current_tags %}
+                        <h1 class="breadcrumbHeading">{{ blog.title }} &mdash; {{ current_tags | join: " + " }}</h1>
+                    {% else %}
+                        <h1 class="breadcrumbHeading">{{ blog.title }}</h1>
+                    {% endif %}
+                {%- elsif template contains 'article' -%}
+                    <h2 class="breadcrumbHeading breadcrumbHeadingArticle">{{ blog.title }}</h2>
+                {%- endif -%}
+                <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}" itemprop="item">
+                            <span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span>
+                        </a>
+                        <meta itemprop="position" content="1" />
+                    </li>
+                    {%- if template contains 'product' -%}
+                        {%- if collection -%}
+                            {%- if collection.handle -%}
+                                {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+                                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                    <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
+                                        <span itemprop="name">{{ collection.title }}</span>
+                                    </a>
+                                    <meta itemprop="position" content="2" />
+                                </li>
+                            {%- endif -%}
+                        {%- else -%}
+                            {%- assign collection = product.collections | first -%}
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a href="{{ collection.url }}" title="{{ collection.title }}" itemprop="item">
+                                    <span itemprop="name">{{ collection.title }}</span>
+                                </a>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                        {%- endif -%}
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="item"><span itemprop="name">{{ product.title }}</span></span>
+                            {%- if collection -%}
+                                {% if collection.handle %}
+                                    <meta itemprop="position" content="3" />
+                                {% endif %}
+                            {%- else -%}
+                                <meta itemprop="position" content="2" />
+                            {%- endif -%}
+                        </li>
+                    {%- elsif template contains 'collection' and collection.handle -%}
+                        {%- if current_tags -%}
+                            {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
+                                    <span itemprop="name">{{ collection.title }}</span>
+                                </a>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <span itemprop="item"><span itemprop="name">{{ current_tags | join: " + " }}</span></span>
+                                <meta itemprop="position" content="3" />
+                            </li>
+                        {%- else -%}
+                            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <span itemprop="item"><span itemprop="name">{{ collection.title }}</span></span>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                        {%- endif -%}
+                    {%- elsif template contains 'blog' -%}
+                        {%- if current_tags -%}
+                            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <a href="{{ blog.url }}" title="{{ blog.title }}" itemprop="item">
+                                    <span itemprop="name">{{ blog.title }}</span>
+                                </a>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <span itemprop="item"><span itemprop="name">{{ current_tags | join: " + " }}</span></span>
+                                <meta itemprop="position" content="3" />
+                            </li>
+                        {%- else -%}
+                            <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                                <span itemprop="item"><span itemprop="name">{{ blog.title }}</span></span>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                        {%- endif -%}
+                    {%- elsif template contains 'article' -%}
+                        <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <a href="{{ blog.url }}" title="{{ blog.title }}" itemprop="item">
+                                <span itemprop="name">{{ blog.title }}</span>
+                            </a>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="item"><span itemprop="name">{{ article.title }}</span></span>
+                            <meta itemprop="position" content="3" />
+                        </li>
+                    {%- elsif template contains 'page' -%}
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="item"><span itemprop="name">{{ page.title }}</span></span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    {%- else -%}
+                        <li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                            <span itemprop="item"><span itemprop="name">{{ page_title }}</span></span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    {%- endif -%}
+                </ol>
+            </div>
+        </nav>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela Breadcrumb",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable",
+                "label": "Use background image",
+                "default": true
+            },
+            {
+                "type": "color",
+                "id": "bgcolor",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background image (Default)",
+                "info": "Default size: 1920x480 pixels"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_product",
+                "label": "Template product",
+                "info": "Background image for product page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_article",
+                "label": "Template article",
+                "info": "Background image for article page"
+            },
+            {
+                "type": "image_picker",
+                "id": "bgimage_page",
+                "label": "Template page",
+                "info": "Background image for page"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "image",
+                "name": "Image collection",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "bgimage",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    },
+                    {
+                        "type": "collection",
+                        "id": "collection_handle",
+                        "label": "Collection page"
+                    }
+
+                ]
+            },
+            {
+                "type": "page",
+                "name": "Image Page",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "bgimage1",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    },
+                    {
+                        "type": "page",
+                        "id": "pagename",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    }
+                    
+                ]
+            },
+            {
+                "type": "blog",
+                "name": "Image Page BLog",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "bgimage2",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    },
+                    {
+                        "type": "blog",
+                        "id": "blogname",
+                        "label": "Background image",
+                        "info": "It will be displayed on collection page"
+                    }
+                    
+                ]
+            }
+        ]
+    }
+{% endschema %}

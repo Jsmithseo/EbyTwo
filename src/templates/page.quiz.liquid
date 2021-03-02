@@ -1,0 +1,22 @@
+{% if customer.tags contains 'Active Subscriber' or customer.tags contains 'Inactive Subscriber'%}
+<script type="text/javascript">
+  if (window.location.href.indexOf("?style=") <= 0) {
+  	window.location.href = '/account';
+  }
+</script>
+{% endif %}
+{% include 'breadcrumb' %}
+<section id="pageContent" class="quiz_content">
+  <div class="container-full">
+    <div class="pageContainer">
+      {%- comment -%}<h1 class="velaPageTitle">{{ page.title }}</h1>{%- endcomment -%}
+      <div class="pageContent">
+        <!--<div class="rte">{{ page.content }}</div> -->
+        {% section 'quiz-section' %}
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  html {padding: 0 !important;}
+</style>

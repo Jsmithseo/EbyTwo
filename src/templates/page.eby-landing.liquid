@@ -1,0 +1,291 @@
+<section class="ebyacfContent">
+    <!-- Section 1, Header -->
+    {% if !!page.metafields.ebyacf.enable_blkOne %}
+        <div class="ebyacfWrapper ebycmsWrapper pageTop" style="background-color: {{ page.metafields.ebyacf.blkOne_background_color }};">
+            <header>
+                {{ page.metafields.ebyacf.blkOne_page_title.en }}
+            </header>
+        </div>
+    {% endif %}
+
+    <!-- Section 2, Image Banner -->
+    {% if !!page.metafields.ebyacf.enable_blkTwo %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkTwo_background_color }};">
+            <header>
+                {{ page.metafields.ebyacf.blkTwo_banner_image }}
+            </header>
+        </div>
+    {% endif %}
+
+    <!-- Section 3, Image and copy -->
+    {% if !!page.metafields.ebyacf.enable_blkThree %}
+        <div class="ebyacfWrapper ebycmsWrapper centerPadding" style="background-color: {{ page.metafields.ebyacf.blkThree_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <div class="ebycmsEditorWrapper">
+                    {{ page.metafields.ebyacf.blkThree_image_and_copy.en }}
+                </div>
+            </article>
+        </div>
+    {% endif %}
+
+    <!-- Section 4, Video and copy -->
+    {% if !!page.metafields.ebyacf.enable_blkFour %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkFour_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <div class="ebycmsEditorWrapper">
+                    {{ page.metafields.ebyacf.blkFour_video_and_copy_editor.en }}
+                </div>
+            </article>
+        </div>
+    {% endif %}
+  
+    <!-- Section 5, Copy Statement -->
+    {% if !!page.metafields.ebyacf.enable_blkFive %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkFive_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <header>
+                    {{ page.metafields.ebyacf.blkFive_copy_statement_editor.en }}
+                </header>
+                <footer class="ebycmsTwoColWrapper">
+                    <div class="ebycmsCol {% if !!page.metafields.ebyacf.blkFive_vert_center_col %}vertCent{% endif %}">
+                        {{ page.metafields.ebyacf.blkFive_left_column_content.en }}
+                    </div>
+                    <div class="ebycmsCol">
+                        {{ page.metafields.ebyacf.blkFive_right_column_content.en }}
+                    </div>
+                </div>
+            </article>
+        </div>
+    {% endif %}
+
+    <!-- Section 6, Two Column Copy/Image -->
+    {% if !!page.metafields.ebyacf.enable_blkSix %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkSix_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <header>
+                    {{ page.metafields.ebyacf.blkSix_copy_image_editor.en }}
+                </header>
+                <div class="ebycmsTwoColWrapper">
+                    <div class="ebycmsCol {% if !!page.metafields.ebyacf.blkSix_vert_center_col %}vertCent{% endif %}">
+                        {{ page.metafields.ebyacf.blkSix_left_column_content.en }}
+                    </div>
+                    <div class="ebycmsCol">
+                        {{ page.metafields.ebyacf.blkSix_right_column_content.en }}
+                    </div>
+                </div>
+                <footer>
+                    {{ page.metafields.ebyacf.blkSix_copy_image_editor_clone.en }}
+                </footer>
+            </article>
+        </div>
+    {% endif %}
+  
+  	<!-- Arctic product listing block -->
+  <div id="shopify-section-our-product-block" class="shopify-section our-product-block"><div class="ebyProductListingGrid">
+    <div class="product-blocks">
+  {% if page.metafields.craftedimage.crafted_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.comfortbackground.crafted_for_comfort_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.craftedimage.crafted_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.comforttitle.crafted_for_comfort_title != blank %}
+            <h3>{{ page.metafields.comforttitle.crafted_for_comfort_title }}</h3>
+        {% endif %}
+        {% if page.metafields.comfortcontent.crafted_for_comfort_content != blank %}
+          <div class="rich-text">{{ page.metafields.comfortcontent.crafted_for_comfort_content }}</div>
+        {% endif %}
+        {% if page.metafields.comfortbuttonlink.comfort_button_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.comfortbuttonlink.comfort_button_link }}">{{ page.metafields.comfortbuttonfield.comfort_button_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+	{% endif %}
+  
+  {% if page.metafields.nopantyimage.no_panty_lines_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.pantylinesbg.no_panty_lines_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.nopantyimage.no_panty_lines_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.pantylinestitle.no_panty_lines_title != blank %}
+            <h3>{{ page.metafields.pantylinestitle.no_panty_lines_title }}</h3>
+        {% endif %}
+        {% if page.metafields.nopantycontent.no_panty_lines_content != blank %}
+          <div class="rich-text">{{ page.metafields.nopantycontent.no_panty_lines_content }}</div>
+        {% endif %}
+        {% if page.metafields.nopantylink.no_panty_lines_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.nopantylink.no_panty_lines_link }}">{{ page.metafields.nopantyfield.no_panty_lines_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+        
+  {% if page.metafields.innovativeimage.innovative_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.innovativebg.innovative_background }};">
+
+        <div class="product-box-img">
+          <img src="{{ page.metafields.innovativeimage.innovative_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.innovativetitle.innovative_title != blank %}
+            <h3>{{ page.metafields.innovativetitle.innovative_title }}</h3>
+        {% endif %}
+        {% if page.metafields.innovativecontent.innovative_content != blank %}
+          <div class="rich-text">{{ page.metafields.innovativecontent.innovative_content }}</div>
+        {% endif %}
+        {% if page.metafields.innovativelink.innovative_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.innovativelink.innovative_link }}">{{ page.metafields.innovativefield.innovative_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+    {% if page.metafields.performanceimage.performance_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.Performancebg.performance_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.performanceimage.performance_image }}" alt="">
+        </div>
+
+		<div class="product-box_details">
+        {% if page.metafields.performancetitle.performance_title != blank %}
+            <h3>{{ page.metafields.performancetitle.performance_title }}</h3>
+        {% endif %}
+        {% if page.metafields.performancecontent.performance_content != blank %}
+          <div class="rich-text">{{ page.metafields.performancecontent.performance_content }}</div>
+        {% endif %}
+        {% if page.metafields.performancelink.performance_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.performancelink.performance_link }}">{{ page.metafields.performancefield.performance_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  {% if page.metafields.cottonliningimage.cotton_lining_image != blank %}
+  <div class="product-box"style="background:{{ page.metafields.liningbackground.cotton_lining_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.cottonliningimage.cotton_lining_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.liningtitle.cotton_lining_title != blank %}
+            <h3>{{ page.metafields.liningtitle.cotton_lining_title }}</h3>
+        {% endif %}
+        {% if page.metafields.liningcontent.cotton_lining_content != blank %}
+          <div class="rich-text">{{ page.metafields.liningcontent.cotton_lining_content }}</div>
+        {% endif %}
+        {% if page.metafields.cottonlininglink.cotton_lining_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.cottonlininglink.cotton_lining_link }}">{{ page.metafields.liningfield.cotton_lining_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.accessimage.access_to_power_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.accessbackground.access_to_power_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.accessimage.access_to_power_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.accesstitle.access_to_power_title != blank %}
+            <h3>{{ page.metafields.accesstitle.access_to_power_title }}</h3>
+        {% endif %}
+        {% if page.metafields.accesscontent.access_to_power_content != blank %}
+          <div class="rich-text">{{ page.metafields.accesscontent.access_to_power_content }}</div>
+        {% endif %}
+        {% if page.metafields.accesslink.access_to_power_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.accesslink.access_to_power_link }}">{{ page.metafields.accessfield.access_to_power_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.printsimage.special_edition_prints_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.specialeditionbg.special_edition_prints_bg }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.printsimage.special_edition_prints_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.printstitle.special_edition_prints_title != blank %}
+            <h3>{{ page.metafields.printstitle.special_edition_prints_title }}</h3>
+        {% endif %}
+        {% if page.metafields.printscontent.special_edition_prints_content != blank %}
+          <div class="rich-text">{{ page.metafields.printscontent.special_edition_prints_content }}</div>
+        {% endif %}
+        {% if page.metafields.printslink.special_edition_prints_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.printslink.special_edition_prints_link }}">{{ page.metafields.printsfield.special_edition_prints_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  
+  	{% if page.metafields.everybodyimage.every_body_image != blank %}
+  	<div class="product-box"style="background:{{ page.metafields.everybodybg.every_body_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.everybodyimage.every_body_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.everybodytitle.every_body_title != blank %}
+            <h3>{{ page.metafields.everybodytitle.every_body_title }}</h3>
+        {% endif %}
+        {% if page.metafields.everybodycontent.every_body_content != blank %}
+          <div class="rich-text">{{ page.metafields.everybodycontent.every_body_content }}</div>
+        {% endif %}
+        {% if page.metafields.everybodylink.every_body_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.everybodylink.every_body_link }}">{{ page.metafields.everybodyfield.every_body_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+  	
+  	{% if page.metafields.purpose_image.panties_with_purpose_image != blank %}
+	<div class="product-box" style="background:{{ page.metafields.purposebackground.purpose_background }};">
+        <div class="product-box-img">
+          <img src="{{ page.metafields.purpose_image.panties_with_purpose_image }}" alt="">
+        </div>
+		<div class="product-box_details">
+        {% if page.metafields.purposetitle.panties_with_purpose_title != blank %}
+            <h3 style="color:{{ page.metafields.purposecolor.panties_with_purpose_color }};">{{ page.metafields.purposetitle.panties_with_purpose_title }}</h3>
+        {% endif %}
+        {% if page.metafields.purposecontent.panties_with_purpose_content != blank %}
+          <div class="rich-text" style="color:{{ page.metafields.purposetextcolor.panties_with_purpose_text_colo }};">{{ page.metafields.purposecontent.panties_with_purpose_content }}</div>
+        {% endif %}
+        {% if page.metafields.purposelink.panties_with_purpose_link != blank %}
+            <a class="btn shop_btn" href="{{ page.metafields.purposelink.panties_with_purpose_link }}">{{ page.metafields.purposefield.panties_with_purpose_field }}</a>
+        {% endif %}
+		</div>
+    </div>
+  	{% endif %}
+</div>
+  </div>
+
+    <!-- Section 8, CTA and Button -->
+    {% if !!page.metafields.ebyacf.enable_blkEight %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkEight_background_color }};">
+            <article class="ebycmsContentBlock cta ebyPaddedCta">
+                <div class="ebycmsEditorWrapper">
+                  {{ page.metafields.ebyacf.blkEight_cta_button_editor.en }} 
+                </div>
+                <div class="ebycmsButtonWrapper">
+                    <a class="ebycmsButton ebyMacroButton" title="{{ page.metafields.ebyacf.blkEight_cta_button_copy.en }}" href="{{ page.metafields.ebyacf.blkEight_cta_button_url }}" >
+                    {{ page.metafields.ebyacf.blkEight_cta_button_copy.en }}
+                  	</a>
+                </div>
+            </article>
+        </div>
+    {% endif %}
+    
+</section>
+
+<!-- Default Template -->
+<section id="pageContent">
+    <div class="container-full">
+        <div class="pageContainer">
+            {%- comment -%}<h1 class="velaPageTitle">{{ page.title }}</h1>{%- endcomment -%}
+            <div class="pageContent">
+                <div class="rte">
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

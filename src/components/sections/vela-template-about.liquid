@@ -1,0 +1,57 @@
+{%- if section.settings.enable -%}
+    <div class="aboutBannerTop" style="background-color: {{section.settings.color_bg }};
+    {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+        <div class="container{% if section.settings.full %}-full{% endif %}">
+            <div class="pageContainer">
+                <div class="aboutImage">
+                    {%- if section.settings.about_image != blank -%}
+                        <img class="img-responsive" src="{{ section.settings.about_image | img_url: 'master' }}" alt="" />
+                    {%- else -%}
+                        <img class="img-responsive" src="//cdn.shopify.com/s/files/1/0313/4062/5964/files/1920x520.jpg" />
+                    {%- endif -%}
+                </div>
+                <div class="pageContent text-center">
+                    <h1 class="velaTitle">{{ page.title }}</h1>
+                    <div class="rte">
+                        {{ page.content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Vela About",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "enable",
+                "label": "Enabel?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Full width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "image_picker",
+                "id": "about_image",
+                "label": "Image"
+            }
+        ]
+    }
+{% endschema %}

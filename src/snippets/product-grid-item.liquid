@@ -1,0 +1,240 @@
+{%- unless proImageSize -%}
+	{%- assign proImageSize = '800x' -%}
+{%- endunless -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+{%- if product.description contains '[SHORTDESCRIPTION]' -%}
+    {%- assign shortDescription = product.description | split:'[SHORTDESCRIPTION]' | first -%}
+{%- else -%}
+    {%- assign shortDescription = product.description | strip_html | truncatewords: 20 -%}
+{%- endif -%}
+<div class="velaProBlock grid {{ product-grid-item }}{% if  lastItemPro == 0 or forloop.last %} lastItem{% endif %} {% if product.metafields.ebyacf.product_is_new_release %} newRelease{% endif %}" data-price="{{ product.price | money_without_currency }}" sa-swatch-root="true">
+  {% render 'starapps-product-json', product: product %}
+  {% if product.metafields.ebyacf.product_is_new_release %}<div class="newReleaseFlagWrapper"><div class="newReleaseFlag"><p>New</p></div></div>{% endif %}
+  	<div class="velaProBlockInner">
+      {% if customer.tags contains 'Active Subscriber' %}
+      	<div class="vip_tag">VIP</div>
+      {% endif %}
+        <div class="proHImage d-flex flexJustifyCenter">
+            <a class="proFeaturedImage" href="{{ product.url }}">
+                {%- if product.metafields.ebyacf.collection_page_tile_img -%}
+                    {% for image in product.images %}
+                        {%- if image.src contains product.metafields.ebyacf.collection_page_tile_img -%}
+                            <img class="img-responsive lazyloaded" alt="{{ image.alt }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | product_img_url:proImageSize, crop: 'top' }}">
+                            {% break %}
+                        {%- endif -%}
+                    {% endfor %}
+                {%- else -%}
+                    <img class="t1 img-responsive lazyloaded" alt="{{ product.featured_image.alt | escape }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ product | img_url: proImageSize, crop: 'top' }}" />
+                {%- endif -%}
+                {%- if product.images.size > 1 and settings.product_second_image -%}
+                    <span class="hidden-sm hidden-xs">
+                        {% for image in product.images %}
+                            {%- if forloop.first != true -%}
+                            	<img class="img-responsive lazyloaded" alt="{{ image.alt }}" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | product_img_url:proImageSize }}">
+                            	{% break %}
+                            {%- endif -%}
+                        {% endfor %}
+                    </span>
+              	{%- endif -%}
+            </a>
+            {%- if on_sale and settings.productgrid_sale -%}
+                <span class="labelSale">{{ 'products.product.label_sale' | t }}</span>
+            {%- endif -%}
+            {%- unless settings.free_gift_enabled == true and product.id == all_products[settings.free_gift_product].id -%}
+            <div class="proButton clearfix">
+              {% if product.type contains "Cotton" %}
+              		{% if customer.tags contains 'Active Subscriber' %}
+                        {% include 'vela-product-quickadd' %}
+              		{% endif %}
+              {% else %}
+                  {% if product.handle contains 'pack' or product.handle contains 'sets' %}
+                  {% else %}
+                  {% include 'vela-product-quickadd' %}
+                  {% endif %}
+              {% endif %}
+
+              
+              {% comment %}
+                {% include 'vela-product-quickview' %}
+              {% endcomment %}
+              
+              {% comment %}
+                {%- assign variantCount = product.variants | size -%}
+                <form action="/cart/add" method="post" enctype="multipart/form-data" class="formAddToCart">
+                  
+                  <!-- Begin ReCharge code -->
+                      {% if product.available %}{% include 'subscription-product' %}{% endif %}
+                  <!-- End ReCharge code -->
+				  
+                    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                    {%- if sold_out -%}
+                        <button class="btn btnProduct btnAddToCart disabled" type="submit" value="Submit" disabled>
+                            <span class="icons icon-handbag"></span>
+                            <span class="text">{{ 'products.product.sold_out' | t }}</span>
+                        </button>
+                    {%- else -%}
+                        {%- if variantCount > 1 -%}
+                            <a class="btn btnProduct btnAddToCart" href="{{ product.url }}" title="{{ 'products.product.select_options' | t }}">
+                                <span class="icons icon-handbag"></span>
+                                <span class="select_options text">{{ 'products.product.select_options' | t }}</span>
+                            </a>
+                        {%- else -%}
+                            <button class="btn  btnProduct btnAddToCart" type="submit" value="Submit">
+                                <span class="icons icon-handbag"></span>
+                                <span class="text">{{ 'products.product.add_to_cart' | t }}</span>
+                            </button>
+                        {%- endif -%}
+                    {%- endif -%}
+                </form>
+              {% endcomment %}
+            </div>
+            {%- endunless -%}
+        </div>
+        <div class="proContent">
+            {%- if product.type != blank and settings.productgrid_type -%}
+                <div class="productType">{{ product.type | link_to_type }}</div>
+            {%- endif -%}
+            <h5 class="proName">
+                <a href="{{ product.url }}">{{ product.title | replace: ' E', ''  }}</a>
+            </h5>
+            {%- if settings.product_reviews_enable and settings.productgrid_review -%}
+                <div class="proReviews">
+                    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                </div>
+            {%- endif -%}
+            <div class="proPrice">
+                {%- if on_sale -%}
+                    <div class="priceProduct priceCompare">{{ product.compare_at_price | money }}</div>
+                {%- endif -%}
+              	<div class="vipPdpPriceWrapper">
+                {% if customer.tags contains 'Active Subscriber' %}
+              	{% else %}
+              	<div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+              	{% endif %}
+              	{% if customer.tags contains 'Active Subscriber' %}
+              		{% if product.type == "Mask"%}
+              		  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.metafields.ebyacf.vip_product_price | replace: '/ ', '' | replace: ' members', ''  }}</div>
+              		  {% else %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                  	  {% endif %}
+                      <div class="ebyProdTile-vipPriceWrapper">
+                          {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                          {%- assign discount = product.price | times: 44 | divided_by: 100 -%}
+                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                       	{% comment %}
+                        <p>/ <span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }}% Off</span></p>
+                       	  {% endcomment %}
+                        <p>/ <span class="ebyHolidayPrice">$6</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                          {% else %}
+                          <p>{{product.metafields.ebyacf.vip_product_price}}</p>
+                          {% endif %}
+                      </div>
+                    {% elsif product.type == "Core Bralette"%}
+              		  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.metafields.ebyacf.vip_product_price | replace: '/ ', '' | replace: ' members', ''  }}</div>
+              		  {% else %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                  	  {% endif %}
+              		  <div class="ebyProdTile-vipPriceWrapper">
+                          {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %} 
+                          {%- assign discount = product.price | times: 42.27 | divided_by: 100 -%}
+                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                        {% comment %}
+                        <p>/ <span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }}% Off</span></p>
+                       	{% endcomment %}
+                        <p>/ <span class="ebyHolidayPrice">$20</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                        	{% else %}
+                          <p>{{product.metafields.ebyacf.vip_product_price}}</p>
+                          {% endif %}
+                      </div>
+                    {% elsif product.type == "Core Underwear" and product.tags contains "Featured Style" %}
+              		  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.metafields.ebyacf.vip_product_price | replace: '/ ', '' | replace: ' members', ''  }}</div>
+              		  {% else %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                  	  {% endif %}
+               		  <div class="ebyProdTile-vipPriceWrapper">
+                          {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %} 
+                          {%- assign discount = product.price | times: 44 | divided_by: 100 -%}
+                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                        {% comment %}
+                        <p>/ <span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }}% Off</span></p>
+                        {% endcomment %}
+                        <p>/ <span class="ebyHolidayPrice">$9</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                        {% else %}
+                          <p>{{product.metafields.ebyacf.vip_product_price}}</p>
+                          {% endif %}
+                      </div>
+                    {% elsif product.type == "Core Underwear" %}
+              		  {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.metafields.ebyacf.vip_product_price | replace: '/ ', '' | replace: ' members', ''  }}</div>
+              		  {% else %}
+                  	  <div class="priceProduct {% if on_sale %}priceSale{% endif %}">{{ product.price | money }}</div>
+                  	  {% endif %}
+              		  <div class="ebyProdTile-vipPriceWrapper">
+                          {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %} 
+                          {%- assign discount = product.price | times: 43.24 | divided_by: 100 -%}
+                          {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                        {% comment %}
+                        <p>/ <span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }}% Off</span></p>
+                        {% endcomment %}
+                        <p>/ <span class="ebyHolidayPrice">$7.50</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                        {% else %}
+                          <p>{{product.metafields.ebyacf.vip_product_price}}</p>
+                          {% endif %}
+                      </div>
+                    {% endif %}
+              
+                {% else %}
+              		<div class="ebyProdTile-vipPriceWrapper">
+                      {% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+                      {%- assign discount = product.price | times: shop.metafields.ebyacf.sitewide_discount_price | divided_by: 100 -%}
+                      {%- assign holidayPrice = product.price | minus: discount | money_without_currency -%}
+                    <p>/ <span class="ebyHolidayPrice">${{holidayPrice}}</span> <span class="ebyHolidayDiscount">{{ shop.metafields.ebyacf.sitewide_discount_price }} Off</span></p>
+                      {% else %}
+                      <p>{{product.metafields.ebyacf.vip_product_price}}</p>
+                      {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            {%- if settings.productgrid_swatch -%}
+                <div class="velaSwatchCus">
+                    {% for option in product.options %}
+                        {%- if option == 'Color' or option == 'color' -%}
+                            {%- assign optionIndex = forloop.index0 -%}
+                            {%- assign valueList = '' -%}
+                            {%- assign value = '' -%}
+                            {%- if product.variants.size > 1 -%}
+                                <ul class="velaSwatchProduct">
+                                    {% for variant in product.variants %}
+                                        {%- assign value = variant.options[optionIndex] -%}
+                                        {%- unless valueList contains value -%}
+                                            <li>
+                                                <label style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({% if variant.image.src != blank %}{{ variant.image.src | product_img_url:'small' }}{% else %}{{ value | handle | append: '.png' | file_url }}{% endif %})"></label>
+                                                <div class="hidden">
+                                                    <a href="{% if variant.image.src != blank %}{{ variant.image.src | product_img_url:'large' }}{% else %}#{% endif %}"></a>
+                                                </div>
+                                            </li>
+                                            {%- assign valueList = valueList | join: ',' -%}
+                                            {%- assign valueList = valueList | append: ',' | append: value -%} 
+                                            {%- assign valueList = valueList | split: ',' -%}
+                                        {%- endunless -%}
+                                    {% endfor %}
+                                </ul>
+                            {%- endif -%}
+                        {%- endif -%}
+                    {% endfor %}
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>

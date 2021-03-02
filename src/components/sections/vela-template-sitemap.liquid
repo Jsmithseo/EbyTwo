@@ -1,0 +1,51 @@
+<section class="pageSitemap">
+    <div class="container-full">
+        <div class="pageSitemapInner">
+            {%- if section.settings.menu_handle != blank -%}
+                {%- assign menuHandle = section.settings.menu_handle -%}
+                <ul class="velaListSitemap">
+                    {% for velaLink in linklists[menuHandle].links %}
+                        <li>
+                            <a href="{{ velaLink.url }}" title="{{ velaLink.title | escape }}">{{ velaLink.title }}</a>
+                            {%- if velaLink.links != blank -%}
+                                <ul>
+                                    {% for velaLinkChild in velaLink.links %}
+                                        <li>
+                                            <a href="{{ velaLinkChild.url }}" title="{{ velaLinkChild.title | escape }}">{{ velaLinkChild.title }}</a>
+                                            {%- if velaLinkChild.links != blank -%}
+                                                {% for velaLinkChild1 in velaLinkChild.links %}
+                                                    <li>
+                                                        <a href="{{ velaLinkChild1.url }}" title="{{ velaLinkChild1.title | escape }}">{{ velaLinkChild1.title }}</a>
+                                                        {%- if velaLinkChild1.links != blank -%}
+                                                            {% for velaLinkChild2 in velaLinkChild1.links %}
+                                                                <li>
+                                                                    <a href="{{ velaLinkChild2.url }}" title="{{ velaLinkChild2.title | escape }}">{{ velaLinkChild2.title }}</a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        {%- endif -%}
+                                                    </li>
+                                                {% endfor %}
+                                            {%- endif -%}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {%- endif -%}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {%- endif -%}
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name": "Vela Sitemap",
+        "settings": [
+            {
+                "type": "link_list",
+                "id": "menu_handle",
+                "label": "Choose menu"
+            }
+        ]
+    }
+{% endschema %}

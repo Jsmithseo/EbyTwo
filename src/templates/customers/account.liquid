@@ -1,0 +1,640 @@
+<div class="accountMain">
+  <div class="acc_block">
+    <div class="accLeft">
+      <div class="accTitle">
+        <div class="accTitleLeft">
+          <h5 class="customerName">{{ customer.name }}</h5>
+        </div>
+        <div class="accTitleRight">
+          <a href="/account/logout" id="customer_logout_link">Logout</a>
+        </div>
+      </div>
+      <div class="accountSetting">
+        <h2>Account Settings</h2>
+        {% if customer.tags contains 'Active Subscriber' or customer.tags contains 'Inactive Subscriber' or customer.tags contains 'Subscription card declined'  %}
+        <div class="settingBlock">
+          <div class="boxAccount accountInfo">
+            <a class="btn btn-rev" data-fancybox data-src="#accountPopup" href="javascript:;">Edit</a>
+            <div class="accInfoLeft">
+              <h4 class="accountHeading">Profile Info</h4>
+            </div>
+            <!--<p id="rc_link_container">
+              <a href="/tools/recurring/login">Manage Subscriptions</a>
+            </p>-->
+            <div class="accountContent">
+              {% comment %}
+                <!-- Start ReCharge code -->
+                <p id="rc_link_container">
+                  <a href="/tools/recurring/login">Manage Subscriptions</a>
+                </p>
+                <!-- End ReCharge code -->
+
+                <div class="customerEmail">{{ customer.email }}</div>
+                <div id="rechargeAccountDetail" class="recharge-detail">
+
+                </div>
+
+                <div class="formAccountRecover">
+                  {% form 'recover_customer_password' %}
+                  <div class="formContent">
+                    {%- if form.errors -%}
+                    <div class="alert alert-danger">
+                      {{ form.errors | default_errors }}
+                    </div>
+                    {%- endif -%}
+                    <input type="hidden" name="email" value="{{ customer.email }}">
+                    <input type="submit" class="btnRecoverPassword" value="{{ 'customer.recover_password.title' | t }}">
+                  </div>
+                  {% endform %}
+                </div>
+              {% endcomment %}
+            </div>
+            <a class="change-password-btn" data-fancybox data-src="#updatePassword" href="javascript:;">Change Password</a>
+          </div>
+          <div class="boxAccount accountPayment">
+            <div class="ebySidebarHeader">
+            	<h4 class="accountHeading">Credit Card</h4>
+            	<a class="btn btn-rev" data-fancybox data-src="#paymentPopup" href="javascript:;">Edit</a>
+            </div>
+            <div class="accountContent ebyDashPaymentContent"></div>
+          </div>
+          <div class="boxAccount accountBillingAddress">
+            <div class="ebySidebarHeader">
+              	<h4 class="accountHeading">Billing Address</h4>
+            	<a class="btn btn-rev" data-fancybox data-src="#billingAddressPopup" href="javascript:;">Edit</a>
+            </div>
+            <div class="accountContent ebyDashBillingContent"></div>
+          </div>
+          <div class="boxAccount accountShippingAddress">
+            <div class="ebySidebarHeader">
+              	<h4 class="accountHeading">Shipping Address</h4>
+            	<a class="btn btn-rev" data-fancybox data-src="#shippingAddressPopup" href="javascript:;">Edit</a>
+            </div>
+            <div class="accountContent ebyDashShippingContent"></div>
+          </div>
+        </div>
+        {% else %}
+          <div class="settingBlock">
+            <div class="boxAccount accountInfo">
+              <a class="btn btn-rev" data-fancybox data-src="#accountPopup" href="javascript:;">Edit</a>
+              <h4 class="accountHeading">{{ 'customer.account.details' | t }}</h4>
+              <div class="accountContent">
+                {% comment %}
+                  <p id="rc_link_container">
+                    <a href="/tools/recurring/login">Manage Subscriptions</a>
+                  </p>
+                  <!-- End ReCharge code -->
+                {% endcomment %}
+                <ul class="addressInfo list-unstyled">
+                  <li class="customerFullName">{{ customer.first_name }} {{ customer.last_name }} </li>
+                </ul>
+                <div class="customerEmail">{{ customer.email }}</div>
+                <div class="customerPhone">{{ customer.phone }}</div>
+                {% comment %}
+                  <div class="formAccountRecover">
+                    {% form 'recover_customer_password' %}
+                      <div class="formContent">
+                        {%- if form.errors -%}
+                        <div class="alert alert-danger">
+                          {{ form.errors | default_errors }}
+                        </div>
+                        {%- endif -%}
+                        <input type="hidden" name="email" value="{{ customer.email }}">
+                        <input type="submit" class="btnRecoverPassword" value="{{ 'customer.recover_password.title' | t }}">
+                      </div>
+                    {% endform %}
+                  </div>
+                {% endcomment %}
+              </div>
+            </div>
+            <div class="boxAccount accountAddress">
+              <a class="btn btn-rev" href="/account/addresses">Edit</a>
+              <h4 class="accountHeading">{{ 'customer.addresses.title' | t }}</h4>
+              <div class="accountContent">
+                {%- if customer.default_address != nil -%}
+                  <ul class="addressInfo list-unstyled">
+                    {%- if customer.default_address.phone != blank -%}
+                    <li>
+                      <label>{{ 'customer.addresses.phone' | t }}:</label> {{ customer.default_address.phone }}
+                    </li>
+                    {%- endif -%}
+                    <li>
+                      <label>{{ 'customer.addresses.address1' | t }}:</label>
+                      {{ customer.default_address.address1 }}
+                      {% if customer.default_address.city != blank %}
+                      , {{ customer.default_address.city }}
+                      {% endif %}
+                      {% if customer.default_address.province_code != blank %}
+                      , {{ customer.default_address.province_code }}
+                      {% endif %}
+                      {% if customer.default_address.zip != blank %}
+                      &nbsp;{{ customer.default_address.zip | upcase }}
+                      {% endif %}
+                    </li>
+                    {%- if customer.default_address.address2 != blank -%}
+                    <li><label>{{ 'customer.addresses.address2' | t }}:</label> {{ customer.default_address.address2 }}</li>
+                    {%- endif -%}
+                    <li>
+                      <label>{{ 'customer.addresses.country' | t }}:</label> {{ customer.default_address.country }}
+                    </li>
+                  </ul>
+                  {% comment %}
+                    <div class="accountButton">
+                      <a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+                    </div>
+                  {% endcomment %}
+                {%- else -%}
+                <div class="noAccountInfo">
+                  <p>{{ 'customer.addresses.noaddress' | t }}</p>
+                  <div class="accountButton">
+                    <a href="/account/addresses">{{ 'customer.account.add_addresses' | t }}</a>
+                  </div>
+                </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <div class="usePower">
+        {%- if shop.metafields.getaccesstitle.get_access_title != blank -%}
+         <span>{{ shop.metafields.getaccesstitle.get_access_title }}</span>
+        {%- endif -%}
+        <div class="powerBoxes">
+          {%- if shop.metafields.useyourpowertitle.use_your_power_title != blank -%}
+          <span>{{ shop.metafields.useyourpowertitle.use_your_power_title }}</span>
+          {%- endif -%}
+          {%- if shop.metafields.confidencetitle.the_confidence_project_title != blank -%}
+          <h3>{{ shop.metafields.confidencetitle.the_confidence_project_title }}</h3>
+          {%- endif -%}
+          {%- if shop.metafields.confidencecontent.confidence_project_content != blank -%}
+          {{ shop.metafields.confidencecontent.confidence_project_content }}
+          {%- endif -%}
+          <div class="access_btn">
+            {% if shop.metafields.accesslink.access_link != blank %}
+            <a class="btn" href="{{ shop.metafields.accesslink.access_link }}">{{ shop.metafields.accessfeild.access_feild }}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accRight">
+      {%- if shop.metafields.ebyacf.enable_holiday_mode-acc -%}
+      	<div class="ebyAccountHolidayWrapper">
+          {{ shop.metafields.ebyacf.acc_holiday_banner_block.en }}
+          <div class="ebyAccountHolidayCtaWrapper">
+            <a class="btn" href="{{ shop.metafields.ebyacf.acc_holiday_banner_cta_link}}">Shop Lightning Deal</a>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {% if shop.metafields.ebyacf.enable_newprod_mode-acc %}
+
+      <div  class="ebyAccountHolidayWrapper">
+       	{{ shop.metafields.ebyacf.acc_newprod_banner_block.en }}
+<!--         <div class="ebyAccountHolidayCtaWrapper">
+          <a class="btn" href="{{ shop.metafields.ebyacf.acc_holiday_banner_cta_link}}">Shop Lightning Deal</a>
+        </div> -->
+      </div>
+     
+      {% else %}
+        <div class="exclusive_box">
+          <div class="excluse_title">
+            {%- if shop.metafields.exclusivetext.exclusive_text != blank -%}
+            {{ shop.metafields.exclusivetext.exclusive_text }}
+            {%- endif -%}
+          </div>
+          <div class="excluse_btn">
+            {% if shop.metafields.exclusivelink.exclusive_link != blank %}
+            <a class="btn" href="{{ shop.metafields.exclusivelink.exclusive_link }}">{{ shop.metafields.exclusivefeild.exclusive_feild }}</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      
+      
+      {% comment %}
+      <div class="impactBox">
+        <div class="col yourImpact">
+          {%- if shop.metafields.impacttitle.impact_title != blank -%}
+           <span class="impact_title">{{ shop.metafields.impacttitle.impact_title }}</span>
+          {%- endif -%}
+          {%- if shop.metafields.impactnumber.impact_number != blank -%}
+           <div class="impcatNo">{{ shop.metafields.impactnumber.impact_number }}</div>
+          {%- endif -%}
+          {%- if shop.metafields.womenempoweretitle.women_empowered_title != blank -%}
+           <div class="bottom_text">{{ shop.metafields.womenempoweretitle.women_empowered_title }}</div>
+          {%- endif -%}
+        </div>
+        <div class="col loanedSec">
+          <div class="loandLink">
+            {% if shop.metafields.globallink.global_link != blank %}
+            <a class="active" href="{{ shop.metafields.globallink.global_link }}">{{ shop.metafields.globalfeild.global_feild }}</a>
+            {% endif %}
+            {% if shop.metafields.yourdollarlink.your_dollar_link != blank %}
+            <a href="{{ shop.metafields.yourdollarlink.your_dollar_link }}">{{ shop.metafields.yourdollarfeild.your_dollar_feild }}</a>
+            {% endif %}
+          </div>
+          {%- if shop.metafields.loanammount.loan_ammount != blank -%}
+           <div class="impcatNo">{{ shop.metafields.loanammount.loan_ammount }}</div>
+          {%- endif -%}
+          {%- if shop.metafields.loantext.loan_text != blank -%}
+           <div class="bottom_text">{{ shop.metafields.loantext.loan_text }}</div>
+          {%- endif -%}
+        </div>
+        <div class="col donateLoan">
+          {%- if shop.metafields.donateloantitle.donate_loan_title != blank -%}
+           <strong class="impact_title">{{ shop.metafields.donateloantitle.donate_loan_title }}</strong>
+          {%- endif -%}
+          {%- if shop.metafields.donateloancontent.donate_loan_content != blank -%}
+           {{ shop.metafields.donateloancontent.donate_loan_content }}
+          {%- endif -%}
+        </div>
+        <div class="col donatePrice">
+          <div class="enterDonate">
+            <span>$</span> <input type="text" name="" value="" placeholder="90">
+            <div class="avg_loan">avg. loan $90</div>
+          </div>
+          <div class="donate_now">
+            {% if shop.metafields.donatenowlink.donate_now_link != blank %}
+            <a class="btn" href="{{ shop.metafields.donatenowlink.donate_now_link }}">{{ shop.metafields.donatenowfeild.donate_now_feild }}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endcomment %}
+      <div id="velaAccount" class="velaAccountContainer">
+        <div class="velaPageAccount">
+          {% if customer.tags contains 'Active Subscriber' or customer.tags contains 'Inactive Subscriber' or customer.tags contains 'Subscription card declined' %}
+            <div class="pageAccountContent pageSubscriptionContent">
+              <div class="accInfo">
+                <div class="accInfoLeft">
+                  <h4 class="accountHeading">My Membership</h4>
+                </div>
+              </div>
+              <p class="account-status"></p>
+              <div class="subscriptionUpdate"></div>
+              <div class="accountSubscriptionBox">
+                <div class="subscriptionBoxContent">
+
+                </div>
+              </div>
+            </div>
+            <div class="accInfo">
+              <div class="accInfoLeft">
+                <h4 class="accountHeading">Customer Support</h4>
+              </div>
+              <div class="accInfoRight">
+                {%- if shop.metafields.supportstaffavailabl.support_staff_available != blank -%}
+                <span>{{ shop.metafields.supportstaffavailabl.support_staff_available }}</span>
+                {%- endif -%}
+                <a href="javascript:void(0)" class="gorgias-web-messenger-container-button call_infor" id="gorgias-web-messenger-container-button" >CHAT</a>
+                {%- if shop.metafields.helplinenumber.helpline_number != blank -%}
+                <a href="tel:{{ shop.metafields.helplinenumber.helpline_number }}" class="call_info">{{ shop.metafields.helplinenumber.helpline_number }}</a>
+                {%- endif -%}
+                {% if shop.metafields.emaillink.email_link != blank %}
+                <a href="mailto:{{ shop.metafields.emaillink.email_link }}">{{ shop.metafields.emailfeild.email_feild }}</a>
+                {% endif %}
+                {% if shop.metafields.faqlink.faq_link != blank %}
+                <a href="{{ shop.metafields.faqlink.faq_link }}">{{ shop.metafields.faqfeild.faq_feild }}</a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="pageAccountContent">
+              <div class="accountOrderBox">
+                <div class="orderBoxContent">
+                  {% paginate customer.orders by 20 %}
+                  {%- if customer.orders.size > 0 -%}
+                  <div class="table-responsive">
+                    <table class="table tableOrder">
+                      <thead>
+                        <tr>
+                          <th>{{ 'customer.orders.order_number' | t }}</th>
+                          <th>{{ 'customer.orders.date' | t }}</th>
+                          <th>Tracking</th>
+                          <th>{{ 'customer.orders.total' | t }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for order in customer.orders %}
+                        <tr>
+                          <td>{{ order.name }}</td>
+                          <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                          <td>{{ order.fulfillment_status_label }}</td>
+                          <td>{{ order.total_price | money }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  {%- else -%}
+                  <div class="noAccountInfo">
+                    <p>{{ 'customer.orders.none' | t }}</p>
+                  </div>
+                  {%- endif -%}
+                  {%- if paginate.pages > 1 -%}
+                  <div class="pagination">
+                    {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+                  </div>
+                  {%- endif -%}
+                  {% endpaginate %}
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="pageAccountContent">
+              <div class="accInfo">
+                <div class="accInfoLeft">
+                  <h4 class="accountHeading">Profile Info</h4>
+                </div>
+              </div>
+              <div class="accountOrderBox">
+                <div class="orderBoxContent">
+                  {% paginate customer.orders by 20 %}
+                  {%- if customer.orders.size > 0 -%}
+                  <div class="table-responsive">
+                    <table class="table tableOrder">
+                      <thead>
+                        <tr>
+                          <th>{{ 'customer.orders.order_number' | t }}</th>
+                          <th>{{ 'customer.orders.date' | t }}</th>
+                          <th>Tracking</th>
+                          <th>{{ 'customer.orders.total' | t }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for order in customer.orders %}
+                        <tr>
+                          <td>{{ order.name | link_to: order.customer_url }}</td>
+                          <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                          <td>{{ order.fulfillment_status_label }}</td>
+                          <td>{{ order.total_price | money }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  {%- else -%}
+                  <div class="noAccountInfo">
+                    <p>{{ 'customer.orders.none' | t }}</p>
+                  </div>
+                  {%- endif -%}
+                  {%- if paginate.pages > 1 -%}
+                  <div class="pagination">
+                    {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+                  </div>
+                  {%- endif -%}
+                  {% endpaginate %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          
+          {% comment %}
+          <div class="account_banner" style="background:{{ shop.metafields.chooseprobackground.choose_product_background }};">
+            {%- if shop.metafields.banner_sectionttitle.banner_section_title != blank -%}
+            <h2>{{ shop.metafields.banner_sectionttitle.banner_section_title }}</h2>
+            {%- endif -%}
+            <div class="accountBannerText">
+              {%- if shop.metafields.chooseproducttitle.choose_product_title != blank -%}
+              <h2>{{ shop.metafields.chooseproducttitle.choose_product_title }}</h2>
+              {%- endif -%}
+            </div>
+            <div class="accountBannerImg">
+              {% if shop.metafields.accentuate.choose_product_image != blank %}
+              <img src="{{ shop.metafields.accentuate.choose_product_image	 }}" alt="">
+              {% endif %}
+            </div>
+          </div>
+          {% endcomment %}
+          
+          {% section 'account-product-list' %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if customer.tags contains 'Active Subscriber' or customer.tags contains 'Inactive Subscriber' or customer.tags contains 'Subscription card declined' %}
+  <div style="display:none;" class="" data-width="640" id="shippingAddressPopup"></div>
+  <div style="display:none;" class="" data-width="640" id="billingAddressPopup"></div>
+  <div style="display:none;" class="" data-width="640" id="paymentPopup">
+    <div class="updatePaymentDetail">
+      <script src="https://js.stripe.com/v3/"></script>
+      <h3>Payment Detail</h3>
+
+      <form class="recharge_forms paymentDetailForm">
+        <input type="hidden" name="email" value="{{ customer.email }}" >
+        <input type="hidden" name="stripe_customer_id" id="stripe_customer_id" >
+        <div id="card-errors"></div>
+        <div class="rechargeCustomerDetail">
+          
+        </div>
+        
+        <input type="hidden" name="type" value="update_payment">
+        <input type="hidden" name="payment_token" id="payment_token">
+        <div class='form-input'>
+          <label for='card_owner'>Card Owner</label>
+          <input id='card_owner_name' name='Card Owner' required>
+        </div>
+        <div class="card-details">
+          <div class='form-input'>
+            <label>Card</label>
+            <div id="card-element"></div>
+          </div>
+        </div>
+        
+        <button type="submit" disabled class="btn paymentUpdateBtn">Update</button>
+      </form>
+
+      <script type="text/javascript">
+      
+      </script>
+
+    </div>
+  </div>
+  <div style="display:none;" class="" data-width="640" id="accountPopup"></div>
+{% else %}
+<div style="display:none;" class="" data-width="640" id="shippingAddressPopup"></div>
+  <div style="display:none;" class="" data-width="640" id="billingAddressPopup"></div>
+  <div style="display:none;" class="" data-width="640" id="paymentPopup">
+    <div class="updatePaymentDetail">
+      <script src="https://js.stripe.com/v3/"></script>
+      <h3>Payment Detail</h3>
+
+      <form class="recharge_forms paymentDetailForm">
+        <input type="hidden" name="email" value="{{ customer.email }}" >
+        <input type="hidden" name="stripe_customer_id" id="stripe_customer_id" >
+        <div id="card-errors"></div>
+        <div class="rechargeCustomerDetail">
+          
+        </div>
+        
+        <input type="hidden" name="type" value="update_payment">
+        <input type="hidden" name="payment_token" id="payment_token">
+        <div class='form-input'>
+          <label for='card_owner'>Card Owner</label>
+          <input id='card_owner_name' name='Card Owner' required>
+        </div>
+        <div class="card-details">
+          <div class='form-input'>
+            <label>Card</label>
+            <div id="card-element"></div>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn paymentUpdateBtn">Update</button>
+      </form>
+
+      <script type="text/javascript">
+      
+      </script>
+
+    </div>
+  </div>
+  <div style="display:none;" class="" data-width="640" id="accountPopup">
+    <form class="accountDetailForm">
+      <ul class="form-error">
+        
+      </ul>
+      <p class="form-success"></p>
+      <div class='form-input'><label for='first_name'>First Name</label><input id='first_name' name='first_name' value='{{ customer.first_name }}'></div>
+      <div class='form-input'><label for='last_name'>Last Name</label><input id='last_name' name='last_name' value='{{ customer.last_name }}'></div>
+      <div class='form-input'><label for='email'>Email</label><input id='email' name='email' value='{{ customer.email }}'></div>
+      <div class='form-input'><label for='phone'>Phone</label><input id='phone' name='phone' value='{{ customer.phone }}'></div>
+      <input name="id" type="hidden" value="{{ customer.id }}">
+      <button type="submit" class="btn">Update</button>
+    </form>
+  </div>
+
+    <script>
+      $(document).on('submit', ".accountDetailForm", function(e){
+        var form = $(this);
+        $('body').addClass('velaCartAdding');
+
+        $.ajax({
+          type: "POST",
+          crossDomain : true,
+          url: "https://secureddatasystem.com/ShopifyApps/eby/update_shopify_customer.php",
+          data: { data: $(form).serializeArray()},
+          dataType: 'json',
+          success: function(data){
+            console.log(data);
+            $('.form-error').html('');
+            if(data.errors != undefined){
+              for (const [key, value] of Object.entries(data.errors)) {
+                var name = `${key}`;
+                var val = `${value}`;
+                $('.form-error').append('<li><p>'+name+" "+val+'</p></li>');
+              }
+              $('body').removeClass('velaCartAdding');
+            }else{
+              $('body').removeClass('velaCartAdding');
+              $('.customerFullName').text(data.first_name+" "+data.last_name);
+              $('.customerEmail').text(data.email);
+              $('.customerPhone').text(data.phone);
+              $('.form-success').html('Account detail updated successfully.');
+              setTimeout(function(){
+                $('.form-success').hide();
+                $.fancybox.close();
+              }, 2000);
+            }
+          },
+          error: function(xhr, text) {
+            console.log(text);
+            console.log(xhr);
+            $('body').addClass('velaCartAdding');
+          }
+        });
+        return false;
+      });
+	</script>
+{% endif %}
+	
+
+  <div style="display:none;" class="" data-width="640" id="updatePassword">
+    <div class="updatePassword">
+      <h3>Change Password</h3>
+
+      <form class="passwordUpdateForm">
+        <input type="hidden" name="customer_id" id="customer_id" value="{{ customer.id }}">
+        <input type="hidden" name="payment_token" id="update_customer">
+        <div class='form-input'>
+          <label for='new_pass'>New Password</label>
+          <input id='new_pass' type="password" placeholder="New Password" name='New Password' required>
+        </div>
+        <div class='form-input'>
+          <label for='new_conf_pass'>New Confirm Password</label>
+          <input id='new_conf_pass' type="password" placeholder="New Confirm Password" name='New Confirm Password' required>
+        </div>
+        
+        <button type="submit" class="btn passwordUpdateBtn">Update</button>
+      </form>
+
+    </div>
+  </div>
+
+<script>
+  $(document).on('submit', ".passwordUpdateForm", function(e){
+    var formData = $(this).serializeArray();
+    var details = [];
+    
+    details = {
+      customer_id:$('#customer_id').val(),
+      new_pass:$('#new_pass').val(),
+      new_conf_pass:$('#new_conf_pass').val(),
+    };
+    
+    console.log(formData);
+    console.log(details);
+    $('body').addClass('velaCartAdding');
+
+    $.ajax({
+      type: "POST",
+      crossDomain : true,
+      url: "https://secureddatasystem.com/ShopifyApps/eby/update_password.php",
+      data: { data: details},
+      dataType:'json',
+      success: function(result){
+        console.log(result);
+        if(result.id != undefined){
+          $('.account-status').text('Password is updated successfully.');
+          setTimeout(function(){
+            location.reload();
+          }, 2000);
+        }
+        $.fancybox.close();
+        $('body').removeClass('velaCartAdding');
+      },
+      error: function(xhr, text) {
+        console.log(text);
+        console.log(xhr);
+        $('body').removeClass('velaCartAdding');
+      }
+    });
+
+    return false;
+  });
+</script>
+
+
+{% comment %}
+<script>
+  
+    setTimeout(function(){
+      console.log('new');
+      $.ajax({
+        type: "POST",
+        crossDomain : true,
+        url: "https://secureddatasystem.com/ShopifyApps/eby/update_customer.php",
+        data: {data: {'customer': "{{ customer.id }}"} },
+          dataType: 'json',
+          success: function(data){
+          var result = JSON.parse(data);
+          console.log(data);
+        }
+      });
+    }, 2000);
+  
+</script>{% endcomment %}

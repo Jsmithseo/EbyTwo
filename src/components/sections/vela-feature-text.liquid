@@ -1,0 +1,110 @@
+{%- if section.settings.enable -%}
+    <div class="velaFeatureText mb30" style="background-color: {{section.settings.color_bg }};
+                                        {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">      
+        <div class="container{% if section.settings.full %}-full{% endif %}">
+            <div class="velaFeatureTextContent">
+                <div class="featureBox">
+                    <div class="featureBoxInner">
+                        <div class="rowFlex rowFlexMargin">
+                        {%- if section.blocks.size > 0 -%}
+                            {% for block in section.blocks %}
+                                    <div class="featureBoxContent col-xs-12 col-sm-4 col-md-4 mb30">
+                                        <div class="featureImage d-flex flexJustifyCenter">
+                                            {%- if block.settings.featureicon != blank -%}
+                                                <img class="img-responsive" src="{{ block.settings.featureicon | img_url: '535x570' }}" alt="" />
+                                            {%- else -%}
+                                                <img class="img-responsive" src="//placehold.it/535x570.jpg" alt="" />
+                                            {%- endif -%}
+                                        </div>
+                                        <div class="featureBoxWrap mt10 text-center"> 
+                                            {%- if block.settings.featuretitle != blank -%}
+                                            <h4 class="featureTitle"> {{ block.settings.featuretitle }}</h4>
+                                            {%- endif -%}
+                                            {%- if block.settings.featuredesc != blank -%}
+                                                <div class="featuredesc"> {{ block.settings.featuredesc }}</div>
+                                            {%- endif -%}
+                                            {%- if block.settings.featurebutton != blank -%}
+                                                <a class="btn mt20" href="{{ block.settings.featurelink}}" title="{{ block.settings.featurebutton }}">{{ block.settings.featurebutton }}</a>
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                {% endfor%}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% schema %}
+    {
+        "name": "Vela Feature text",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "enable",
+                "label": "Enabel?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "full",
+                "label": "Full width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            }
+        ],
+        "blocks": 
+        [
+            {
+                "type": "item",
+                "name": "Feature Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "featuretitle",
+                        "label": "title"
+                    },
+                    {
+                        "type": "html",
+                        "id": "featuredesc",
+                        "label": "Description"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "featureicon",
+                        "label": "Banner"
+                    },
+                    {
+                        "type": "text",
+                        "id": "featurebutton",
+                        "label": "Text buttom"
+                    },
+                    {
+                        "type": "url",
+                        "id": "featurelink",
+                        "label": "Link button"
+                    }
+                ]
+            }
+            
+        ],
+        "presets": [
+            {
+                "name": "Vela Feature text",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,105 @@
+{%- if section.settings.color_bg != 'rgba(0,0,0,0)' -%}
+    {% capture bgColor %}
+        background-color: {{ section.settings.color_bg }};
+    {% endcapture %}
+{%- endif -%}
+{% capture bgImage %}
+    {%- if section.settings.image != blank -%}
+        background-image: url({{ section.settings.image | img_url:'master' }});
+    {%- else -%}
+        background-image: url('//placehold.it/1920x800.jpg');
+    {%- endif -%}
+{% endcapture %}
+{%- if section.settings.padding_block != blank -%}
+    {% capture paddingblock %}
+        padding: {{section.settings.padding_block}};
+    {% endcapture %}
+{%- endif -%}
+
+<div class="velaVideo mb60 {% if section.settings.parallax %}parallax{% endif %}" style="{{ bgColor }} {{ paddingblock }} {% if section.settings.parallax %}{{ bgImage }}{% endif %}">
+    <div class="container{%- if section.settings.full_with -%}-full{%- endif -%}">
+        <div class="velaVideoInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            {%- if section.settings.video_url != blank -%}
+                <div class="velaContent">
+                    <div class="videoWrapper">
+                        {%- if section.settings.video_url == blank -%}
+                            {%- assign videoURL = '//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720' -%}
+                        {%- else -%}
+                            {%- assign videoURL = section.settings.video_url -%}
+                        {%- endif -%}
+                        <div class="videoThumb">
+                            {%- if section.settings.image != blank -%}
+                                <img class="img-responsive" src="{{ section.settings.image | img_url:'master' }}" alt="{{ section.settings.image.alt | default: shop.name }}" />
+                            {%- else -%}
+                            <img class="img-responsive" src="//placehold.it/1920x800.jpg" alt="" />
+                            {%- endif -%}
+                        </div>
+                        <a data-fancybox href="{{ videoURL }}">
+                            <span class="fa fa-play"></span>
+                        </a>
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela video",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "video_url",
+                "id": "video_url",
+                "label": "Video link",
+                "accept": ["youtube", "vimeo"]
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Video thumb"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Video",
+                "category": "5. Vela Text"
+            }
+        ]
+    }
+{% endschema %}

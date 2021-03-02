@@ -1,0 +1,41 @@
+<section id="pageContent">
+    <div class="container-full">
+        <div class="velaAccountContainer">
+            <div class="velaFormAccount">
+                <div class="formAccount formActivateAccount">
+                    <h1 class="velaAccountTitle">
+                        <span>{{ 'customer.activate_account.title' | t }}</span>
+                    </h1>
+                    {% form 'activate_customer_password' %}
+                        <div class="formContent">
+                            <div class="formAccountText">
+                                <p>{{ 'customer.activate_account.subtext' | t }}</p>
+                            </div>
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.errors | default_errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-group form-group--pasword">
+                                <label for="CustomerPassword" class="hidden">{{ 'customer.activate_account.password' | t }}</label>
+                                <input type="password" value="" name="customer[password]" id="CustomerPassword" class="form-control" placeholder="{{ 'customer.activate_account.password' | t }}">
+                                <a href="javascript:void(0)" class="velaShowPassword">{{ 'customer.account.show_password' | t }}</a>
+                            </div>
+                            <div class="form-group form-group--pasword">
+                                <label for="CustomerPasswordConfirmation" class="hidden">{{ 'customer.activate_account.password_confirm' | t }}</label>
+                                <input type="password" value="" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" class="form-control" placeholder="{{ 'customer.activate_account.password_confirm' | t }}">
+                                <a href="javascript:void(0)" class="velaShowPassword">{{ 'customer.account.show_password' | t }}</a>
+                            </div>
+                            <div class="form-button">
+                              <button type="submit" class="btn btnVelaOne" value="{{ 'customer.activate_account.submit' | t }}">Activate EBY Account</button>
+                            </div>
+                            <div class="form-buttonCancel">
+                                <input type="submit" class="velaAccountButton btnVelaCancel" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
+                            </div>
+                        </div>
+                    {% endform %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,133 @@
+{%- if section.settings.prodetail_style == "detail_style2" or section.settings.prodetail_style == "detail_style3" -%}
+  {%- if product.images.size > 1 -%}
+	<div id="productThumbs" class="proThumbnails">
+      <div class="owl-thumblist">
+        <div class="owl-carousel" data-item = "1" >
+          {%- for image in product.images -%}
+            {%- assign itemNumber = forloop.index | modulo:5 -%}
+          	{%- if itemNumber == 1 -%}
+          	  <div class="thumbItem">
+            {%- endif -%}
+                <a {% if forloop.first %}class="active"{% endif %} href="{{ image.src | img_url: 'master' }}" 
+                   data-imageid="{{ image.id }}" 
+                   data-image="{{ image.src | img_url: proImageSize }}" 
+                   data-zoom-image="{{ image.src | img_url: 'master' }}">
+                  <img class="img-responsive lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | img_url: '200x' }}" alt="{{ image.alt | escape }}">
+                </a>
+             {%- if itemNumber == 0 or  forloop.last -%}
+                </div>
+             {%- endif -%}
+           {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+  <div id="proFeaturedImage" class="proFeaturedImage mb20">
+    {%- assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+    <img id="ProductPhotoImg"
+         class="img-responsive lazyloaded"
+         alt="{{ featured_image.alt | escape }}"
+         src="{{ 'blank.png' | asset_url }}" data-src="{{ featured_image | img_url: proImageSize }}"
+         data-zoom-enable="{{ section.settings.product_zoom_enable }}"
+         data-zoom-image="{{ featured_image | img_url: 'master' }}"
+         data-zoom-scroll="{{ section.settings.product_scroll_zoom }}"
+         data-zoom-type="{{ section.settings.product_zoom_type }}"
+         data-zoom-width="{{ section.settings.product_zoom_width }}"
+         data-zoom-height="{{ section.settings.product_zoom_height }}"
+         data-zoom-lens="{{ section.settings.product_lens_size }}"
+         data-lens-shape="{{ section.settings.product_lens_type }}"
+         />
+          <!-- <button id="velaViewImage" class="btn hidden-xs hidden-sm">
+      <i class="icons icon-size-fullscreen"></i>
+      </button> -->
+  </div>
+{%- else -%}
+  {%- if product.images.size < 2 -%} 
+    <div id="proFeaturedImage" class="proFeaturedImage">
+      {%- assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+      <img id="ProductPhotoImg"
+           class="img-responsive lazyloaded"
+           alt="{{ featured_image.alt | escape }}"
+           src="{{ 'blank.png' | asset_url }}" data-src="{{ featured_image | img_url: proImageSize }}"
+           data-zoom-enable="{{ section.settings.product_zoom_enable }}"
+           data-zoom-image="{{ featured_image | img_url: 'master' }}"
+           data-zoom-scroll="{{ section.settings.product_scroll_zoom }}"
+           data-zoom-type="{{ section.settings.product_zoom_type }}"
+           data-zoom-width="{{ section.settings.product_zoom_width }}"
+           data-zoom-height="{{ section.settings.product_zoom_height }}"
+           data-zoom-lens="{{ section.settings.product_lens_size }}"
+           data-lens-shape="{{ section.settings.product_lens_type }}"
+           />
+      <!--<button id="velaViewImage" class="btn hidden-xs hidden-sm">
+    <i class="icons icon-size-fullscreen"></i>
+    </button> -->
+    </div> 
+  {%- endif -%}
+  <div class="modelSizeSelection">
+    <p>
+      <span id="currentSizeSelection">Model wearing size small</span>
+      <span>
+        <a href="javascript:void(0);" class="size-btn hide" data-size="small" id="smallSizeSelection">See Size small</a>
+        <a href="javascript:void(0);" class="size-btn" data-size="large" id="largeSizeSelection">See size 1X</a>
+      </span>
+    </p>
+  </div>
+  	
+	{%- if product.images.size > 1 -%}
+	<div class="velaProductGallerySlider">
+	<div class="owl-carousel tpo_slider" data-item = "3" data-slidefor="small">
+      {%- for image in product.images limit:5 -%}
+        <div class="slide" data-alt="{{ image.alt | escape }}">
+          {% comment %}{{ image.src | img_url: 'master' }}{% endcomment %}
+          <a {% if forloop.first %}class="active"{% endif %} href="javascript:void(0);" 
+             data-imageid="{{ image.id }}" 
+             data-image="{{ image.src | img_url: proImageSize }}" 
+             data-zoom-image="{{ image.src | img_url: 'master' }}">
+            <img class="img-responsive lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | img_url: '750x' }}" alt="{{ image.alt | escape }}">
+          </a>
+        </div>
+      {%- endfor -%}
+	</div>
+    <div class="owl-carousel tpo_slider" data-item = "3"  data-slidefor="large">
+      {%- for image in product.images -%}
+      	{% if forloop.index <= 5 %}
+          {% continue %}
+        {% else %}
+          <div class="slide" data-alt="{{ image.alt | escape }}">
+            {% comment %}{{ image.src | img_url: 'master' }}{% endcomment %}
+            <a {% if forloop.first %}class="active"{% endif %} href="javascript:void(0);" 
+               data-imageid="{{ image.id }}" 
+               data-image="{{ image.src | img_url: proImageSize }}" 
+               data-zoom-image="{{ image.src | img_url: 'master' }}">
+              <img class="img-responsive lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | img_url: '750x' }}" alt="{{ image.alt | escape }}">
+            </a>
+          </div>
+        {% endif %}
+      {%- endfor -%}
+    </div>
+    </div>
+    {%- endif -%}
+	
+  
+
+  {% comment %}
+    {%- if product.images.size > 1 -%}
+    <div id="productThumbs" class="proThumbnails" style="opacity:0;">
+      <div class="owl-thumblist">
+        <div class="owl-carousel" data-item = "5" >
+          {%- for image in product.images -%}
+          <div class="thumbItem">
+            <a {% if forloop.first %}class="active"{% endif %} href="{{ image.src | img_url: 'master' }}" 
+               data-imageid="{{ image.id }}" 
+               data-image="{{ image.src | img_url: proImageSize }}" 
+               data-zoom-image="{{ image.src | img_url: 'master' }}">
+              <img class="img-responsive lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="{{ image.src | img_url: '200x' }}" alt="{{ image.alt | escape }}">
+            </a>
+          </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  {% endcomment %}
+{%- endif -%}

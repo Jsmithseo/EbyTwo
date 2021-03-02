@@ -1,0 +1,24 @@
+<div style="background-color: {{ page.metafields.fundsbackgroundcolor.funds_background_color }};">
+  <div class="wrapper">
+    {{ page.metafields.blktwelvecontent.blk_twelve_content }}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "EBY Funds",
+    "class": "ebyFundsMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+    {
+      "type":"richtext",
+      "id":"count_content",
+      "label":"Enter Count Content"
+    }
+    ]
+  }
+{% endschema %}

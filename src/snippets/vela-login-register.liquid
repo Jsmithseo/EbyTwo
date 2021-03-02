@@ -1,0 +1,152 @@
+<div class="velaFormAccount">
+    {% comment %}
+  	<ul class="nav navFormAccount">
+        <li class="{% if isLogin %}active{% endif %}">
+            <a href="#frmAccountTabLogin" data-toggle="tab">
+                {{ 'customer.login.title' | t }}
+            </a>
+        </li>
+        <li class="{% unless isLogin %}active{% endunless %}">
+            <a href="#frmAccountTabRegister" data-toggle="tab">
+                {{ 'customer.register.title' | t }}
+            </a>
+        </li>
+    </ul>
+  	{% endcomment %}
+    <div class="tab-content">
+      	{% comment %}
+        <div id="frmAccountTabLogin" class="tab-pane{% if isLogin %} active{% endif %}">
+            <div id="ResetPassword" class="resetPassword alert alert-success hidden">
+                {{ 'customer.recover_password.success' | t }}
+            </div>
+            <div id="CustomerLoginForm" class="formAccount formAccountLogin">
+                {% form 'customer_login' %}
+                    <div class="formContent">
+                        {%- if form.errors -%}
+                            <div class="alert alert-danger">
+                                {{ form.errors | default_errors }}
+                            </div>
+                        {%- endif -%}
+                        <div class="form-group{% if form.errors contains 'email' %} has-error{% endif %}">
+                            <label for="CustomerEmail" class="hidden">{{ 'customer.login.email' | t }}</label>
+                            <input autocomplete="off" type="email" name="customer[email]" id="CustomerEmail" class="form-control" placeholder="{{ 'customer.login.email' | t }}" required {% if isLogin %}autofocus{% endif %}>
+                        </div>
+                        {%- if form.password_needed -%}
+                            <div class="form-group form-group--pasword{% if form.errors contains 'password' %} has-error{% endif %}">
+                                <label for="CustomerPassword" class="hidden">{{ 'customer.login.password' | t }}</label>
+                                <input autocomplete="off" type="password" value="" name="customer[password]" id="CustomerPassword" class="form-control" placeholder="{{ 'customer.login.password' | t }}" required>
+                                {% comment %}
+                              	<a href="javascript:void(0)" class="velaShowPassword">{{ 'customer.account.show_password' | t }}</a>
+                              	{% endcomment %}
+                            </div>
+                        {%- endif -%}
+                        <div class="form-button">
+                            <input type="submit" class="btn btnVelaOne" value="{{ 'customer.login.sign_in' | t }}">
+                        </div>
+                        {%- if form.password_needed -%}
+                            <div class="forgetPassword">
+                                <a href="#recover" class="velaAccountButton velaRecoverPassword">Forgot Password</a>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                {% endform %}
+            </div>
+            <div id="RecoverPasswordForm" class="formAccount formAccountRecover hidden">
+                <h2 class="velaAccountTitle">
+                    <span>{{ 'customer.recover_password.title' | t }}</span>
+                </h2>
+                {% form 'recover_customer_password' %}
+                    <div class="formContent">
+                        <div class="formAccountText">
+                            <p>{{ 'customer.recover_password.subtext' | t }}</p>    
+                        </div>
+                        {%- if form.errors -%}
+                            <div class="alert alert-danger">
+                                {{ form.errors | default_errors }}
+                            </div>
+                        {%- endif -%}
+                        {%- if form.posted_successfully? -%}
+                            {%- assign resetPassword = true -%}
+                            <script type="text/javascript">
+                                $(document).ready(function() {
+                                    $('#ResetPassword').removeClass('hidden');
+                                });
+                            </script>
+                        {%- endif -%}
+                        <div class="form-group">
+                            <label for="RecoverEmail" class="hidden">{{ 'customer.recover_password.email' | t }}</label>
+                            <input type="email" value="" name="email" id="RecoverEmail" class="form-control" placeholder="{{ 'customer.recover_password.email' | t }}" required>
+                        </div>
+                        <div class="form-button">
+                            <input type="submit" class="btn btnVelaOne" value="{{ 'customer.recover_password.submit' | t }}">
+                            <div class="forgetPassword">
+                                <a href="javascript:void(0)" class="velaAccountButton velaHideRecoverPasswordLink">{{ 'customer.recover_password.cancel' | t }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endform %}
+            </div>
+            {%- if shop.checkout.guest_login -%}
+                <h2 class="velaAccountTitle">
+                    <span>{{ 'customer.login.guest_title' | t }}</span>
+                </h2>
+                <div class="formAccount">
+                    {% form 'guest_login' %}
+                        <div class="form-button">
+                            <input type="submit" class="btn btnVelaOne" value="{{ 'customer.login.guest_continue' | t }}">
+                        </div>
+                    {% endform %}
+                </div>
+            {%- endif -%}
+        </div>
+      	{% endcomment %}
+        <div id="frmAccountTabRegister" class="tab-pane{% unless isLogin %} active{% endunless %}">
+            <div id="CustomerRegisterForm" class="formAccount formAccountRegister">
+              	<div class="loginHeading">
+                  <h2>Reactivate Your Account</h2>
+                </div>
+                {% form 'create_customer' %}
+              		<div class="ebyFormSubHeader">
+                      <p>Enter the email associated with your previous account and a temporary password below. We'll send an invitation to activate your account on our new site.</p>
+                      <p class="hidden">Enter offer code <span class="ebyCouponCodeHighlight">ACTIVATE25</span> at checkout to receive 25% off.</p>
+              		</div>
+                    <div class="formContent">
+                        {%- if form.errors -%}
+                            <div class="alert alert-danger eby">
+                                {{ form.errors | default_errors }}
+                            </div>
+                        {%- endif -%}
+                        <div class="form-group{% if form.errors contains 'email' %} has-error{% endif %}">
+                            <label for="Email" class="hidden">{{ 'customer.register.email' | t }}</label>
+                            <input autocomplete="off" type="email" name="customer[email]" id="Email" class="form-control" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} required {% unless isLogin %}autofocus{% endunless %}>
+                        </div>
+                      	<div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="FirstName" class="hidden">{{ 'customer.register.first_name' | t }}</label>
+                                    <input type="text" name="customer[first_name]" id="FirstName" class="form-control" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} required >
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label for="LastName" class="hidden">{{ 'customer.register.last_name' | t }}</label>
+                                    <input type="text" name="customer[last_name]" id="LastName" class="form-control" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group--pasword{% if form.errors contains 'password' %} has-error{% endif %}">
+                            <label for="CreatePassword" class="hidden">{{ 'customer.register.password' | t }}</label>
+                            <input autocomplete="off" type="password" name="customer[password]" id="CreatePassword" class="form-control" placeholder="{{ 'customer.register.password' | t }}" required>
+                            {% comment %}
+                          	<a href="javascript:void(0)" class="velaShowPassword">{{ 'customer.account.show_password' | t }}</a>
+                          	{% endcomment %}
+                        </div>
+                        <div class="form-button">
+                            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btnVelaOne">
+                        </div>
+                    </div>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</div>

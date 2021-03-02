@@ -1,0 +1,11 @@
+
+<section id="pageContent">
+    <div class="container-full">
+        <div class="pageContainer">
+            {% section 'vela-template-contact' %}
+        </div>
+    </div>
+</section>
+{%- if settings.googlemap_enable -%}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ settings.googlemap_key }}&callback=initMap"></script>
+{%- endif -%}

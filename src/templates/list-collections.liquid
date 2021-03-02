@@ -1,0 +1,68 @@
+{% if customer.tags contains 'Active Subscriber'%}
+<script type="text/javascript">window.location.href = '/collections/vip'</script>
+{% endif %}
+{% include 'breadcrumb' %}
+
+{% if shop.metafields.ebyacf.enable_holiday_mode-vip_pg or shop.metafields.ebyacf.enable_holiday_mode-coll_pg %}
+
+<section id="pageContent" class="ebyHolidayListCollWrapper">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      {% section 'top-categories' %}
+      <div class="ebyCollectionHolidayWrapper">
+        {{ shop.metafields.ebyacf.coll_holiday_banner_bloc.en }}
+      </div>
+      {% section 'vela-template-collections' %}          
+    </div>
+  </div>
+</section>
+
+<section id="foot">
+  <div class="container-full">
+    <div class="foot rowFlex rowFlexMargin mt30 pt-md-30 pro_coll_topcats negtiv_mrgin">
+      <div class="last_slider">
+        <div class="left_content">
+          <h2>Your choices have power.<br>Put them on repeat.</h2>
+          <a class="btn btn-black" href="/collections">Join Now</a>
+        </div>
+        <div class="right_content">
+          <img class="lazyloaded" src="{{ 'blank.png' | asset_url }}" data-src="https://cdn.shopify.com/s/files/1/0340/6525/2411/files/Untitled-1@2x.png?v=1593698394"/>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+</section>
+
+{% else %}
+
+<section id="pageContent">
+  <div class="container-full">
+    <div class="pageCollectionInner mb20 pb-md-30 collectionsGlobalWrapper">
+      {% section 'top-categories' %}
+      <div class="ebyCollectionHolidayWrapper hide">
+        {{ shop.metafields.ebyacf.coll_holiday_banner_bloc.en }}
+      </div>
+      {% section 'vela-template-collections' %}          
+    </div>
+  </div>
+</section>
+
+<section id="foot">
+  <div class="container-full">
+    <div class="foot rowFlex rowFlexMargin mt30 pt-md-30 pro_coll_topcats negtiv_mrgin">
+      <div class="last_slider">
+        <div class="left_content">
+          <h2>Your choices have power.<br>Put them on repeat.</h2>
+          <a class="btn btn-black" href="/collections">Join Now</a>
+        </div>
+        <div class="right_content">
+          <img src="https://cdn.shopify.com/s/files/1/0340/6525/2411/files/Untitled-1@2x.png?v=1593698394"/>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+</section>
+
+{% endif %}

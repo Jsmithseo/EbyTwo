@@ -1,0 +1,14 @@
+{%- assign proCountdown = false -%}
+{%- for tag in product.tags -%}
+    {%- if tag contains '[COUNTDOWN]' -%}
+    	{%- assign proCountdown = true -%}
+		{%- assign countdownTime = tag | split:'COUNTDOWN]' | last -%}
+		{%- break -%}
+    {%- endif -%}
+{%- endfor -%}
+{%- if proCountdown -%}
+	<div class="proCountdown">
+		<p class="countDownTitle">{{ 'general.countdown.title' | t }}</p>
+        <div class="velaCountdown" data-countdown="{{ countdownTime }}"></div>
+    </div>
+{%- endif -%}

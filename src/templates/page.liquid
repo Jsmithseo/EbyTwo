@@ -1,0 +1,117 @@
+<section class="ebyacfContent">
+    <!-- Section 1, Header -->
+    {% if !!page.metafields.ebyacf.enable_blkOne %}
+        <div class="ebyacfWrapper ebycmsWrapper pageTop" style="background-color: {{ page.metafields.ebyacf.blkOne_background_color }};">
+            <header>
+                {{ page.metafields.ebyacf.blkOne_page_title.en }}
+            </header>
+        </div>
+    {% endif %}
+
+    <!-- Section 2, Image Banner -->
+    {% if !!page.metafields.ebyacf.enable_blkTwo %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkTwo_background_color }};">
+            <header>
+                {{ page.metafields.ebyacf.blkTwo_banner_image }}
+            </header>
+        </div>
+    {% endif %}
+
+    <!-- Section 3, Image and copy -->
+    {% if !!page.metafields.ebyacf.enable_blkThree %}
+        <div class="ebyacfWrapper ebycmsWrapper centerPadding" style="background-color: {{ page.metafields.ebyacf.blkThree_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <div class="ebycmsEditorWrapper">
+                    {{ page.metafields.ebyacf.blkThree_image_and_copy.en }}
+                </div>
+            </article>
+        </div>
+    {% endif %}
+
+    <!-- Section 4, Video and copy -->
+    {% if !!page.metafields.ebyacf.enable_blkFour %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkFour_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <div class="ebycmsEditorWrapper">
+                    {{ page.metafields.ebyacf.blkFour_video_and_copy_editor.en }}
+                </div>
+            </article>
+        </div>
+    {% endif %}
+  
+    <!-- Section 5, Copy Statement -->
+    {% if !!page.metafields.ebyacf.enable_blkFive %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkFive_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <header>
+                    {{ page.metafields.ebyacf.blkFive_copy_statement_editor.en }}
+                </header>
+                <footer class="ebycmsTwoColWrapper">
+                    <div class="ebycmsCol {% if !!page.metafields.ebyacf.blkFive_vert_center_col %}vertCent{% endif %}">
+                        {{ page.metafields.ebyacf.blkFive_left_column_content.en }}
+                    </div>
+                    <div class="ebycmsCol">
+                        {{ page.metafields.ebyacf.blkFive_right_column_content.en }}
+                    </div>
+                </div>
+            </article>
+        </div>
+    {% endif %}
+
+    <!-- Section 6, Two Column Copy/Image -->
+    {% if !!page.metafields.ebyacf.enable_blkSix %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkSix_background_color }};">
+            <article class="ebycmsContentBlock info">
+                <header>
+                    {{ page.metafields.ebyacf.blkSix_copy_image_editor.en }}
+                </header>
+                <div class="ebycmsTwoColWrapper">
+                    <div class="ebycmsCol {% if !!page.metafields.ebyacf.blkSix_vert_center_col %}vertCent{% endif %}">
+                        {{ page.metafields.ebyacf.blkSix_left_column_content.en }}
+                    </div>
+                    <div class="ebycmsCol">
+                        {{ page.metafields.ebyacf.blkSix_right_column_content.en }}
+                    </div>
+                </div>
+                <footer>
+                    {{ page.metafields.ebyacf.blkSix_copy_image_editor_clone.en }}
+                </footer>
+            </article>
+        </div>
+    {% endif %}
+
+    <!-- Section 8, CTA and Button -->
+    {% if !!page.metafields.ebyacf.enable_blkEight %}
+        <div class="ebyacfWrapper ebycmsWrapper" style="background-color: {{ page.metafields.ebyacf.blkEight_background_color }};">
+            <article class="ebycmsContentBlock cta">
+                <div class="ebycmsEditorWrapper">
+                  {% for value in page.metafields.ebyacf.blkEight_cta_button_editor %}
+                  {{ page.metafields.ebyacf.blkEight_cta_button_editor[forloop.index0].en }}
+                  {% endfor %}    
+                </div>
+                <div class="ebycmsButtonWrapper">
+                    <a class="ebycmsButton ebyMacroButton" title="{{ page.metafields.ebyacf.blkEight_cta_button_copy.en }}" href="{{ page.metafields.ebyacf.blkEight_cta_button_url }}" >
+                    {% for value in page.metafields.ebyacf.blkEight_cta_button_copy %}
+                    {{ page.metafields.ebyacf.blkEight_cta_button_copy[forloop.index0].en }}
+                    {% endfor %}
+                  	</a>
+                </div>
+            </article>
+        </div>
+    {% endif %}
+    
+</section>
+
+<!-- Default Template -->
+<section id="pageContent">
+    <div class="container-full">
+        <div class="pageContainer">
+            {%- comment -%}<h1 class="velaPageTitle">{{ page.title }}</h1>{%- endcomment -%}
+            <div class="pageContent">
+                <div class="rte">
+                    {{ page.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

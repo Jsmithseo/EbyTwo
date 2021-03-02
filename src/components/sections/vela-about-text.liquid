@@ -1,0 +1,89 @@
+<div class="velaBannerText mb60" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaBannerTextInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaHomeTitle velaTitle">
+                    {{ section.settings.title }}
+                    {%- if section.settings.subtitle != blank -%}
+                        <span class="subTitle">{{ section.settings.subtitle }}</span>
+                    {%- endif -%}
+                </h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="rte">
+                    {{ section.settings.content }}    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Banner&Text",
+        "class": "velaFramework",
+        "settings":[
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "image_picker",
+                "id": "banner",
+                "label": "Banner"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubHeading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Item Text",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Heading",
+                        "default": "Organic cream"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "content",
+                        "label": "HTML",
+                        "default": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas."
+                    }
+                ]
+
+            }
+        ]
+    }
+{% endschema %}

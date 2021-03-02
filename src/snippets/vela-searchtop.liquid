@@ -1,0 +1,14 @@
+<div id="velaSearchTop" class="collapse">
+	<div class="container-full text-center">
+	    <a class="btnClose" href="#velaSearchTop" data-toggle="collapse"></a>
+		<h3 class="title">{{ 'general.search.submit' | t }}</h3>
+	    <form id="velaSearchbox" class="formSearch" action="/search" method="get">
+	        <input type="hidden" name="type" value="product">
+	        <input class="velaSearch form-control" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off" />
+	        <button id="velaSearchButton" class="btnVelaSearch" type="submit" >
+	           	<i class="icons icon-magnifier"></i>
+	            <span class="btnSearchText">{{ 'general.search.submit' | t }}</span>
+	        </button>
+	    </form>
+	</div>
+</div>

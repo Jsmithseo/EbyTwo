@@ -1,0 +1,199 @@
+{%- assign intProColumns = section.settings.collection_product_columns | plus:0 -%}
+{%- assign intProPaginate = section.settings.collection_product_page | plus:0 -%}
+{%- assign strColumn = 12 | divided_by:intProColumns -%}
+{%- if intProColumns == 5 -%}
+    {% capture strGridItem %}col-sp-12 col-xs-6 col-md-4 col-lg-2-4{% endcapture %}
+{%- else -%}
+    {% capture strGridItem %}col-sp-12 col-xs-6 col-md-4 col-lg-{{ strColumn }}{% endcapture %}
+{%- endif -%}
+{% capture strGridItem %}col-sp-4 col-xs-1 col-md-2 col-lg-4{% endcapture %}
+
+{%- unless collectionLayout -%}
+    {%- assign collectionLayout = 'grid' -%}
+{%- endunless -%}
+
+{%- if section.settings.product_image_size != blank -%}
+    {%- assign proImageSize = section.settings.product_image_size -%}
+{%- else -%}
+    {%- assign proImageSize = 'master' -%}
+{%- endif -%}
+{% paginate collection.products by intProPaginate %}
+  {%- if section.settings.collection_image or section.settings.collection_description -%}
+    <div class="collBoxTop">
+      <div class="rowFlex rowFlexMargin">
+        {%- if section.settings.collection_image and collection.image -%}
+        <div class="collImage col-xs-12 col-sm-4">
+          <a href="{{ collection.url }}">
+            <img class="img-responsive" alt="{{ collection.title }}" src="{{ collection.image | collection_img_url: 'master' }}" />
+          </a>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.collection_description and collection.description != blank -%}
+        <div class="collDescription col-xs-12 col-sm-8">
+          <h1 class="headerCollection">{{ collection.title }}</h1>
+          <div class="rte">
+            {{ collection.description }}
+          </div>
+        </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+  {%- unless template contains '.fullwidth' -%}
+    <div class="filterCollectionFullwidth">
+      <div class="filterTagFullwidth hidden-xl hidden-md hidden-lg">
+        <div class="filterTagFullwidthButton">
+          <i class="fa fa-sliders"></i>
+          <span>{{ 'collections.sidebar.filter' | t }}</span>
+        </div>
+      </div>
+      <div class="collBoxSort">
+        {% include 'collection-sorting' %}
+      </div>
+    </div>
+  {%- endunless -%}
+  <div class="collBoxProducts">
+    {% if template contains ".list" %}
+      {% include 'vela-collection-list' %}
+    {% else %}
+      {% include 'vela-collection-grid' %}
+    {% endif %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div id="collPagination" class="velaPaginationWrap clearfix">
+      {% include 'vela-pagination' %}
+      {% assign minPage = 1 %}
+      {% assign maxPage = paginate.page_size | times:paginate.current_page %}
+      {% if paginate.current_page > 1 %}
+      {% assign currentPage = paginate.current_page | minus:1 %}
+      {% assign minPage = currentPage | times: paginate.page_size %}
+      {% endif %}
+      {% if maxPage > paginate.items %}{% assign maxPage = paginate.items %}{% endif %}
+      <div class="collProductCount itemPaginate pull-right hidden-xs hidden-sm">{{ 'collections.paginate.showing_html' | t: minPage:minPage, maxPage:maxPage, itemsPage:paginate.items }}</div>
+    </div>
+  {% endif %}
+{% endpaginate %}
+
+{% schema %}
+    {
+        "name": "Vela Collection Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "text",
+                "id": "collection_product_columns",
+                "label": "Number of products in a row",
+                "placeholder": "Example: 4",
+                "default": "4"
+            },
+            {
+                "type": "text",
+                "id": "collection_product_page",
+                "label": "Number of products in a page",
+                "placeholder": "Example: 12",
+                "default": "12"
+            },
+            {
+                "type": "text",
+                "id": "product_image_size",
+                "label": "Product image size",
+                "default": "500x",
+                "info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_image",
+                "label": "Show collection image"
+            },
+            {
+                "type": "checkbox",
+                "id": "collection_description",
+                "label": "Show collection description"
+            }
+        ],
+		"blocks":[
+			{
+				"type":"collection",
+				"name":"Collection",
+				"settings":[
+					{
+						"type":"collection",
+						"id":"collection",
+						"label":"Collection"
+					}
+				]
+			},
+			{
+				"type":"full-content-buttons",
+				"name":"Full Content With Buttons",
+				"settings":[
+					{
+                        "type":"text",
+                        "id":"title1",
+                        "label":"Title1",
+                        "default":"Mix it up!"
+                    },
+                    {
+                        "type":"text",
+                        "id":"title2",
+                        "label":"Title2",
+                        "default":"3 Pack or Quarterly Membership"
+                    },
+                    {
+                        "type":"richtext",
+                        "id":"info",
+                        "label":"Info"
+                    },
+                    {
+                        "type":"text",
+                        "id":"btn1",
+                        "label":"Button Label 1",
+                        "default":"Join Now"
+                    },
+                    {
+                        "type":"url",
+                        "id":"link1",
+                        "label":"Button Link 1"
+                    },
+                    {
+                        "type":"text",
+                        "id":"btn2",
+                        "label":"Button Label 2",
+                        "default":"Shop All"
+                    },
+                    {
+                        "type":"url",
+                        "id":"link2",
+                        "label":"Button Link 2"
+                    },
+                    {
+                        "type":"image_picker",
+                        "id":"right_img",
+                        "label":"Right Image"
+                    }
+				]
+			},
+			{
+				"type":"full-content-block",
+				"name":"Full Content Block",
+				"settings":[
+					{
+                        "type":"text",
+                        "id":"title",
+                        "label":"Title"
+                    },
+                    {
+                        "type":"richtext",
+                        "id":"info",
+                        "label":"Info",
+                        "default":"<p>Massaging About Bralette</p>"
+                    }
+				]
+			}
+		]
+    }
+{% endschema %}

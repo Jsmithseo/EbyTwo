@@ -1,0 +1,58 @@
+<div class="landingBlock">
+  <div class="landing_col" style="background:{{ page.metafields.landingblockonebg.landing_block_one_background }};">
+    <div class="landingHeading">
+      {%- if page.metafields.landingblocktitle.landing_block_one_title != blank -%}
+      <h2>{{ page.metafields.landingblocktitle.landing_block_one_title }}</h2>
+      {%- endif -%}
+    </div>
+    {% if page.metafields.landingblockoneimage.landing_block_one_image != blank %}
+    <div class="landing-banner"><img src="{{ page.metafields.landingblockoneimage.landing_block_one_image }}" alt=""></div>
+    {% endif %}
+    <div class="landingContent">
+      {%- if page.metafields.landingblocksubtitle.landing_block_one_sub_title != blank -%}
+      <h2>{{ page.metafields.landingblocksubtitle.landing_block_one_sub_title }}</h2>
+      {%- endif -%}
+      {%- if page.metafields.landingblkonecontent.landing_block_one_content != blank -%}
+      {{ page.metafields.landingblkonecontent.landing_block_one_content }}
+      {%- endif -%}
+      <div class="join_now">
+        {% if page.metafields.landingblockonelink.landing_block_one_link != blank %}
+        <a class="join_btn" href="/pages/build-your-box">{{ page.metafields.landingblockonefeild.landing_block_one_feild }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="landing_col" style="background:{{ page.metafields.landingblocktwobg.landing_block_two_background }};">
+    <div class="landingHeading">
+      {%- if page.metafields.landingblocktwotitle.landing_block_two_title != blank -%}
+      <h2>{{ page.metafields.landingblocktwotitle.landing_block_two_title }}</h2>
+      {%- endif -%}
+    </div>
+    {% if page.metafields.landingblocktwoimage.landing_block_two_image != blank %}
+    <div class="landing-banner"><img src="{{ page.metafields.landingblocktwoimage.landing_block_two_image }}" alt=""></div>
+    {% endif %}
+    <div class="landingContent">
+      {%- if page.metafields.landingblktwsubtitle.landing_block_two_sub_title != blank -%}
+      <h2>{{ page.metafields.landingblktwsubtitle.landing_block_two_sub_title }}</h2>
+      {%- endif -%}
+      {%- if page.metafields.landingblktwocontent.landing_block_two_content != blank -%}
+      {{ page.metafields.landingblktwocontent.landing_block_two_content }}
+      {%- endif -%}
+      <div class="join_now shop_now">
+        {% if page.metafields.landingblocktwolink.landing_block_two_link != blank %}
+        <a class="join_btn" href="/collections">{{ page.metafields.landingblocktwofeild.landing_block_two_feild }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="landing_bottom_content" style="background:{{ page.metafields.landingbottombg.landing_bottom_background }};">
+  <div class="landingBotContent">
+    {%- if page.metafields.landingbottomcontent.landing_bottom_content != blank -%}
+    {{ page.metafields.landingbottomcontent.landing_bottom_content }}
+    {%- endif -%}
+  </div>
+  {% if page.metafields.landingbottomimage.landing_bottom_image != blank %}
+  <div class="landing-icon"><img src="{{ page.metafields.landingbottomimage.landing_bottom_image }}" alt=""></div>
+  {% endif %}
+</div>

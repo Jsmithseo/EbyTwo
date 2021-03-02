@@ -1,0 +1,36 @@
+{% comment %}
+    {% include 'breadcrumb' %}
+{% endcomment%}
+{% section 'vela-collection-banner' %}
+<section id="pageContent">
+    <div class="container-full">
+        <div class="pageCollectionInner mb20 pb-md-30">
+            <div class="filterCollectionFullwidth">
+                <div class="filterTagFullwidth">
+                    <a class="filterTagFullwidthButton" href="#fullWidthVertical" data-toggle="collapse" title="{{ 'collections.sidebar.filter' | t }}">
+                        <i class="fa fa-sliders"></i>
+                        <span>{{ 'collections.sidebar.filter' | t }}</span>
+                    </a>
+                </div>
+                <div class="collBoxSort">
+                    {% include 'collection-sorting' %}
+                </div>
+            </div>
+            <div id="fullWidthVertical" class="collapse">
+                <div class="rowFlex rowFlexMargin">
+                    <div class="col-xs-12 col-sm-3">
+                        {% section 'sidebartop' %}
+                    </div>
+                    <div class="col-xs-12 col-sm-9">
+                        {% section 'sidebarfilter' %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="proListCollection" class="velaCenterColumn col-xs-12">
+                    {% section 'vela-template-collection' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

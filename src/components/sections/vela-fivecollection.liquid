@@ -1,0 +1,262 @@
+<div class="velaFiveCollection style_default mb30" style="background-color: {{section.settings.color_bg }};{% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaCollectionInner ">
+            {%- if section.settings.heading != blank -%}
+                <h3 class="velaTitle velaHomeTitle text-center">{{ section.settings.heading}}</h3>
+            {%- endif -%}
+            <div class="velaContent">
+                <div class="rowFlex rowFlexMargin">
+                    {%- assign proCollection1 = section.settings.collection_handle1 -%}
+                    <div class="col-xs-12 w-small">
+                        <div class="velaCollectionItem mb30">
+                            <a href="{% if proCollection1 != blank %}{{ collections[proCollection1].url }}{% else %}#{% endif %}" title="{{ section.settings.single_image1.alt | default: shop.name }}">
+                                {% if section.settings.single_images1 != blank %}
+                                    <img class="img-responsive" alt="" src="{{ section.settings.single_images1 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/525x390.jpg" />
+                                {% endif %}
+                            </a>
+                            <div class="velaCollectionWrap">
+                                {%- if section.settings.title1 != blank -%}
+                                    <h4 class="title">{{ section.settings.title1 }}</h4>
+                                {%- endif -%}
+                                {%- if section.settings.text_button1 != blank -%} 
+                                    <a class="btn" href="{% if proCollection1 != blank %}{{ collections[proCollection1].url }}{% else %}#{% endif %}" title="{{ section.settings.text_button1 }}"><span>{{ section.settings.text_button1 }}</span></a> 
+                                {%- endif -%}
+                            </div>              
+                        </div>
+                        <div class="velaCollectionItem mb30">
+                            {%- assign proCollection2 = section.settings.collection_handle2 -%}
+                            <a href="{% if proCollection2 != blank %}{{ collections[proCollection2].url }}{% else %}#{% endif %}" title="{{ section.settings.single_image2.alt | default: shop.name }}">
+                                {% if section.settings.single_images2 != blank %}
+                                    <img class="img-responsive" alt="" src="{{ section.settings.single_images2 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/300x320.jpg" />
+                                {% endif %}
+                            </a>
+                            <div class="velaCollectionWrap">
+                                {%- if section.settings.title2 != blank -%}
+                                    <h4 class="title">{{ section.settings.title2 }}</h4>
+                                {%- endif -%}
+                                {%- if section.settings.text_button2 != blank -%} 
+                                    <a class="btn" href="{% if proCollection2 != blank %}{{ collections[proCollection2].url }}{% else %}#{% endif %}" title="{{ section.settings.text_button2 }}"><span>{{ section.settings.text_button2 }}</span></a> 
+                                {%- endif -%}
+                            </div>              
+                        </div>
+                    </div>
+                    <div class="col-xs-12 w-large">
+                        <div class="velaCollectionItem mb30">
+                            {%- assign proCollection3 = section.settings.collection_handle3 -%}
+                            <a href="{% if proCollection3 != blank %}{{ collections[proCollection3].url }}{% else %}#{% endif %}" title="{{ section.settings.single_image3.alt | default: shop.name }}">
+                                {% if section.settings.single_images3 != blank %}
+                                    <img class="img-responsive" alt="" src="{{ section.settings.single_images3 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/690x945.jpg" />
+                                {% endif %}
+                            </a>
+                            <div class="velaCollectionWrap">
+                                {%- if section.settings.title3 != blank -%}
+                                    <h4 class="title">{{ section.settings.title3 }}</h4>
+                                {%- endif -%}
+                                {%- if section.settings.text_button3 != blank -%} 
+                                    <a class="btn" href="{% if proCollection3 != blank %}{{ collections[proCollection3].url }}{% else %}#{% endif %}" title="{{ section.settings.text_button3 }}"><span>{{ section.settings.text_button3 }}</span></a> 
+                                {%- endif -%}
+                            </div>              
+                        </div>
+                    </div>
+                    <div class="col-xs-12 w-small">
+                        <div class="velaCollectionItem mb30">
+                            {%- assign proCollection4 = section.settings.collection_handle4 -%}
+                            <a href="{% if proCollection4 != blank %}{{ collections[proCollection4].url }}{% else %}#{% endif %}" title="{{ section.settings.single_image4.alt | default: shop.name }}">
+                                {% if section.settings.single_images4 != blank %}
+                                    <img class="img-responsive" alt="" src="{{ section.settings.single_images4 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/690x945.jpg" />
+                                {% endif %}
+                            </a>
+                            <div class="velaCollectionWrap">
+                                {%- if section.settings.title4 != blank -%}
+                                    <h4 class="title">{{ section.settings.title4 }}</h4>
+                                {%- endif -%}
+                                {%- if section.settings.text_button4 != blank -%} 
+                                    <a class="btn" href="{% if proCollection4 != blank %}{{ collections[proCollection4].url }}{% else %}#{% endif %}" title="{{ section.settings.text_button4 }}"><span>{{ section.settings.text_button4 }}</span></a> 
+                                {%- endif -%}
+                            </div>              
+                        </div>
+                        <div class="velaCollectionItem mb30">
+                            {%- assign proCollection5 = section.settings.collection_handle5 -%}
+                            <a href="{% if proCollection5 != blank %}{{ collections[proCollection5].url }}{% else %}#{% endif %}" title="{{ section.settings.single_image5.alt | default: shop.name }}">
+                                {% if section.settings.single_images5 != blank %}
+                                    <img class="img-responsive" alt="" src="{{ section.settings.single_images5 | img_url: 'master' }}" />
+                                {% else %}
+                                    <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/690x955.jpg" />
+                                {% endif %}
+                            </a>
+                            <div class="velaCollectionWrap">
+                                {%- if section.settings.title5 != blank -%}
+                                    <h5 class="title">{{ section.settings.title5 }}</h5>
+                                {%- endif -%}
+                                {%- if section.settings.text_button5 != blank -%} 
+                                    <a class="btn" href="{% if proCollection5 != blank %}{{ collections[proCollection5].url }}{% else %}#{% endif %}" title="{{ section.settings.text_button5 }}"><span>{{ section.settings.text_button5 }}</span></a> 
+                                {%- endif -%}
+                            </div>              
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Five Collection",
+        "class": "velaFramework",
+        "settings": [
+            {
+              "type": "header",
+              "content": "Design Block"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+               "type": "header",
+               "content": "General Settings"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle"
+            },
+            {
+               "type": "header",
+               "content": "Collection Item"
+            },
+            {
+                "type": "text",
+                "id": "title1",
+                "label": "1st Title"
+            },
+            {
+                "type": "image_picker",
+                "id": "single_images1",
+                "label": "1st Collection Image"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle1",
+                "label": "Collection"
+            }, 
+            {
+                "type": "text",
+                "id": "text_button1",
+                "label": "1st Text Button"
+            },
+            {
+                "type": "text",
+                "id": "title2",
+                "label": "2st Title"
+            },            
+            {
+                "type": "image_picker",
+                "id": "single_images2",
+                "label": "2st Collection Image"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle2",
+                "label": "Collection"
+            }, 
+            {
+                "type": "text",
+                "id": "text_button2",
+                "label": "2st Text Button"
+            },
+            {
+                "type": "text",
+                "id": "title3",
+                "label": "3st Title"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images3",
+                "label": "3st Collection Image"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle3",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "text_button3",
+                "label": "3st Text Button"
+            },
+            {
+                "type": "text",
+                "id": "title4",
+                "label": "4st Title"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images4",
+                "label": "4st Collection Image"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle4",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "text_button4",
+                "label": "4st Text Button"
+            },
+            {
+                "type": "text",
+                "id": "title5",
+                "label": "5st Title"
+            },           
+            {
+                "type": "image_picker",
+                "id": "single_images5",
+                "label": "5st Collection Image"
+            },
+            {
+                "type": "collection",
+                "id": "collection_handle5",
+                "label": "Collection"
+            },
+            {
+                "type": "text",
+                "id": "text_button5",
+                "label": "5st Text Button"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Vela Five Collection",
+                "category": "4. Vela Image"
+            }
+        ]
+    }
+{% endschema %}

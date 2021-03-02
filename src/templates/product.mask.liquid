@@ -1,0 +1,71 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% comment %}{% include 'breadcrumb' %}
+{% endcomment %}
+{% if product.type == 'Core Underwear' %}
+<section id="pageContent" class="ebyPantyPdp">
+{% elsif product.type == 'Mask' %}
+<section id="pageContent" class="ebyMaskPdp">
+{% elsif product.type == 'Mask Pack' %}
+<section id="pageContent" class="ebyMaskPdp">
+{% elsif product.type == 'Bralette Panty Set' %}
+<section id="pageContent" class="ebyBraPantySetPdp">
+{% elsif product.type == 'Panty Pack' %}
+<section id="pageContent"  class="ebyPantyPackPdp">
+{% elsif product.type == 'Core Bralette' %}
+<section id="pageContent" class="ebyBralettePdp">
+{% endif %}
+  {% section 'vela-template-product' %}
+</section>
+
+{% section 'global_gallery_section' %}
+{% section 'vela-product-page-section-1' %}
+{% section 'vela-product-page-section-2' %}
+{% section 'vela-product-page-section-3' %}
+{% section 'vela-product-page-section-4' %}                                  
+{% section 'vela-product-page-section-5' %}
+{% section 'vela-product-page-section-6' %}
+{% section 'vela-product-page-section-7' %}
+{% section 'vela-product-page-section-8' %}
+{% section 'product-review' %}
+
+<script>
+    var selectCallback = function(variant, selector) {
+        vela.productPage({
+            money_format: '{{ shop.money_format }}',
+            variant: variant,
+            selector: selector
+        });
+    };
+    $(document).ready(function() {
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{ product | json }},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+        {% if product.available and product.options.size > 1 %}
+            if (!window.swatch_show_unvailable) {
+                Shopify.linkOptionSelectors({{ product | json }});
+            } else if (window.swatch_enable) {
+            	Shopify.linkOptionSelectors({{ product | json }});
+            }
+        {% endif %}
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+            $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+        {% endif %}
+        {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+            $('.selector-wrapper').hide();
+            $('.swatch').hide();
+        {% endif %}
+        $('.velaProductNavTabs li:first, .proDetailInfo .tab-content .tab-pane:first').addClass('active');
+        $('.proDetailInfo .velaPanel:first .panel-collapse').addClass('in');
+    });
+</script>
+{% comment %}
+<div data-rebuy-id="1079" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+{% endcomment %}
+
+<style>
+  .formAddToCart ul.swatch-view {margin: 0;}
+  .formAddToCart ul.swatch-view li .swatch-button {    border: none !important;}  
+  
+</style>

@@ -1,0 +1,45 @@
+{%- if section.settings.featured_text_section_enable -%}
+<div class="featured-text-section" id="featured-text-section">
+  <div class="container-full">
+    <div class="content_area">
+      <h3>{{ section.settings.featured_text_section_title }}</h3>
+      <p>{{ section.settings.featured_text_section_text }}</p>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Featured Text",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Featured Text Section"
+        },
+		{
+          "type": "checkbox",
+          "id": "featured_text_section_enable",
+          "label": "Show global section 1",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "featured_text_section_title",
+          "label": "Heading",
+          "default": "Fit Guaranteed"
+        },
+		{
+          "type": "textarea",
+          "id": "featured_text_section_text",
+          "label": "Heading",
+          "default": "Our aim is to provide the best fit with consistency across all sizes. If you are unhappy in any way with your EBYs, we will help you find your absolute best fit -- or your money back."
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

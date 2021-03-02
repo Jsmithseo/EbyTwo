@@ -1,0 +1,95 @@
+{% paginate collection.products by 1000 %}
+<div class="proList">
+  	<span class="ebySaleNotice">All sales are final</span>
+	<div class="ebyProdTileListWrapper flashsaleProdListing">
+	{% for product in collection.products %}
+
+      	{%- assign prodColorTitle = "" -%}
+      	{%- assign prodDealPrice = "" -%}
+      
+      	{% if product.type == "Core Underwear" %}
+      		{% assign isPanty = true %}
+      		{% assign isBralette = false %}
+
+            {% for prodTag in product.tags %}
+                {% if prodTag contains "pantyType-" %}
+                    {%- assign prodNameTitle = prodTag | replace: "pantyType-", "" -%}
+                {% endif %}
+                {% if prodTag contains "pantyColor-" %}
+                    {%- assign prodColorTitle = prodTag | replace: "pantyColor-", "" -%}
+                {% endif %}
+                {% if prodTag contains "lightningDeal-" %}
+                    {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" -%}
+                {% endif %}
+            {% endfor %}
+        {% elsif product.type == "Core Bralette" %}
+            {%- assign isPanty = false -%}
+            {%- assign isBralette = true -%}
+
+            {%- assign prodNameTitle = "Bralette" -%}
+            {% for prodTag in product.tags %}
+                {% if prodTag contains "braletteColor-" %}
+                    {%- assign prodColorTitle = prodTag | replace: "braletteColor-", "" -%}
+                {% endif %}
+                {% if prodTag contains "lightningDeal-" %}
+                    {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", ""  -%}
+                {% endif %}
+            {% endfor %}
+        {% elsif product.type == "Mask" %}
+            {% assign isPanty = false %}
+            {% assign isBralette = false %}
+
+            {%- assign prodNameTitle = "Mask" -%}
+            {% for prodTag in product.tags %}
+                {% if prodTag contains "maskColor-" %}
+                    {%- assign prodColorTitle = prodTag | replace: "maskColor-", "" -%}
+                {% endif %}
+                {% if prodTag contains "lightningDeal-" %}
+                    {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" -%}
+                {% endif %}
+            {% endfor %}
+        {% elsif product.type == "Pack" %}
+            {%- assign isPanty = false %}
+            {%- assign isBralette = false %}
+
+            {%- assign prodNameTitle = "3 Pack" -%}
+            {% for prodTag in product.tags %}
+                {% if prodTag contains "packColor-" %}
+                    {%- assign prodColorTitle = prodTag | replace: "packColor-", "" -%}
+                {% endif %}
+                {% if prodTag contains "lightningDeal-" %}
+                    {%- assign prodDealPrice = prodTag | replace: "lightningDeal-", "" -%}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+      
+        <div class="item ebyProdTile saleProdTile newRelease"
+             data-prodTitle="{{ product.title }}"
+             data-prodType="{{ prodNameTitle }}"
+             data-prodColor="{{ prodColorTitle }}"
+             data-prodPrice="{{ prodDealPrice }}"
+             data-prodIsPanty="{{ isPanty }}"
+             data-isBralette="{{ isBralette }}"
+             >
+          	{% include 'saleprod-grid-item' %}
+        </div>
+    {% endfor %} 
+  	</div>
+</div>
+{% endpaginate %}
+<footer class="sortCollLoadingWrapper">
+  <div class="collListingLoadingBg"></div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Lightning Deals",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

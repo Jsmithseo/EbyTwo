@@ -1,0 +1,69 @@
+{% assign bannersize = '900x900' %}
+{%- if section.settings.global_section_enable_6 -%}
+{%- if product.metafields.ebyacf.enable_blkSix -%}
+<div class="our-product-block" style="background: {{ product.metafields.purposebackground.purpose_background }};">
+  <div class="product-blocks">
+    <div class="product-box">
+    <div class="product-box-img">
+      <div class="ebyacfCmsImgWrapper">{{ product.metafields.ebyacf.blksix_image_content }}</div>
+    </div>
+    <div class="product-box_details">
+      <h3>{{ product.metafields.purposetitle.panties_with_purpose_title }}</h3>
+      <div class="rich-text">
+      	<p>{{ product.metafields.purposecontent.panties_with_purpose_content }}</p>
+      </div>
+      {%- if product.metafields.ebyacf.enable_blkSix_cta -%}
+      <a class="btn shop_btn" title="{{ product.metafields.purposelink.panties_with_purpose_link }}" href="{{ product.metafields.purposelink.panties_with_purpose_link }}" >{{ product.metafields.purposefield.panties_with_purpose_field }}</a>
+      {%- endif -%}
+    </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Global Section 6",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Global Section 6"
+        },
+		{
+          "type": "checkbox",
+          "id": "global_section_enable_6",
+          "label": "Show global section 6",
+          "default": true
+		},
+        {
+          "type": "text",
+          "id": "global_section_title_6",
+          "label": "Heading",
+          "default": "No Slip Grip"
+        },
+        {
+          "type": "textarea",
+          "id": "global_section_text_6",
+          "label": "Text",
+          "default": "Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip."
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_6_image_1",
+          "label": "Image for desktop view"
+        },
+        {
+          "type": "image_picker",
+          "id": "global_section_6_image_2",
+          "label": "Image for mobile view"
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

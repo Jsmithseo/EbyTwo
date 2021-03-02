@@ -1,0 +1,81 @@
+{%- if section.settings.bgimage != blank -%}
+    {%- capture bgImage -%}style="background-image: url({{ section.settings.bgimage | img_url: 'master' }});"{%- endcapture -%}
+{%- endif -%}
+<div class="container-full">
+    <div class="velaAboutUs velaAboutUsServices" {{ bgImage }}>
+        <div class="velaAboutUsServicesInner">
+            {%- if section.settings.title != blank -%}
+                <h3 class="velaAboutUsTitle text-center">
+                    {{ section.settings.title }}
+                </h3>
+            {%- endif -%}
+            {%- if section.settings.subtitle != blank -%}
+                <div class="velaPageSubTitle">
+                    {{ section.settings.subtitle }}
+                </div>
+            {%- endif -%}
+            {%- if section.blocks.size > 0 -%}
+                <div class="velaContent">
+                    <div class="rowFlex rowFlexMargin flexJustifyCenter">
+                        {% for block in section.blocks %}
+                            {%- assign counter = forloop.index -%}
+                            {%- if counter < 10 -%}
+                                {%- assign counter = '0' | append: counter | append: '.' -%}
+                            {%- endif -%}
+                            {%- assign boxHeading = block.settings.title -%}
+                            {%- assign boxDesc = block.settings.desc -%}
+                            <div class="col-xs-12 col-md-4">
+                                <div class="aboutService">
+                                    <div class="aboutServiceCounter">{{ counter }}</div>
+                                    <div class="aboutServiceHeading">{{ boxHeading }}</div>
+                                    <div class="aboutServiceDesc">{{ boxDesc }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela About Services",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "bgimage",
+                "label": "Background image"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subheading",
+                "placeholder": "Subheading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Service Item",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Box heading"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "desc",
+                        "label": "Box description"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

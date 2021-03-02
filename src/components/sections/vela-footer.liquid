@@ -1,0 +1,320 @@
+<footer id="velaFooter" class="style1">
+  <section class="foot_section">
+    <div class="rowFlex rowFlexMargin">
+      <div class="col-md-8">
+        <div class="menu_section">
+          <div class="menu_col1">
+            <h4>Products</h4>
+            <ul class="prod_menu">
+                {% for link in linklists.footer-menu-products.links %}
+              <li><a href= "{{ link.url }}"><span>{{ link.title }}</span></a></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <div class="menu_col2">
+            <div class="accountFooterWrapper">
+                <h4>Account</h4>
+                <ul class="account_menu">
+                    {% if customer %}
+                  		<li><a href= "/account"><span>My Account</span></a></li>
+                  		<li><a href= "/account/logout"><span>Sign Out</span></a></li>
+                  	{% else %}
+                      {% for link in linklists.footer-menu-account.links %}
+                      <li><a href= "{{ link.url }}"><span>{{ link.title }}</span></a></li>
+                      {% endfor %}
+                  	{% endif %}
+                </ul>
+              	<br>
+            </div>
+            <h4>Community</h4>
+            <ul class="comm_menu">
+                {% for link in linklists.footer-menu-community.links %}
+              <li><a target="_blank" href= "{{ link.url }}"><span>{{ link.title }}</span></a></li>
+                {% endfor %}
+            </ul>
+          </div>
+          <div class="menu_col3">
+            <h4>About Us</h4>
+            <ul class="about_menu">
+                {% for link in linklists.footer-menu-aboutus.links %}
+              <li><a href= "{{ link.url }}"><span>{{ link.title }}</span></a></li>
+                {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="cont_section">
+          <div class="cont_inner">
+            <h2>We're here to help</h2>
+            <p>Support staff available by phone or text at: <a class="c_link" href="tel:888.848.1454"><b>888.848.1454</b></a><br>
+              Monday - Friday, 9am - 5pm, EST</p>
+            <div class="link_section">
+              <a class="c_link" href="tel:888.848.1454">Call</a>
+              <a class="c_link" href="mailto:seamlesssupport@join-eby.com">Email</a>
+              <a class="c_link" href="/pages/faq">FAQ</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <div class="footerCopyRight">
+        <div class="container-full">
+            <div class="footerCopyRightInner">
+                <div class="rowFlex rowFlexMargin flexAlignCenter">
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        {%- if section.settings.copyright_enable and section.settings.footer_copyright != blank -%}
+                            <div class="velaCopyRight">
+                                &copy;{{'now' | date: '%Y' }} {{ section.settings.footer_copyright }}
+                            </div>
+                        {%- endif -%}
+                    </div>
+                    {% if section.settings.social_enable %}
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            {%- assign socialFacebook = section.settings.social_facebook -%}
+                            {%- assign socialTwitter = section.settings.social_twitter -%}
+                            {%- assign socialInstagram = section.settings.social_instagram -%}
+                            {%- assign socialPinterest = section.settings.social_pinterest -%}
+                            {%- assign socialYoutube = section.settings.social_youtube -%}
+                            <div class="velaSocialFooter">
+                                {% if section.settings.social_title != blank %}
+                                    <h4 class="velaFooterTitle">{{ section.settings.social_title }}</h4>
+                                {% endif %}
+                                <div class="velaContent">        
+                                    <ul class="velaListSocial list-unstyled list-inline">
+                                        {%- if socialFacebook != blank -%}
+                                            <li class="facebook">
+                                                <a target="_blank" href="{{ socialFacebook }}" title="{{ shop.name }} on Facebook" class="btn-social btn-social--facebook" data-original-title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if socialTwitter != blank -%}
+                                            <li class="twitter">
+                                                <a target="_blank" href="{{ socialTwitter }}" title="{{ shop.name }} on Twitter" class="btn-social btn-social--twitter" data-original-title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if socialInstagram != blank -%}
+                                            <li class="instagram">
+                                                <a target="_blank" href="{{ socialInstagram }}" title="{{ shop.name }} on Instagram" class="btn-social btn-social--instagram" data-original-title="Instagram">
+                                                    <i class="fa fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if socialPinterest != blank -%}
+                                            <li class="pinterest">
+                                                <a target="_blank" href="{{ socialPinterest }}" title="{{ shop.name }} on Pinterest" class="btn-social btn-social--pinterest" data-original-title="Pinterest">
+                                                    <i class="fa fa-pinterest"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                        {%- if socialYoutube != blank -%}
+                                            <li class="youtube">
+                                                <a target="_blank" href="{{ socialYoutube }}" title="{{ shop.name }} on Youtube" class="btn-social btn-social--youtube" data-original-title="Youtube">
+                                                    <i class="fa fa-youtube"></i>
+                                                </a>
+                                            </li>
+                                        {%- endif -%}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {%- if section.settings.footer_menu_enable3 -%}
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            <div class="velaCopyRightLink">
+                                {%- assign menuTitle = "" -%}
+                                {%- assign menuHandle = section.settings.footer_menu_menu3 -%}
+                                <ul class="list-inline list-unstyled">
+                                    {% for velaLink in linklists[menuHandle].links %}
+                                        <li class="{% if velaLink.active %}active{% endif %}">
+                                          <a href="{{ velaLink.url }}" title=""><span>{{ velaLink.title }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% schema %}
+    {
+        "name": "Footer",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Link Bar Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "contact_link_bar_1_enable",
+                "label": "Link Bar 1?"
+            },
+			{
+                "type": "link_list",
+                "id": "contact_link_bar_1",
+                "label": "Block links 1",
+                "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+            },
+			{
+                "type": "checkbox",
+                "id": "contact_link_bar_2_enable",
+                "label": "Link Bar 1?"
+            },
+			{
+                "type": "link_list",
+                "id": "contact_link_bar_2",
+                "label": "Block links 2",
+                "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+            },
+            {
+                "type": "header",
+                "content": "Block Newsletter"
+            },
+            {
+                "type": "checkbox",
+                "id": "newsletter_enable",
+                "label": "Enable?",
+                "default": true
+            }, 
+            {
+                "type": "text",
+                "id": "newsletter_title",
+                "placeholder": "Title for Block",
+                "label": "Title"
+            },
+            {
+                "type": "textarea",
+                "id": "newsletter_description",
+                "placeholder": "Description for Block",
+                "label": "Description"
+            },
+            {
+                "type": "checkbox",
+                "id": "newsletter_mailchimp",
+                "label": "Use MailChimp",
+                "default": true
+            },
+            {
+                "type": "paragraph",
+                "content": "Uncheck if You use Newsletter of Shopify. Email will be saved to shopify customer. Admin -> Customers -> Accepts Marketting. You must send invite account for customer."
+            },
+            {
+                "type": "text",
+                "id": "newsletter_form_action",
+                "label": "MailChimp form action URL",
+                "info": "[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
+            }, 
+            {
+                "type": "header",
+                "content": "Block Payment"
+            },
+            {
+                "type": "text",
+                "id": "paypament_title",
+                "label": "Title"
+            },   
+            {
+                "type": "image_picker",
+                "id": "contactinfo_payment",
+                "label": "Payment Logo"
+            }, 
+            {
+                "type": "header",
+                "content": "Block Copyright"
+            },
+            {
+                "type": "checkbox",
+                "id": "copyright_enable",
+                "label": "Enable?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "footer_copyright",
+                "label": "Copyright",
+                "placeholder": "Copyright"
+            },
+            {
+                "type": "header",
+                "content": "Vela Social"
+            },
+            {
+                "type": "checkbox",
+                "id": "social_enable",
+                "label": "Enable Vela Social?"
+            },
+            {
+                "type": "text",
+                "id": "social_title",
+                "placeholder": "Title for Block",
+                "label": "Block Title",
+                "info": "Title for Block"
+            },
+            {
+                "type": "text",
+                "id": "social_facebook",
+                "placeholder": "Link your Facebook",
+                "label": "Facebook Link"
+            },
+            {
+                "type": "text",
+                "id": "social_twitter",
+                "placeholder": "Link your Twitter",
+                "label": "Twitter Link"
+            },
+            {
+                "type": "text",
+                "id": "social_instagram",
+                "placeholder": "Link your Instagram",
+                "label": "Instagram Link"
+            },
+            {
+                "type": "text",
+                "id": "social_pinterest",
+                "placeholder": "Link your Pinterest",
+                "label": "Pinterest Link"
+            },
+            {
+                "type": "text",
+                "id": "social_youtube",
+                "placeholder": "Link your Youtube",
+                "label": "Youtube Link"
+            },
+            {
+                "type": "text",
+                "id": "social_googleplus",
+                "placeholder": "Link your Googleplus",
+                "label": "Googleplus Link"
+            },
+            {
+                "type": "text",
+                "id": "social_rss",
+                "placeholder": "Link your Rss",
+                "label": "Rss Link"
+            },
+            {
+                "type": "header",
+                "content": "Links Footer3"
+            },
+            {
+                "type": "checkbox",
+                "id": "footer_menu_enable3",
+                "label": "Links Footer?",
+                "default": true
+            },
+            {
+                "type": "link_list",
+                "id": "footer_menu_menu3",
+                "label": "Block links",
+                "info": "Choose menu for block. Add new menu: Admin -> Navigation"
+            }    
+        ]
+    }
+{% endschema %}

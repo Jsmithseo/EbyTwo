@@ -1,0 +1,100 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% comment %}{% include 'breadcrumb' %}
+{% endcomment %}
+{% if product.type == 'Core Underwear' %}
+<section id="pageContent" class="ebyPantyPdp">
+{% elsif product.type == 'Bralette Panty Set' %}
+<section id="pageContent" class="ebyBraPantySetPdp">
+{% elsif product.type == 'Panty Pack' %}
+<section id="pageContent"  class="ebyPantyPackPdp">
+{% elsif product.type == 'Core Bralette' %}
+<section id="pageContent" class="ebyBralettePdp">
+{% endif %}
+  {% section 'vela-template-product' %}
+</section>
+  
+
+<script type="text/javascript" async>
+    
+  /*$.get('https://inventorylocations.checkmyapp.net/inventory/products/eby-by-sofia-vergara.myshopify.com/[{{ product.id }}]', function (data, textStatus, jqXHR) {
+          window.productInfo = data[{{ product.id }}].product;
+          console.log(window.productInfo);
+          var s = data[{{ product.id }}].product.variants[v.id].inventoryItem.locations;
+          if(s == 0 || s < 0){
+        $('#AddToCart').addClass('disabled').prop('disabled', true);
+        $('#AddToCartText').html("Sold Out");
+      }
+    });*/
+  	var v = [];
+  	var selectCallback = function(variant, selector) {
+      v = variant;
+      //console.log(variant);     
+        vela.productPage({
+            money_format: '{{ shop.money_format }}',
+            variant: variant,
+            selector: selector
+        });
+    };
+  //document.addEventListener('load', function(){    
+  //});
+  	
+    /*document.addEventListener('tomitProductLoaded', function(e) {
+      var variantStock = tomitProductInventoryInfo.activeProduct;
+      window.productInfo = variantStock;
+      //console.log(tomitProductInventoryInfo.activeProduct);
+      //console.log(v);
+      var s = variantStock.variants[v.id].inventoryItem.locations[0].available;
+      if(s == 0 || s < 0){
+        $('#AddToCart').addClass('disabled').prop('disabled', true);
+        $('#AddToCartText').html("Sold Out");
+      }
+    });*/
+    $(document).ready(function() {
+      	console.log('ee');
+      	$('body').addClass('velaCartAdding');
+      	jQuery.ajax({
+          url: "https://inventorylocations.checkmyapp.net/inventory/products/eby-by-sofia-vergara.myshopify.com/[{{ product.id }}]",
+          beforeSend: function(){
+            $('body').addClass('velaCartAdding');
+          },
+          success: function(data){
+              window.productInfo = data[{{ product.id }}].product;
+              console.log(window.productInfo);
+              var s = data[{{ product.id }}].product.variants[v.id].inventoryItem.locations;
+              console.log(s[0].available);
+              if(s[0].available == 0 || s[0].available < 0){
+                $('#AddToCart').addClass('disabled').prop('disabled', true);
+                $('#AddToCartText').html("Sold Out");
+              }
+              $('body').removeClass('velaCartAdding');
+          }
+    	});
+  
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{ product | json }},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+  
+        {% if product.available and product.options.size > 1 %}
+            if (!window.swatch_show_unvailable) {
+                Shopify.linkOptionSelectors({{ product | json }});
+            } else if (window.swatch_enable) {
+            	Shopify.linkOptionSelectors({{ product | json }});
+            }
+        {% endif %}
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+            $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+        {% endif %}
+        {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+            $('.selector-wrapper').hide();
+            $('.swatch').hide();
+        {% endif %}
+        $('.velaProductNavTabs li:first, .proDetailInfo .tab-content .tab-pane:first').addClass('active');
+        $('.proDetailInfo .velaPanel:first .panel-collapse').addClass('in');
+    });
+
+</script>
+{% comment %}
+<div data-rebuy-id="1079" data-rebuy-shopify-product-ids="{{ product.id }}"></div>
+{% endcomment %}

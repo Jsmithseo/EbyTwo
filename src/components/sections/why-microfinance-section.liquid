@@ -1,0 +1,60 @@
+<div style="background-color: {{ page.metafields.ebyacf.blkFour_background_color }};">
+  {{ page.metafields.ebyacf.blkFour_video_and_copy_editor.en }}
+</div>
+
+{% schema %}
+  {
+    "name": "Why Microfinance",
+    "class": "videoMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+    {
+      "type":"richtext",
+      "id":"count_content",
+      "label":"Enter Count Content"
+    },
+    {
+      "type":"text",
+      "id":"join_now_btn",
+      "label":"Button Label"
+    },
+    {
+      "type": "url",
+      "id": "join_now_link",
+      "label": "Link"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "video_link",
+            "label": "Video Link"
+          },
+          {
+            "type":"text",
+            "id":"video_title",
+            "label":"Video Heading"
+          },
+          {
+            "type":"text",
+            "id":"video_sub_title",
+            "label":"Video Sub Heading"
+          },
+          {
+            "type":"richtext",
+            "id":"video_content",
+            "label":"Video Text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

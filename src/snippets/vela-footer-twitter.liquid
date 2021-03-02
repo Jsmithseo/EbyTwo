@@ -1,0 +1,33 @@
+{%- assign dataChrome = '' -%}
+{%- if section.settings.twitter_noheader -%}
+    {%- assign dataChrome = dataChrome | append: 'noheader ' -%}
+{%- endif -%}
+{%- if section.settings.twitter_nofooter -%}
+    {%- assign dataChrome = dataChrome | append: 'nofooter ' -%}
+{%- endif -%}
+{%- if section.settings.twitter_noborders -%}
+    {%- assign dataChrome = dataChrome | append: 'noborders ' -%}
+{%- endif -%}
+{%- if section.settings.twitter_scrollbar -%}
+    {%- assign dataChrome = dataChrome | append: 'noscrollbar ' -%}
+{%- endif -%}
+{%- if section.settings.twitter_transparent -%}
+    {%- assign dataChrome = dataChrome | append: 'transparent ' -%}
+{%- endif -%}
+<div class="velaFooter velaFooterTwitter">
+    {%- if section.settings.twitter_title != blank -%}
+        <h4 class="velaFooterTitle">
+            {{ section.settings.twitter_title }}
+        </h4>
+    {%- endif -%}
+    <div class="velaContent">
+        <a class="twitter-timeline" 
+            href="{{ section.settings.twitter_url }}" 
+            data-chrome="{{ dataChrome }}" 
+            data-theme="{{ section.settings.twitter_theme }}" 
+            data-link-color="{{ section.settings.twitter_link_color }}" 
+            data-tweet-limit="{{ section.settings.twitter_limit }}" 
+        ></a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+</div>

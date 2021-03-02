@@ -1,0 +1,632 @@
+{%- assign proImageSize = section.settings.image_size -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- if product.description contains '[SHORTDESCRIPTION]' -%}
+{%- assign shortDescription = product.description | split:'[SHORTDESCRIPTION]' | first -%}
+{%- assign fullDescription = product.description | split:'[SHORTDESCRIPTION]' | last -%}
+{%- else -%}
+{%- assign shortDescription = '' -%}
+{%- assign fullDescription = product.description -%}
+{%- endif -%}
+<div class="container-full">
+  <div class="pageCollectionInner">
+    <div class="productBox" itemscope itemtype="http://schema.org/Product">
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+      <div class="proBoxPrimary mb30 {{ section.settings.prodetail_style }}">
+        {%- if section.settings.prodetail_style == "detail_style1" -%}
+        <div class="row">
+          <div class="ab proBoxImage col-xs-12 col-md-12 col-lg-12 mb30">
+            {% include 'vela-prodetail-image' %}
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-6 mb30 proBoxInfo_outr">
+            <div class="proBoxInfo">
+              {% include 'vela-prodetail-info' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pro_page_tab">
+        <div class="container-full">
+          {% include 'vela-prodetail-tabdesc'%}
+        </div>
+      </div>
+      {% if section.settings.image_picker_1 != blank %}
+      <div class="cus-image-section cus-image-section-1">
+        <a href="{% if section.settings.image_picker_1_url != blank %}{{ section.settings.image_picker_1_url }}{% else %}javascript:void(0);{% endif %}" ><img src="{{ section.settings.image_picker_1 | img_url:'master' }}" style="width:100%" alt="Image 1" /></a>
+      </div>
+      {% endif %}
+      {% if section.settings.image_picker_2 != blank %}
+      <div class="cus-image-section cus-image-section-2">
+        <a href="{% if section.settings.image_picker_2_url != blank %}{{ section.settings.image_picker_2_url }}{% else %}javascript:void(0);{% endif %}" ><img src="{{ section.settings.image_picker_2 | img_url:'master' }}" style="width:100%" alt="Image 2" /></a>
+      </div>
+      {% endif %}
+      {% if section.settings.image_picker_3 != blank %}
+      <div class="cus-image-section cus-image-section-3">
+        <a href="{% if section.settings.image_picker_3_url != blank %}{{ section.settings.image_picker_3_url }}{% else %}javascript:void(0);{% endif %}" ><img src="{{ section.settings.image_picker_3 | img_url:'master' }}" style="width:100%" alt="Image 3" /></a>
+      </div>
+      {% endif %}
+      {%- elsif section.settings.prodetail_style == "detail_style2" -%}
+      <div class="row">
+        <div class="proBoxImage col-xs-12 col-md-6 col-lg-6 col-xl-5 mb30">
+          {% include 'vela-prodetail-image' %}
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-6 col-xl-7 mb30">
+          <div class="proBoxInfo">
+            {% include 'vela-prodetail-info' %}
+            <div class="mt30">
+              {% include 'vela-prodetail-tabdesc'%}
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- elsif section.settings.prodetail_style == "detail_style3" -%}
+      <div class="row">
+        <div class="proBoxImage col-xs-12 col-md-6 col-lg-6 col-xl-5 mb30">
+          {% include 'vela-prodetail-image' %}
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-6 col-xl-7 mb30">
+          <div class="proBoxInfo">
+            {% include 'vela-prodetail-info' %}
+          </div>
+        </div>
+      </div>
+      <div class="mb30 pt-md-30">
+        {% include 'vela-prodetail-tabdesc'%}
+      </div>
+      {%- else -%}
+      <div class="row">
+        <div class="proBoxImage col-xs-12 col-md-6 col-lg-5 mb30">
+          {% include 'vela-prodetail-image' %}
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-7 mb30">
+          <div class="proBoxInfo">
+            {% include 'vela-prodetail-info' %}
+            <div class="mt30">
+              {% include 'vela-prodetail-tabdesc'%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+    {% include 'vela-product-related' %}
+  </div>
+</div>
+</div>
+</div>
+<div class="pop_size">
+  <div class="pop_inner">
+    <div class="pop_wrap">
+      <span class="colz_pop">&times;</span>
+      <img src="https://cdn.shopify.com/s/files/1/0340/6525/2411/files/womens@2x.png?v=1593763293"/>
+    </div>
+    <div class="pop_wrapper_backing">&nbsp;</div>
+  </div>
+</div>
+<style>
+  .container-full {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+</style>
+{%- if section.settings.product_instagram_enable -%}
+    {% include 'vela-instagram' %}
+{%- endif -%}
+{% schema %}
+    {
+        "name": "Vela Product Page",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Settings"
+            },
+            {
+                "type": "select",
+                "id": "prodetail_style",
+                "label": "Product Layout",
+                "default": "detail_default",
+                "options": [
+                    {
+                        "value": "detail_default",
+                        "label": "Layout Default"
+                    },
+                    {
+                        "value": "detail_style1",
+                        "label": "Layout Style1"
+                    },
+                    {
+                        "value": "detail_style2",
+                        "label": "Layout Style2"
+                    },
+                    {
+                        "value": "detail_style3",
+                        "label": "Layout Style3"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "product_available_enable",
+                "label": "Show product available",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_type_enable",
+                "label": "Show product type",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_vendor_enable",
+                "label": "Show product vendor",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_sku_enable",
+                "label": "Show product SKU",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_countdown_enable",
+                "label": "Show Countdown",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "image_size",
+                "label": "Image size",
+                "default": "480x480",
+                "info": "Image size is required."
+            },
+            {
+                "type": "header",
+                "content": "Product Zoom"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_zoom_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_scroll_zoom",
+                "label": "Scroll zoom",
+                "info": "Allow zoom on mousewheel, true to activate",
+                "default": true
+            },
+            {
+                "type": "select",
+                "id": "product_zoom_type",
+                "label": "Zoom type",
+                "default": "window",
+                "options": [
+                    {
+                        "value": "window",
+                        "label": "Window"
+                    },
+                    {
+                        "value": "inner",
+                        "label": "Inner"
+                    },
+                    {
+                        "value": "lens",
+                        "label": "Lens"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_width",
+                "label": "Zoom window width",
+                "info": "Use with zoom type Window",
+                "default": "500"
+            },
+            {
+                "type": "text",
+                "id": "product_zoom_height",
+                "label": "Zoom window height",
+                "info": "Use with zoom type Window",
+                "default": "600"
+            },
+            {
+                "type": "text",
+                "id": "product_lens_size",
+                "label": "Lens size",
+                "info": "Use with zoom type Lens",
+                "default": "200"
+            },
+            {
+                "type": "select",
+                "id": "product_lens_type",
+                "label": "Lens type",
+                "info": "Use with zoom type Lens",
+                "default": "square",
+                "options": [
+                    {
+                        "value": "square",
+                        "label": "Square"
+                    },
+                    {
+                        "value": "round",
+                        "label": "Round"
+                    }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "Product Collections"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_collection_enable",
+                "label": "Show product collections",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_collection_title",
+                "label": "Box categoies title"
+            },
+            {
+                "type": "range",
+                "id": "product_coll_limit",
+                "min": 2,
+                "max": 10,
+                "step": 1,
+                "unit": "pcs",
+                "label": "Limit",
+                "default": 6
+            },
+            {
+                "type": "header",
+                "content": "Product Short Description"
+            },
+            {
+                "type": "radio",
+                "id": "product_short_description",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "no",
+                        "label": "Don't show"
+                    },
+                    {
+                        "value": "yes",
+                        "label": "Show short description"
+                    },
+                    {
+                        "value": "full",
+                        "label": "Show full description"
+                    }
+                ],
+                "default": "yes",
+                "info": "Use tag [SHORTDESCRIPTION] on product description."
+            },
+            {
+                "type": "header",
+                "content": "Product More Info"
+            },
+            {
+                "type": "radio",
+                "id": "product_tab_type",
+                "label": "Choose type",
+                "options": [
+                    {
+                        "value": "disable",
+                        "label": "Don't Show"
+                    },
+                    {
+                        "value": "protab",
+                        "label": "Tab More Info"
+                    },
+                    {
+                        "value": "propanel",
+                        "label": "Panel More Info"
+                    }
+                ],
+                "default": "protab"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab1_enable",
+                "label": "1st Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab1_title",
+                "label": "1st Heading tab",
+                "default": "Details"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab2_enable",
+                "label": "2nd Enable tab"
+            },
+            {
+                "type": "text",
+                "id": "product_tab2_title",
+                "label": "2nd Heading tab"
+            },
+            {
+                "type": "textarea",
+                "id": "product_tab2_content",
+                "label": "2nd Tab content"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab3_enable",
+                "label": "3rd Enable FAQs"
+            },
+            {
+                "type": "text",
+                "id": "product_tab3_title",
+                "label": "3rd Heading tab"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_tab4_enable",
+                "label": "4th Enable tab",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_tab4_title",
+                "label": "4th Title tab",
+                "default": "Reviews"
+            },
+			{
+                "type": "header",
+                "content": "Dynamic checkout buttons"
+            },
+            {
+                "type": "checkbox",
+                "id": "dynamic_check_enable",
+                "label": "Enable Dynamic Checkout Button",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "buyit_check_enable",
+                "label": "Enable Buy It Now Button",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Product Social Sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_enable",
+                "label": "Enable",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "product_social_title",
+                "label": "Heading"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_facebook_enable",
+                "label": "Show facebook sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_twitter_enable",
+                "label": "Show twitter sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_google_enable",
+                "label": "Show google plus sharing",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_linkedin_enable",
+                "label": "Show linkedin sharing"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_social_pinterest_enable",
+                "label": "Show pinterest sharing"
+            },
+            {
+                "type": "header",
+                "content": "Product Related"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_related_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "text",
+                "id": "product_related_title",
+                "placeholder": "Title for Block",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "product_related_limit",
+                "placeholder": "Number. Ex: 8",
+                "label": "Limit"
+            },
+            {
+                "type": "header",
+                "content": "Vela Instagram"
+            },
+            {
+                "type": "checkbox",
+                "id": "product_instagram_enable",
+                "label": "Enable"
+            },
+            {
+                "type": "checkbox",
+                "id": "instagram_full",
+                "label": "Full Width?"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle",
+                "placeholder": "SubTitle"
+            },
+			{
+                "type": "text",
+                "id": "userid",
+                "label": "User Id (*)",
+                "placeholder": "User Id",
+                "default": "2292239002",
+                "info": "[Where do I find User ID?](https:\/\/codeofaninja.com\/tools\/find-instagram-user-id)"
+            },
+            {
+                "type": "text",
+                "id": "accessToken",
+                "label": "Access token (*)",
+                "placeholder": "Access Token",
+                "default": "2292239002.1677ed0.fac0c0ffe73643cd8f4838b89b4c11a3",
+                "info": "[Where do I find Access Token?](http:\/\/instagram.pixelunion.net\/)"
+            },
+            {
+                "type": "text",
+                "id": "limited",
+                "placeholder": "Ex:8",
+                "label": "Limit The Number of Images",
+                "default": "8"
+            },
+			{
+                "type": "select",
+                "id": "resolution",
+                "label": "Resolution of images",
+                "options": [
+                    {
+                      	"value": "thumbnail",
+                      	"label": "Thumbnail (150x150)"
+                    },
+                    {
+                      	"value": "low_resolution",
+                      	"label": "Low Resolution (320x320)"
+                    },
+                    {
+                      	"value": "standard_resolution",
+                      	"label": "Standard Resolution (640x640)"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "show_loadmore",
+                "label": "Show Loadmore?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "loadmore",
+                "label": "Load more",
+                "placeholder": "Button load more text"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_1",
+                "label": "Image 1"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_1_url",
+                "label": "Image 1 URL"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_2",
+                "label": "Image 2"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_2_url",
+                "label": "Image 2 URL"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_picker_3",
+                "label": "Image 3"
+            },
+            {
+                "type": "url",
+                "id": "image_picker_3_url",
+                "label": "Image 3 URL"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "FAQ Item",
+                "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "label": "Question"
+                },
+                {
+                    "type": "textarea",
+                    "id": "answer",
+                    "label": "Answer"
+                }
+                ]
+            },
+            {
+                "type": "item_size",
+                "name": "Size Guide",
+                "settings": [
+                    {
+                        "type": "collection",
+                        "id": "size_collection",
+                        "label": "Collection"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "size_image",
+                        "label": " Size Guide"
+                    },
+                    {
+                        "type": "html",
+                        "id": "size_desc",
+                        "label": "Description",
+                        "info": "Use HTML to format your text so it can be easily read"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
+<script>
+  jQuery(document).on('click', '.siz_guid', function(){
+    if(jQuery('.pop_size').is(':visible'))
+    {
+      jQuery('.pop_size').fadeOut()
+    }
+    else{
+      jQuery('.pop_size').fadeIn()
+    }
+    return false;
+  });
+  jQuery('.pop_wrapper_backing').click(function(){
+    jQuery('.pop_size').fadeOut();
+  });
+  jQuery('span.colz_pop').click(function(){
+    jQuery('.pop_size').fadeOut();
+  });
+</script>

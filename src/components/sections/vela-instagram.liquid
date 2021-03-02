@@ -1,0 +1,146 @@
+
+<div class="velaInstagram mb60" style="background-color: {{ section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaInstagramInner">
+            {%- if section.settings.title != blank -%}
+                <div class="headingGroup pb20">
+                    <h3 class="velaHomeTitle text-center">
+                        {{ section.settings.title }}
+                    </h3>
+                    {%- if section.settings.subtitle != blank -%}
+                    <span class="subTitle">{{ section.settings.subtitle }}</span>
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+            <div class="velaContent">
+                {%- if section.settings.show_icon -%}
+                    <i class="icons icon-social-instagram"></i>
+                {%- endif -%}
+                <div id="velaIns{{ section.id }}" class="boxInstagram" 
+                     data-id="velaIns{{ section.id }}"
+                     data-userid="{{ section.settings.userid }}"
+                     data-accesstoken="{{ section.settings.accessToken }}"
+                     data-limit="{{ section.settings.limited }}"
+                     data-resolution="{{ section.settings.resolution }}">
+              	</div>
+                {%- if section.settings.show_loadmore and section.settings.loadmore != blank -%}
+                    <div class="insLoadMore">
+                        <a class="btnInsLoadMore btnVelaOne" href="javascript:void(0);">{{ section.settings.loadmore }}</a>
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Instagram",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "checkbox",
+                "id": "show_icon",
+                "label": "Show Icon?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "placeholder": "Title"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "SubTitle",
+                "placeholder": "SubTitle"
+            },
+			{
+                "type": "text",
+                "id": "userid",
+                "label": "User Id (*)",
+                "placeholder": "User Id",
+                "default": "2292239002",
+                "info": "[Where do I find User ID?](https:\/\/codeofaninja.com\/tools\/find-instagram-user-id)"
+            },
+            {
+                "type": "text",
+                "id": "accessToken",
+                "label": "Access token (*)",
+                "placeholder": "Access Token",
+                "default": "2292239002.1677ed0.fac0c0ffe73643cd8f4838b89b4c11a3",
+                "info": "[Where do I find Access Token?](http:\/\/instagram.pixelunion.net\/)"
+            },
+            {
+                "type": "text",
+                "id": "limited",
+                "placeholder": "Ex:8",
+                "label": "Limit The Number of Images",
+                "default": "8"
+            },
+			{
+                "type": "select",
+                "id": "resolution",
+                "label": "Resolution of images",
+                "options": [
+                    {
+                      	"value": "thumbnail",
+                      	"label": "Thumbnail (150x150)"
+                    },
+                    {
+                      	"value": "low_resolution",
+                      	"label": "Low Resolution (320x320)"
+                    },
+                    {
+                      	"value": "standard_resolution",
+                      	"label": "Standard Resolution (640x640)"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "show_loadmore",
+                "label": "Show Loadmore?",
+                "default": true
+            },
+            {
+                "type": "text",
+                "id": "loadmore",
+                "label": "Load more",
+                "placeholder": "Button load more text"
+            }
+        ],
+		"presets": [
+            {
+                "name": "Instagram",
+                "category": "4. Vela Image"
+            }
+        ]
+    }
+{% endschema %}

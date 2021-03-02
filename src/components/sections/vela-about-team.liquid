@@ -1,0 +1,143 @@
+<div class="velaAboutUs velaAboutUsTeams mb30">
+    <div class="container-full">
+        <div class="velaAboutUsTeamsInner">
+            {%- if section.settings.title != blank -%}
+                <div class="headingGroup pb20">
+                    <h3 class="velaAboutUsTitle velaHomeTitle">
+                        {{ section.settings.title }}
+                    </h3>
+                    
+                    {%- if section.settings.subtitle != blank -%}
+                        <div class="subTitle velaPageSubTitle text-center">
+                            {{ section.settings.subtitle }}
+                        </div>
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+            {%- if section.blocks.size > 0 -%}
+                <div class="velaContent">
+                    <div class="rowFlex rowFlexMargin flexJustifyCenter">
+                        {% for block in section.blocks %}
+                            <div class="col-xs-6 col-md-3 mb30">
+                                <div class="aboutMember">
+                                    <div class="aboutMemberImage">
+                                        {%- if block.settings.image != blank -%}
+                                            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:'master' }}" />
+                                        {%- else -%} 
+                                            <img class="img-responsive" alt="{{ shop.name }}" src="http://velatheme.com/demo_banner/netro/abouteam_{{ forloop.index }}.jpg" />
+                                        {%- endif -%}
+                                    </div>
+                                    <div class="aboutContent text-center">
+                                        {%- if block.settings.title != blank -%}
+                                            <div class="aboutMemberName">{{ block.settings.title }}</div>
+                                        {%- endif -%}
+                                        {%- if block.settings.position != blank -%}
+                                            <div class="aboutMemberPosition">{{ block.settings.position }}</div>
+                                        {%- endif -%}
+                                        <div class="velaSocial text-center">
+                                            <ul class="velaListSocial list-unstyled list-inline">
+                                                {%- if block.settings.fa_link != blank -%}
+                                                    <li class="facebook">
+                                                        <a target="_blank" href="{{ block.settings.fa_link }}" class="btn-social btn-social--facebook">
+                                                            <i class="fa fa-facebook"></i>
+                                                        </a>
+                                                    </li>
+                                                {%- endif -%}
+                                                {%- if block.settings.tw_link != blank -%}
+                                                    <li class="twitter">
+                                                        <a target="_blank" href="{{ block.settings.tw_link }}" class="btn-social btn-social--twitter">
+                                                            <i class="fa fa-twitter"></i>
+                                                        </a>
+                                                    </li>
+                                                {%- endif -%}
+                                                {%- if block.settings.in_link != blank -%}
+                                                    <li class="linkedin">
+                                                        <a target="_blank" href="{{ block.settings.in_link }}"  class="btn-social btn-social--instagram">
+                                                            <i class="fa fa-linkedin"></i>
+                                                        </a>
+                                                    </li>
+                                                {%- endif -%}
+                                                {%- if block.settings.gg_link != blank -%}
+                                                    <li class="google-plus">
+                                                        <a target="_blank" href="{{ block.settings.gg_link }}" class="btn-social btn-social--google-plus">
+                                                            <i class="fa fa-google-plus"></i>
+                                                        </a>
+                                                    </li>
+                                                {%- endif -%}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela About Teams",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "text",
+                "id": "subtitle",
+                "label": "Subheading",
+                "placeholder": "Subheading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Service Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Member avatar"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Member name"
+                    },
+                    {
+                        "type": "text",
+                        "id": "position",
+                        "label": "Member position"
+                    },
+                    {
+                        "type": "header",
+                        "content": "Social link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "fa_link",
+                        "label": "Facebook link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "tw_link",
+                        "label": "Twitter link"
+                    },
+                    {
+                        "type": "text",
+                        "id": "in_link",
+                        "label": "Linkedin"
+                    },
+                    {
+                        "type": "text",
+                        "id": "gg_link",
+                        "label": "Google link"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

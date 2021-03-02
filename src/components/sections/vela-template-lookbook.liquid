@@ -1,0 +1,283 @@
+<div class="velaLookbook"style="background-color: {{section.settings.color_bg }};
+    {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+    <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaLookbookInner">
+            <div class="velaContent">
+                <div class="rowFlex {% if section.settings.noGutter %}noGutter{% else %}rowFlexMargin{% endif %}">
+                    {%- if section.settings.image1 != blank -%}
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="velaBoxLookbook">
+                                <img class="img-responsive" alt="{{ section.settings.image1.alt | default: shop.name }}" src="{{ section.settings.image1 | img_url:'master' }}" />
+                                {%- assign counterItem = 0 -%}
+                                {%- assign imageWidth = section.settings.image1.width -%}
+                                {%- assign imageHeight = section.settings.image1.height -%}
+                                {% for block in section.blocks %}
+                                    {%- assign productHandle = block.settings.product -%}
+                                    {%- assign lookbook = block.settings.lookbook -%}
+                                    {%- assign displayType = block.settings.display -%}
+                                    {%- if lookbook == 'image1' -%}
+                                        {%- assign coordsX = block.settings.coordsX | plus: 0 -%}
+                                        {%- assign percelX = coordsX | times: 100 | divided_by: imageWidth -%}
+                                        {%- assign coordsY = block.settings.coordsY | plus: 0 -%}
+                                        {%- assign percelY = coordsY | times: 100 | divided_by: imageHeight -%}
+                                        {%- assign counterItem = counterItem | plus: 1 -%}
+                                        {%- assign productLookbook = all_products[productHandle] -%}
+                                        {%- assign on_sale = false -%}
+                                        {%- if productLookbook.compare_at_price > productLookbook.price -%}
+                                            {%- assign on_sale = true -%}
+                                        {%- endif -%}
+                                        {% include 'vela-lookbook-item' %}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.image2 != blank -%}
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="velaBoxLookbook">
+                                <img class="img-responsive" alt="{{ section.settings.image2.alt | default: shop.name }}" src="{{ section.settings.image2 | img_url:'master' }}" />
+                                {%- assign counterItem = 0 -%}
+                                {%- assign imageWidth = section.settings.image2.width -%}
+                                {%- assign imageHeight = section.settings.image2.height -%}
+                                {% for block in section.blocks %}
+                                    {%- assign productHandle = block.settings.product -%}
+                                    {%- assign lookbook = block.settings.lookbook -%}
+                                    {%- assign displayType = block.settings.display -%}
+                                    {%- if lookbook == 'image2' -%}
+                                        {%- assign coordsX = block.settings.coordsX | plus: 0 -%}
+                                        {%- assign percelX = coordsX | times: 100 | divided_by: imageWidth -%}
+                                        {%- assign coordsY = block.settings.coordsY | plus: 0 -%}
+                                        {%- assign percelY = coordsY | times: 100 | divided_by: imageHeight -%}
+                                        {%- assign counterItem = counterItem | plus: 1 -%}
+                                        {%- assign productLookbook = all_products[productHandle] -%}
+                                        {%- assign on_sale = false -%}
+                                        {%- if productLookbook.compare_at_price > productLookbook.price -%}
+                                            {%- assign on_sale = true -%}
+                                        {%- endif -%}
+                                        {% include 'vela-lookbook-item' %}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.image3 != blank -%}
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="velaBoxLookbook">
+                                <img class="img-responsive" alt="{{ section.settings.image3.alt | default: shop.name }}" src="{{ section.settings.image3 | img_url:'master' }}" />
+                                {%- assign counterItem = 0 -%}
+                                {%- assign imageWidth = section.settings.image3.width -%}
+                                {%- assign imageHeight = section.settings.image3.height -%}
+                                {% for block in section.blocks %}
+                                    {%- assign productHandle = block.settings.product -%}
+                                    {%- assign lookbook = block.settings.lookbook -%}
+                                    {%- assign displayType = block.settings.display -%}
+                                    {%- if lookbook == 'image3' -%}
+                                        {%- assign coordsX = block.settings.coordsX | plus: 0 -%}
+                                        {%- assign percelX = coordsX | times: 100 | divided_by: imageWidth -%}
+                                        {%- assign coordsY = block.settings.coordsY | plus: 0 -%}
+                                        {%- assign percelY = coordsY | times: 100 | divided_by: imageHeight -%}
+                                        {%- assign counterItem = counterItem | plus: 1 -%}
+                                        {%- assign productLookbook = all_products[productHandle] -%}
+                                        {%- assign on_sale = false -%}
+                                        {%- if productLookbook.compare_at_price > productLookbook.price -%}
+                                            {%- assign on_sale = true -%}
+                                        {%- endif -%}
+                                        {% include 'vela-lookbook-item' %}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {%- endif -%}
+                    {%- if section.settings.image4 != blank -%}
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="velaBoxLookbook">
+                                <img class="img-responsive" alt="{{ section.settings.image4.alt | default: shop.name }}" src="{{ section.settings.image4 | img_url:'master' }}" />
+                                {%- assign counterItem = 0 -%}
+                                {%- assign imageWidth = section.settings.image4.width -%}
+                                {%- assign imageHeight = section.settings.image4.height -%}
+                                {% for block in section.blocks %}
+                                    {%- assign productHandle = block.settings.product -%}
+                                    {%- assign lookbook = block.settings.lookbook -%}
+                                    {%- assign displayType = block.settings.display -%}
+                                    {%- if lookbook == 'image4' -%}
+                                        {%- assign coordsX = block.settings.coordsX | plus: 0 -%}
+                                        {%- assign percelX = coordsX | times: 100 | divided_by: imageWidth -%}
+                                        {%- assign coordsY = block.settings.coordsY | plus: 0 -%}
+                                        {%- assign percelY = coordsY | times: 100 | divided_by: imageHeight -%}
+                                        {%- assign counterItem = counterItem | plus: 1 -%}
+                                        {%- assign productLookbook = all_products[productHandle] -%}
+                                        {%- assign on_sale = false -%}
+                                        {%- if productLookbook.compare_at_price > productLookbook.price -%}
+                                            {%- assign on_sale = true -%}
+                                        {%- endif -%}
+                                        {% include 'vela-lookbook-item' %}
+                                    {%- endif -%}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Vela Lookbook",
+        "class": "velaFramework",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Design Section"
+            },
+            {
+                "type": "checkbox",
+                "id": "full_with",
+                "label": "Enabel Full Width?"
+            },
+            {
+                "type": "color",
+                "id": "color_bg",
+                "label": "Background Color",
+                "default": "rgba(0,0,0,0)"
+            },
+            {
+                "type": "text",
+                "id": "padding_block",
+                "label": "Padding",
+                "placeholder": "0px 0px"
+            },
+            {
+                "type": "checkbox",
+                "id": "noGutter",
+                "label": "No Padding",
+                "default": false
+            },
+            {
+                "type": "header",
+                "content": "General Settings"
+            },
+            {
+                "type": "image_picker",
+                "id": "image1",
+                "label": "Lookbook image 1"
+            },
+            {
+                "type": "image_picker",
+                "id": "image2",
+                "label": "Lookbook image 2"
+            },
+            {
+                "type": "image_picker",
+                "id": "image3",
+                "label": "Lookbook image 3"
+            },
+            {
+                "type": "image_picker",
+                "id": "image4",
+                "label": "Lookbook image 4"
+            },
+            {
+                "type": "image_picker",
+                "id": "image5",
+                "label": "Lookbook image 5"
+            },
+            {
+                "type": "image_picker",
+                "id": "image6",
+                "label": "Lookbook image 6"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "item",
+                "name": "Product",
+                "settings": [
+                    {
+                        "type": "product",
+                        "id": "product",
+                        "label": "Choose product"
+                    },
+                    {
+                        "type": "select",
+                        "id": "lookbook",
+                        "label": "Choose lookbook",
+                        "default": "image1",
+                        "options": [
+                            {
+                                "value": "image1",
+                                "label": "Lookbook image 1"
+                            },
+                            {
+                                "value": "image2",
+                                "label": "Lookbook image 2"
+                            },
+                            {
+                                "value": "image3",
+                                "label": "Lookbook image 3"
+                            },
+                            {
+                                "value": "image4",
+                                "label": "Lookbook image 4"
+                            },
+                            {
+                                "value": "image5",
+                                "label": "Lookbook image 5"
+                            },
+                            {
+                                "value": "image6",
+                                "label": "Lookbook image 6"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "select",
+                        "id": "display",
+                        "label": "Display type",
+                        "default": "topLeft",
+                        "options": [
+                            {
+                                "value": "topLeft",
+                                "label": "Top Left"
+                            },
+                            {
+                                "value": "topRight",
+                                "label": "Top Right"
+                            },
+                            {
+                                "value": "centerLeft",
+                                "label": "Center Left"
+                            },
+                            {
+                                "value": "centerRight",
+                                "label": "Center Right"
+                            },
+                            {
+                                "value": "bottomLeft",
+                                "label": "Bottom Left"
+                            },
+                            {
+                                "value": "bottomRight",
+                                "label": "Bottom Right"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "id": "coordsX",
+                        "label": "X coordinates"
+                    },
+                    {
+                        "type": "text",
+                        "id": "coordsY",
+                        "label": "Y coordinates"
+                    },
+                    {
+                       "type": "paragraph",
+                       "content": "How to [get image coordinates ?](http://velatheme.com/get-image-coordinates/)"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

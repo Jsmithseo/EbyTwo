@@ -1,0 +1,65 @@
+
+<div class="velaProductsMasonry" style="background-color: {{section.settings.color_bg }};
+                                     {% if section.settings.padding_block !=blank %}padding:{{section.settings.padding_block}}; {% endif %}">
+   <div class="container{% if section.settings.full_with %}-full{% endif %}">
+        <div class="velaContent gridMasonry gutter-10">
+            {%- assign proCollection = section.settings.collection_handle -%}
+            <div class="rowFlex flexRowMargin">
+                <div class="grid-sizer"></div>
+                {% if proCollection != blank %}
+                        {% for product in collections[proCollection].products limit:16 %}
+                            {%- if forloop.index == 7 or forloop.index == 11 -%}
+                                {%- assign gridcol = 6 -%}
+                                {%- assign proImageSize1 = '792x' -%}
+                            {% else %}
+                                {%- assign gridcol = 3 -%}
+                                {%- assign proImageSize1 = '400x' -%}
+                            {% endif %}
+                            {% include 'product-grid-item1' %}
+                        {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Vela ProductsList Masonry",
+    "class": "velaFramework",
+    "settings":[
+        {
+            "type": "header",
+            "content": "Design Section"
+        },
+        {
+            "type": "checkbox",
+            "id": "full_with",
+            "label": "Enabel Full Width?"
+        },
+        {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Background Color",
+            "default": "rgba(0,0,0,0)"
+        },
+        {
+            "type": "text",
+            "id": "padding_block",
+            "label": "Padding",
+            "placeholder": "0px 0px"
+        },
+        {
+            "type": "collection",
+            "id": "collection_handle",
+            "label": "Collection"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Vela ProductsList Masonry",
+            "category": "2. Vela Product"
+        }
+    ]
+}
+{% endschema %}

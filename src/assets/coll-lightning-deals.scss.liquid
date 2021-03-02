@@ -1,0 +1,640 @@
+.collImageHeader {
+  	width: 100%;
+    max-width: 100%;
+    position: relative;
+  	
+  	.collHeaderWrapper {
+  		max-width: 100%;
+      	display: none;
+      
+      	&.active {
+      		display: block;
+      	}
+      
+        .headerBgPanels {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-height: 350px;
+            overflow: hidden;
+            list-style: none;
+        }
+      
+      	img {
+            display: block;
+            width: 100%;
+        }
+  	}
+    .collHeaderTitle {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        h1 {
+            font-family: "Domaine Regular", serif;
+            color: #fff;
+            font-size: 10rem;
+
+            @media(max-width: 770px) {
+              font-size: 6rem;
+            }
+            @media(max-width: 480px) {
+              font-size: 4rem;
+            }
+        }
+    }
+  	
+}
+
+.collToolbar {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding: 0;
+    top: -30px;
+  
+    .sortPreloadingContainer.barProgressWrapper {
+        margin-top: 2.5rem;
+        height: 4px;
+      
+      	.progress {
+      		display: none;
+      	}
+      
+      	&.active {
+            .progress {
+              	display: block;
+            }
+      	}
+      
+        @media(max-width: 770px) {
+          	margin-top:0;
+        } 	
+    }
+  
+  	.collToolbarWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        max-width: 1000px;
+      	margin: 0 auto;
+      
+      	.attributeSorter.sizeSorter.primarySorter {
+      		width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            -o-box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+            -moz-box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+            -webkit-box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+            background: #fff;
+          	position: relative;
+          
+          	.sortPreloadingContainer.circleProgressWrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+          		background: rgba(255,255,255,0.85);
+              
+              	display: none;
+              	-o-transition: all 0.2s ease-in-out;
+              	-moz-transition: all 0.2s ease-in-out;
+              	-webkit-transition: all 0.2s ease-in-out;
+              	transition: all 0.2s ease-in-out;
+              
+             	&.active {
+              		display: flex;
+              	}
+          	}
+          
+          	.sorterWrapper.primarySorterWrapper {
+              	display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                padding: 15px 4rem;
+              
+              	p {
+              		font-size: 2.1rem;
+                    font-weight: 500;
+                    color: #00435f;
+                    margin: 1rem auto 0;
+                    width: 100%;
+                    text-align: center;
+              	}
+              
+              	button {
+              		text-align: center;
+                    display: inline-block;
+                    font-size: 1.4rem;
+                    color: #0064ff;
+                    border: none;
+                    background: transparent;
+                    width: initial;
+                    margin: 0 auto;
+                    padding: 0;
+              	}
+              
+              	.sorterListing.sizeOptListing {
+              		padding: 0;
+                    list-style: none;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    margin: 2rem auto 0;
+                  
+                  	.sortOpt {
+                        width: 33.3%;
+                        text-align: center;
+                        margin-bottom: 1.5rem;
+                  
+                      	label {
+                            cursor: pointer;
+                            width: 100%;
+                            max-width: 55px;
+                            display: inline-block;
+                          	margin: 0;
+                          
+                          	input {
+                            	visibility: hidden;
+                                height: 0;
+                                width: 0;
+                              	margin: 0;
+                            }
+                          
+                          	> * {
+                                display: block;
+                                pointer-events: none;
+                            }
+                          
+                          	span {
+                                background: #fff;
+                                color: #0064ff;
+                                border: 2px solid #0064ff;
+                                border-radius: 50px;
+                                margin: 0;
+                                display: block;
+                                position: relative;
+                                padding: 0.2rem 1.75rem;
+                                font-size: 1.4rem;
+                              	-o-transition: all 0.2s ease-in-out;
+                                -moz-transition: all 0.2s ease-in-out;
+                                -webkit-transition: all 0.2s ease-in-out;
+                                transition: all 0.2s ease-in-out;
+                              
+                              	&:before {
+                                    content: "";
+                                    border: 2px solid #fff;
+                                    border-radius: 50px;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    height: 100%;
+                              	}
+                          	}
+                          
+                          	input:checked + span {
+                                background: #0064ff;
+                                color: #fff;
+                                border: 2px solid #0064ff;
+                                border-radius: 50px;
+                              
+                                &:before {
+                                  	border: 2px solid #fff;
+                                }
+                          	}
+                          
+                          	&:hover {
+                          		input + span {
+                                    background: #0064ff;
+                                    color: #fff;
+                                    border: 2px solid #0064ff;
+                                    border-radius: 50px;
+
+                                    &:before {
+                                        border: 2px solid #fff;
+                                    }
+                                }
+                          	}
+                    	}
+                    }
+                  
+                  
+                  	@media(max-width: 770px) {
+                      
+                      	.sortOpt {
+                            text-align: center;
+                            margin-bottom: 1rem;
+                            width: 18%;
+                            margin-left: 0.3rem;
+                            margin-right: 0.3rem;
+                      	}
+                    }
+              	}
+          	}
+      	}
+      
+      	.attributeSorter.pantyStyleSorter.supportSorter {
+      		width: 100%;
+          	max-width: 600px;
+          	padding: 2rem 0 0 2rem;
+          
+          	.sorterWrapper {
+              	p {
+              		color: #00435f;
+                  	font-size: 1.4rem;
+              	}
+          	
+              	.sorterListing {
+                    padding: 0;
+                  	display: flex;
+                  	flex-wrap: wrap;
+                  
+                  	.sortOpt {
+                      	background: transparent;
+                        color: #0064ff;
+                        margin-bottom: 1.2rem;
+                        margin-right: 1.2rem;
+                        border: 1px solid #0064ff;
+                      	cursor: pointer;
+                        -o-transition: all 0.2s ease-in-out;
+                        -moz-transition: all 0.2s ease-in-out;
+                        -webkit-transition: all 0.2s ease-in-out;
+                        transition: all 0.2s ease-in-out;
+                      	display: none;
+                        margin-bottom: 1rem;
+                        margin-right: 0.3rem;
+                        margin-left: 0.3rem;
+                      	
+                      	&.online {
+                      		display: block;
+                      	}
+                      
+                      	&.optOn,
+                      	&:hover {
+                            background: #0064ff;
+                            color: #fff;
+                        }
+                      	&.optOn {
+                          
+                          	i {
+                                display: none;
+                            }
+                        }
+                      
+                      	i {
+                      		display: none;
+                          	color: #fff;
+                      	}
+
+                  	}
+                  
+                  	@media(max-width: 770px) {
+                        margin: 0;
+                        justify-content: center;
+                      	
+                      
+                      	.sortOpt {
+                            line-height: 31px;
+                            height: 31px;
+                            padding: 0 2rem;
+                      	}
+                    }
+                }
+            }
+      	}
+  	}
+  
+  	@media(max-width: 770px) {
+      	top: -10px;
+      
+      	.collToolbarWrapper {
+            flex-direction: column;
+            text-align: center;
+          
+          	.attributeSorter.sizeSorter.primarySorter {
+                margin-bottom: 3rem;
+                max-width: 500px;
+              
+              	.sorterWrapper.primarySorterWrapper {
+              		padding: 15px 10px;
+              	}
+          	}
+          
+          	.attributeSorter.pantyStyleSorter.supportSorter { 
+          		padding: 0;
+          	}
+      	}
+    }
+  
+  	@media(max-width: 480px) {
+      
+      	.collToolbarWrapper {
+          	padding: 1rem;
+          
+          	.attributeSorter.sizeSorter.primarySorter {
+                margin-bottom: 3rem;
+                max-width: 500px;
+              
+              	.sorterWrapper.primarySorterWrapper {
+              		padding: 15px 10px;
+              	}
+          	}
+          
+          	.attributeSorter.pantyStyleSorter.supportSorter { 
+          		padding: 0;
+          	}
+      	}
+    }
+}
+
+#shopify-section-coll-lightningdeals-listing {
+  	margin-top: 0;
+  	position: relative;
+    padding: 0;
+    top: -30px;
+  
+  	.proList {
+  		padding: 0 2rem 2rem;
+      
+      	.ebySaleNotice {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 3rem;
+          	padding-top: 1rem;
+            color: #0064ff;
+            font-size: 2.8rem;
+          	font-family: "Domaine Regular", serif;
+      	}
+  	}
+  
+  	@media(max-width: 770px) {
+      	top: -10px;
+      	margin-top: 0;
+      
+        .proList {
+            padding: 2rem 2rem 2rem;
+
+            .ebySaleNotice {
+                padding-bottom: 2rem;
+              	font-size: 2.4rem;
+            }
+        }
+      
+    }
+}
+
+.ebyProdTileListWrapper.flashsaleProdListing {
+  	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  
+  	.alert.alert-danger {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        margin: 0;
+        height: 100%;
+      	width: 100%;
+  	}
+  
+  	.ebyProdTile.saleProdTile {
+        width: 100%;
+        max-width: 23%;
+        min-width: 225px;
+        padding-bottom: 0;
+        margin: 0 1%;
+        position: relative;
+        display: none;
+      	-o-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+      
+      
+      	&.inStock,
+      	&.lastCall {
+      		display: block;
+      	}
+      
+      	&.lastCall:before {
+          	content: "Only 5 left";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 12px;
+            color: #d0021b;
+            padding: 0 12px;
+            z-index: 1;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 24px;
+            text-transform: uppercase;
+      	}
+      
+      
+      	@media(max-width: 770px) {
+            max-width: 48%;
+          	min-width: auto;
+          
+          	.labelSale {
+          		left: 8px;
+          	}
+          
+            &.lastCall:before {
+                right: 8px;
+                top: 15px;
+                font-size: 10px;
+                padding: 0;
+            }
+        }
+      
+      	.proHImage .proFeaturedImage .img-responsive {
+      		height: auto;
+      	}
+
+      	.velaProBlockInner {
+      		-o-box-shadow: 1px 3px 10px rgba(0,0,0,0.25);
+          	-moz-box-shadow: 1px 3px 10px rgba(0,0,0,0.25);
+          	-webkit-box-shadow: 1px 3px 10px rgba(0,0,0,0.25);
+          	box-shadow: 1px 3px 10px rgba(0,0,0,0.25);
+      	}
+      
+      	.saleProdColorWrapper {
+            position: absolute;
+            bottom: 0;
+            left: 2rem;
+            z-index: 1;
+          
+          	.saleProdColor {
+                font-size: 14px;
+                color: #00435f;
+                margin-bottom: 1rem;
+              	text-transform: capitalize;
+          	}
+          
+          
+            @media(max-width: 480px) {
+                width: 100%;
+                left: 0;
+                text-align: center;
+              	
+              	.saleProdColor {
+                    margin: 0;
+                    font-size: 10px;
+              	}
+            }
+      	}
+      
+      	.saleProdFooter {
+            background: #fff;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          
+          	@media(max-width: 770px) {
+                flex-direction: column;
+                text-align: center;
+              
+              	.saleProdFooterCol.buttonWrapperCol {
+              		margin-top: 1rem;
+              	}
+            }
+          
+          	.saleProdFooterCol {
+          		
+              	.saleProdAdd {
+              		margin-bottom: 0;
+                    font-size: 1.4rem;
+                    color: #0064ff;
+                    border: 1px solid #0064ff;
+                    border-radius: 50px;
+                    text-transform: capitalize;
+                    letter-spacing: inherit;
+                    padding: 0 3.5rem;
+                    line-height: 32px;
+                  	background: transparent;
+                  
+                  	span {
+                  		font-weight: 400;
+                  	}
+                  
+                  	&:hover {
+                  		background: #0064ff;
+                      	color: #fff;
+                  	}
+              	}
+              
+              	.proName.saleProdName {
+              		margin: 0 0 0.25rem;
+                    color: #00435f;
+              	}
+              
+              	.lightningDealPrice {
+              		display: flex;
+                  
+                    .origPrice{
+                        color: #00435f;
+                        text-decoration: line-through;
+                        margin: 0;
+                        font-size: 1.4rem;
+                    }
+
+                    .salePrice {
+                        margin: 0 0 0 0.75rem;
+                        color: #d0021b;
+                        font-weight: 600;
+                        font-size: 1.4rem;
+                    }
+
+              	}
+              
+          	}
+      	}
+    }
+}
+.sortCollLoadingWrapper {
+	position: absolute;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    height: 100%;
+    display: flex;
+    top: 0;
+    left: 0;
+  	min-height: 300px;
+  
+  	display: none;
+  
+  	&.active {
+  		display: block;
+  	}
+}
+
+/* filterByStyle */
+
+.ebyProdTileListWrapper.flashsaleProdListing.filterActive {
+    .ebyProdTile.saleProdTile {
+      	display: none;
+    }
+    // by bikini, only show bikini
+  	&.filter-bikini_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="bikini"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="bikini"] {
+      		display: block;
+      	}
+    }
+    // by thong, only show bikini
+  	&.filter-thong_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="thong"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="thong"] {
+      		display: block;
+      	}
+    }
+  	// by brief, only show bikini
+  	&.filter-brief_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="brief"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="brief"] {
+      		display: block;
+      	}
+    }
+  	// by cheeky, only show bikini
+  	&.filter-cheeky_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="cheeky"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="cheeky"]{
+      		display: block;
+      	}
+    }
+  	// by bikini, only show highwaisted
+  	&.filter-highwaisted_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="highwaisted"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="highwaisted"] {
+      		display: block;
+      	}
+    }
+  	// by bikini, only show g_string
+  	&.filter-g_string_only {
+      	.ebyProdTile.saleProdTile.inStock[data-prodtype="g_string"],
+      	.ebyProdTile.saleProdTile.lastCall[data-prodtype="g_string"] {
+      		display: block;
+      	}
+    }
+}

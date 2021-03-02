@@ -1,0 +1,44 @@
+<div style="background-color: {{ page.metafields.ebyacf.blkSix_background_color }};">
+  <div class="wrapper">
+    {{ page.metafields.ebyacf.blkSix_copy_image_editor.en }}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Impact So Far",
+    "class": "locationMain",
+    "settings": [
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Enter Heading"
+    },
+	{
+      "type":"text",
+      "id":"select_year_01",
+      "label":"Enter Year"
+    },
+    {
+      "type":"text",
+      "id":"select_year_02",
+      "label":"Enter Year"
+    },
+	{
+      "type":"text",
+      "id":"join_now_btn",
+      "label":"Button Label"
+    },
+    {
+      "type": "url",
+      "id": "join_now_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id":"repeat_img",
+      "label":"Select images"
+    }
+    ]
+  }
+{% endschema %}

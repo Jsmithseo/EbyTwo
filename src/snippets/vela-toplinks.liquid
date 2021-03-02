@@ -1,0 +1,20 @@
+{% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+   {% capture fullname %}{{ customer.first_name }}{% endcapture %}
+   {% assign login_html = 'layout.header.login_html' | t:fullname:fullname %}
+   {% assign logout = 'layout.header.logout' | t %}
+   {% assign login = 'layout.header.login' | t %}
+   {% assign register = 'layout.header.register' | t %}
+
+      <div  id="velaTopLinks" class="velaTopLinks collapse">
+         <ul  class="list-unstyled">
+            {% if customer  %}
+           	<li><a href="/account" title="EBY Dashboard"><span>Dashboard</span></a></li>              
+           	<li><a href="/account/logout" title="Sign Out"><span>Sign Out</span></a></li>
+            {% else %}
+               <li>{{ register | customer_register_link }}</li>
+               <li>{{ login | customer_login_link }}</li>
+            {% endif %}
+         </ul>
+      </div>
+
+{% endif %}
