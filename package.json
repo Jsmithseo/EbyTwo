@@ -1,10 +1,10 @@
 {
   "name": "eby",
   "version": "1.0.0",
-  "main": "webpack.dev.js",
+  "main": "src",
   "license": "MIT",
   "keywords": [],
-  "author": "Mike Salvati",
+  "author": "Jeremy Smith",
   "private": true,
   "scripts": {
     "start": "webpack --mode=development --config webpack.dev.js && npx tailwindcss build src/components/tailwind.css -o dist/assets/tailwind.css.liquid && cleancss -o dist/assets/tailwind.min.css.liquid dist/assets/tailwind.css.liquid",
